@@ -5,7 +5,7 @@
     ],
     //"al.ruleSetPath": "./.codeAnalysis/PR.ruleset.json",
     "CRS.ObjectNamePrefix": "",
-    "CRS.ExtensionObjectNamePattern":  "<Prefix><BaseNameShort>", 
+    "CRS.ExtensionObjectNamePattern":  "<Prefix><BaseNameShort><ObjectTypeShortPascalCase>", 
     "CRS.FileNamePattern": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al", 
     "CRS.FileNamePatternExtensions": "<ObjectNameShort>.<ObjectTypeShortPascalCase>.al",
     "CRS.AlSubFolderName": "None",
