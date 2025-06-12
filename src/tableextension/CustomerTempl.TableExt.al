@@ -1,4 +1,4 @@
-tableextension 50042 tableextension50042 extends "Customer Template"
+tableextension 50042 CustomerTempl extends "Customer Templ."
 {
 
     //Unsupported feature: Code Modification on "OnInsert".

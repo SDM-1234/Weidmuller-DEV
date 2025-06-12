@@ -5,10 +5,9 @@ codeunit 50007 "Sales Price Management"
     begin
     end;
 
-    [Scope('Internal')]
-    procedure ApprovalProcessMandatory(SalesHeader: Record "36")
+    procedure ApprovalProcessMandatory(SalesHeader: Record "Sales Header")
     var
-        UserSetup: Record "91";
+        UserSetup: Record "User Setup";
     begin
         UserSetup.GET(USERID);
         IF UserSetup."Update Pricing" THEN
@@ -16,26 +15,22 @@ codeunit 50007 "Sales Price Management"
 
         IF SalesHeader.Status = SalesHeader.Status::Released THEN
             EXIT;
-        IF SalesHeader."Document Type" IN [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] THEN BEGIN
+        IF SalesHeader."Document Type" IN [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] THEN
             IF SpecialPrice(SalesHeader."Transaction Type") THEN
                 ERROR('Sales %1 %2 is must be approve through the workflow process.', SalesHeader."Document Type", SalesHeader."No.");
+    END;
 
-        END;
-    end;
-
-    [Scope('Internal')]
     procedure SpecialPrice("Code": Code[20]): Boolean
     var
-        TransactionType: Record "258";
+        TransactionType: Record "Transaction Type";
     begin
         IF TransactionType.GET(Code) THEN;
-
         EXIT(TransactionType."Special Price");
     end;
 
-    local procedure SpecialPricingValidation(SalesHeader: Record "36")
+    local procedure SpecialPricingValidation(SalesHeader: Record "Sales Header")
     var
-        UserSetup: Record "91";
+        UserSetup: Record "User Setup";
     begin
         UserSetup.GET(USERID);
         IF UserSetup."Update Pricing" THEN
@@ -47,70 +42,67 @@ codeunit 50007 "Sales Price Management"
         ERROR('You do not have permission to change the special pricing transaction type.');
     end;
 
-    [Scope('Internal')]
-    procedure ConfirmTransactionType(var SalesHeader: Record "36"; xRec: Record "36")
+    procedure ConfirmTransactionType(var SalesHeader: Record "Sales Header"; xRec: Record "Sales Header")
     begin
-        WITH SalesHeader DO BEGIN
-            IF "Document Type" IN ["Document Type"::Order, "Document Type"::Quote] THEN BEGIN
-                SpecialPricingValidation(xRec);
-                IF SpecialPrice("Transaction Type") THEN BEGIN
-                    TESTFIELD(Status, Status::Open);
-                    IF CONFIRM('Do you want to confirm this transaction with Special Pricing ?', TRUE, FALSE) THEN
-                        UpdateSalesLineUnitPrice(SalesHeader)
-                    ELSE
-                        RevertBackTransactionType(SalesHeader, xRec);
-                END ELSE BEGIN
-                    IF CONFIRM('Do you want to confirm to confirm that this transaction is NOT with Special Pricing ?', TRUE, FALSE) THEN
-                        RecalculateSalesPrice(SalesHeader)
-                    ELSE
-                        RevertBackTransactionType(SalesHeader, xRec);
-                END;
-            END;
+        //WITH SalesHeader DO
+        IF SalesHeader."Document Type" IN [SalesHeader."Document Type"::Order, SalesHeader."Document Type"::Quote] THEN BEGIN
+            SpecialPricingValidation(xRec);
+            IF SpecialPrice(SalesHeader."Transaction Type") THEN BEGIN
+                SalesHeader.TESTFIELD(Status, SalesHeader.Status::Open);
+                IF CONFIRM('Do you want to confirm this transaction with Special Pricing ?', TRUE, FALSE) THEN
+                    UpdateSalesLineUnitPrice(SalesHeader)
+                ELSE
+                    RevertBackTransactionType(SalesHeader, xRec);
+            END ELSE
+                IF CONFIRM('Do you want to confirm to confirm that this transaction is NOT with Special Pricing ?', TRUE, FALSE) THEN
+                    RecalculateSalesPrice(SalesHeader)
+                ELSE
+                    RevertBackTransactionType(SalesHeader, xRec);
         END;
+
     end;
 
-    local procedure RecalculateSalesPrice(SalesHeader: Record "36")
+    local procedure RecalculateSalesPrice(SalesHeader: Record "Sales Header")
     var
-        SalesLine: Record "37";
+        SalesLine: Record "Sales Line";
     begin
-        SalesLine.RESET;
+        SalesLine.RESET();
         SalesLine.SETRANGE("Document Type", SalesHeader."Document Type");
         SalesLine.SETRANGE("Document No.", SalesHeader."No.");
         SalesLine.SETFILTER(Type, '%1', SalesLine.Type::Item);
         SalesLine.SETFILTER("No.", '<>%1', '');
-        IF SalesLine.FINDSET(TRUE, FALSE) THEN
+        IF SalesLine.FINDSET() THEN
             REPEAT
                 SalesLine."Unit Price" := 0;
                 SalesLine.VALIDATE(Quantity);
                 SalesLine.MODIFY(TRUE);
-            UNTIL SalesLine.NEXT = 0;
+            UNTIL SalesLine.NEXT() = 0;
     end;
 
-    local procedure UpdateSalesLineUnitPrice(SalesHeader: Record "36")
+    local procedure UpdateSalesLineUnitPrice(SalesHeader: Record "Sales Header")
     var
-        SalesLine: Record "37";
+        SalesLine: Record "Sales Line";
     begin
         SalesLine.SETCURRENTKEY("Document Type", "Document No.");
         SalesLine.SETRANGE("Document Type", SalesHeader."Document Type");
         SalesLine.SETRANGE("Document No.", SalesHeader."No.");
         SalesLine.SETFILTER("Unit Price", '<>%1', 0);
-        IF SalesLine.FINDSET(TRUE, FALSE) THEN
+        IF SalesLine.FINDSET() THEN
             REPEAT
                 SalesLine.VALIDATE("Unit Price", 0);
                 SalesLine.MODIFY(TRUE);
-            UNTIL SalesLine.NEXT = 0;
+            UNTIL SalesLine.NEXT() = 0;
     end;
 
-    local procedure RevertBackTransactionType(var Rec: Record "36"; xRec: Record "36")
+    local procedure RevertBackTransactionType(var Rec: Record "Sales Header"; xRec: Record "Sales Header")
     begin
         Rec."Transaction Type" := xRec."Transaction Type";
     end;
 
-    [Scope('Internal')]
-    procedure UnitPriceChangeValidation(SalesLine: Record "37")
+    procedure UnitPriceChangeValidation(SalesLine: Record "Sales Line")
     var
-        SalesHeader: Record "36";
-        UserSetup: Record "91";
+        SalesHeader: Record "Sales Header";
+        UserSetup: Record "User Setup";
     begin
         IF SalesLine."Document Type" IN [SalesLine."Document Type"::Order, SalesLine."Document Type"::Quote] THEN BEGIN
             //IF SalesLine."Unit Price" = 0 THEN
@@ -124,55 +116,52 @@ codeunit 50007 "Sales Price Management"
         END;
     end;
 
-    [TryFunction]
-    [Scope('Internal')]
-    procedure UpdateMoQ(var Rec: Record "7002")
+    procedure UpdateMoQ(var Rec: Record "Price Source")
     var
-        Item: Record "27";
+        Item: Record Item;
     begin
 
-        IF NOT Item.GET(Rec."Item No.") THEN
-            EXIT;
-        IF Item."Minimum Order Quantity" <> 0 THEN
-            Rec."Minimum Quantity" := Item."Order Multiple" //Rec."Minimum Quantity" := Item."Minimum Order Quantity"
-        ELSE
-            Rec.TESTFIELD("Minimum Quantity");
+        // IF NOT Item.GET(Rec."Item No.") THEN
+        //     EXIT;
+        // IF Item."Minimum Order Quantity" <> 0 THEN
+        //     Rec."Minimum Quantity" := Item."Order Multiple" //Rec."Minimum Quantity" := Item."Minimum Order Quantity"
+        // ELSE
+        //     Rec.TESTFIELD("Minimum Quantity");
 
-        IF Rec.Status = Rec.Status::Released THEN
-            Rec.VALIDATE(Status, Rec.Status::Open);
-        IF Rec.Status = Rec.Status::"Pending for Approval" THEN
-            Rec.TESTFIELD(Status, Rec.Status::Open);
+        // IF Rec.Status = Rec.Status::Released THEN
+        //     Rec.VALIDATE(Status, Rec.Status::Open);
+        // IF Rec.Status = Rec.Status::"Pending for Approval" THEN
+        //     Rec.TESTFIELD(Status, Rec.Status::Open);
     end;
 
-    [Scope('Internal')]
-    procedure UpDateQuoteAndOrderPrice(SalesPrice: Record "7002")
-    var
-        SalesHeader: Record "36";
-        SalesLine: Record "37";
-        PriceCalcMgt: Codeunit "7000";
-    begin
-        // WITH SalesLine DO BEGIN
-        //  RESET;
-        //  SETCURRENTKEY("Document Type","Document No.","No.");
-        //  SETFILTER("Document Type",'%1|%2',"Document Type"::Quote,"Document Type"::Order);
-        //  SETRANGE(Type,Type::Item);
-        //  SETRANGE("No.",SalesPrice."Item No.");
-        //  IF FINDSET THEN
-        //    REPEAT
-        //      GetSalesHeader(SalesHeader,SalesLine);
-        //      IF (SalesHeader.Status = SalesHeader.Status::Open) AND (NOT SpecialPrice(SalesHeader."Transaction Type")) THEN BEGIN
-        //        SalesLine.VALIDATE("Unit Price" ,0);//SalesLine."Unit Price" := 0;
-        //        //SalesLine.VALIDATE(Quantity);
-        //        SalesLine.MODIFY(TRUE);
-        //      END;
-        //    UNTIL NEXT = 0;
-        // END;
-    end;
+    //procedure UpDateQuoteAndOrderPrice(SalesPrice: Record "7002")
+    //var
+    //  SalesHeader: Record "36";
+    //SalesLine: Record "37";
+    //PriceCalcMgt: Codeunit "7000";
+    //begin
+    // WITH SalesLine DO BEGIN
+    //  RESET;
+    //  SETCURRENTKEY("Document Type","Document No.","No.");
+    //  SETFILTER("Document Type",'%1|%2',"Document Type"::Quote,"Document Type"::Order);
+    //  SETRANGE(Type,Type::Item);
+    //  SETRANGE("No.",SalesPrice."Item No.");
+    //  IF FINDSET THEN
+    //    REPEAT
+    //      GetSalesHeader(SalesHeader,SalesLine);
+    //      IF (SalesHeader.Status = SalesHeader.Status::Open) AND (NOT SpecialPrice(SalesHeader."Transaction Type")) THEN BEGIN
+    //        SalesLine.VALIDATE("Unit Price" ,0);//SalesLine."Unit Price" := 0;
+    //        //SalesLine.VALIDATE(Quantity);
+    //        SalesLine.MODIFY(TRUE);
+    //      END;
+    //    UNTIL NEXT = 0;
+    // END;
+    //end;
 
-    local procedure GetSalesHeader(var SalesHeader: Record "36"; SalesLine: Record "37")
+    local procedure GetSalesHeader(var SalesHeader: Record "Sales Header"; SalesLine: Record "Sales Line")
     var
         IsReleased: Boolean;
-        ReleaseSalesDoc: Codeunit "414";
+        ReleaseSalesDoc: Codeunit "Release Sales Document";
     begin
         // IF (SalesLine."Document Type" <> SalesHeader."Document Type") OR (SalesLine."Document No." <> SalesHeader."No.") THEN BEGIN
         //  IF (IsReleased) AND (NOT SpecialPrice(SalesHeader."Transaction Type")) THEN
@@ -184,11 +173,11 @@ codeunit 50007 "Sales Price Management"
         // END;
     end;
 
-    [EventSubscriber(ObjectType::Table, 7002, 'OnAfterModifyEvent', '', false, false)]
-    local procedure OnSalesStatusReOpenUpdateUnitPrice(var Rec: Record "7002"; var xRec: Record "7002"; RunTrigger: Boolean)
-    begin
-        // IF (Rec.Status = Rec.Status::Open) AND (xRec.Status = xRec.Status::Released)THEN
-        //    UpDateQuoteAndOrderPrice(Rec);
-    end;
+    //[EventSubscriber(ObjectType::Table, 7002, 'OnAfterModifyEvent', '', false, false)]
+    //local procedure OnSalesStatusReOpenUpdateUnitPrice(var Rec: Record "7002"; var xRec: Record "7002"; RunTrigger: Boolean)
+    //begin
+    // IF (Rec.Status = Rec.Status::Open) AND (xRec.Status = xRec.Status::Released)THEN
+    //    UpDateQuoteAndOrderPrice(Rec);
+    //end;
 }
 

@@ -1,11 +1,8 @@
-pageextension 50034 pageextension50034 extends "Apply Customer Entries"
+pageextension 50034 ApplyCustomerEntries extends "Apply Customer Entries"
 {
 
-    //Unsupported feature: Variable Insertion (Variable: UpdateCustomer) (VariableCollection) on "PostDirectApplication(PROCEDURE 15)".
 
-
-    //Unsupported feature: Code Modification on "PostDirectApplication(PROCEDURE 15)".
-
+    // Not able to find Proper Event After Preview/
     //procedure PostDirectApplication();
     //Parameters and return type have not been exported.
     //>>>> ORIGINAL CODE:
@@ -45,15 +42,12 @@ pageextension 50034 pageextension50034 extends "Apply Customer Entries"
     */
     //end;
 
-    local procedure "....SAGAR..."()
-    begin
-    end;
 
     local procedure OpencustomerBlockedForDocumentTypeBlank(EntryNo1: Integer; EntryNo2: Integer; BlockedType: Option; var UpdateBackBlocked: Boolean)
     var
-        RecCust: Record "18";
-        CLE1: Record "21";
-        CLE2: Record "21";
+        RecCust: Record Customer;
+        CLE1: Record "Cust. Ledger Entry";
+        CLE2: Record "Cust. Ledger Entry";
     begin
         //>> ZE.SAGAR
         IF NOT RecCust.GET(Rec."Customer No.") THEN
@@ -70,13 +64,13 @@ pageextension 50034 pageextension50034 extends "Apply Customer Entries"
                 RecCust.MODIFY(TRUE);
                 UpdateBackBlocked := TRUE;
             END;
-        END ELSE BEGIN
+        END ELSE
             IF UpdateBackBlocked THEN BEGIN
                 RecCust.Blocked := BlockedType;
                 RecCust.MODIFY(TRUE);
             END;
-        END;
-        //<< ZE.SAGAR
-    end;
+    END;
+    //<< ZE.SAGAR
+
 }
 

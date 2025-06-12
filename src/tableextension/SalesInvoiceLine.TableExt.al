@@ -1,4 +1,4 @@
-tableextension 50004 tableextension50004 extends "Sales Invoice Line"
+tableextension 50004 SalesInvoiceLine extends "Sales Invoice Line"
 {
     fields
     {
@@ -6,9 +6,9 @@ tableextension 50004 tableextension50004 extends "Sales Invoice Line"
         {
             Description = '//SE-E859';
         }
-        field(50070; "Bill-to Customer Name"; Text[50])
+        field(50070; "Bill-to Customer Name"; Text[100])
         {
-            CalcFormula = Lookup (Customer.Name WHERE (No.=FIELD(Bill-to Customer No.)));
+            CalcFormula = Lookup(Customer.Name WHERE("No." = FIELD("Bill-to Customer No.")));
             Caption = 'Bill-to Customer Name';
             Description = 'ZT0207';
             FieldClass = FlowField;

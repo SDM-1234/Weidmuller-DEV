@@ -1,14 +1,16 @@
-pageextension 50070 pageextension50070 extends "Create Opportunity"
+pageextension 50070 CreateOpportunity extends "Create Opportunity"
 {
 
     //Unsupported feature: Property Modification (PageType) on ""Create Opportunity"(Page 5126)".
 
     layout
     {
-        addafter("Control 12")
+        addafter("Sales Cycle Code")
         {
-            field("Calendar Week"; "Calendar Week")
+            field("Calendar Week"; rec."Calendar Week")
             {
+                ToolTip = 'Specifies the value of the Calendar Week field.';
+                ApplicationArea = All;
             }
         }
     }

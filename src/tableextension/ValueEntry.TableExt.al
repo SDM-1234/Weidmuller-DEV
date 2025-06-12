@@ -1,4 +1,4 @@
-tableextension 50043 tableextension50043 extends "Value Entry"
+tableextension 50043 ValueEntry extends "Value Entry"
 {
     keys
     {

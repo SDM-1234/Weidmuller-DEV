@@ -1,4 +1,4 @@
-tableextension 50041 tableextension50041 extends Opportunity
+tableextension 50041 Opportunity extends Opportunity
 {
     fields
     {

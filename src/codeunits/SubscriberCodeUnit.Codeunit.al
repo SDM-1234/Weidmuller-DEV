@@ -6,9 +6,9 @@ codeunit 50004 "Subscriber CodeUnit"
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 1535, 'OnApproveApprovalRequest', '', false, false)]
-    local procedure OnApproveApprovalRequest_CU1535(var ApprovalEntry: Record "454")
+    local procedure OnApproveApprovalRequest_CU1535(var ApprovalEntry: Record "Approval Entry")
     var
-        RequeststoApprove: Page "654";
+        RequeststoApprove: Page "Requests to Approve";
     begin
         //ZE_SIDD 31.10.2022
         //++

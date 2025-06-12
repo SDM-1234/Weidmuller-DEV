@@ -1,4 +1,4 @@
-tableextension 50021 tableextension50021 extends "Batch Header"
+/* tableextension 50021 BatchHeader extends "Batch Header"
 {
     fields
     {
@@ -47,3 +47,4 @@ tableextension 50021 tableextension50021 extends "Batch Header"
     }
 }
 
+ */

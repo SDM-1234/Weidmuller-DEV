@@ -1,11 +1,13 @@
-pageextension 50065 pageextension50065 extends "Blanket Sales Order Subform"
+pageextension 50065 BlanketSalesOrderSubform extends "Blanket Sales Order Subform"
 {
     layout
     {
-        addafter("Control 24")
+        addafter(Control49)
         {
-            field("Line No."; "Line No.")
+            field("Line No."; Rec."Line No.")
             {
+                ToolTip = 'Specifies the line number.';
+                ApplicationArea = All;
             }
         }
     }

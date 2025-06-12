@@ -1,4 +1,4 @@
-tableextension 50016 tableextension50016 extends "Notification Schedule"
+tableextension 50016 NotificationSchedule extends "Notification Schedule"
 {
     fields
     {

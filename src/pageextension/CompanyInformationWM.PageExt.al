@@ -1,42 +1,43 @@
-pageextension 50001 pageextension50001 extends "Company Information"
+pageextension 50001 CompanyInformationWM extends "Company Information"
 {
     layout
     {
-        addafter("Control 10")
+        addafter("Country/Region Code")
         {
-            field("Phone No. 2"; "Phone No. 2")
+            field("Phone No. 2"; Rec."Phone No. 2")
             {
+                ToolTip = 'Specifies the value of the Phone No. 2 field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 33")
-        {
-            field("Terms Picture"; "Terms Picture")
+            field("Terms Picture"; Rec."Terms Picture")
             {
                 Caption = 'Terms Picture';
+                ToolTip = 'Specifies the value of the Terms Picture field.';
+                ApplicationArea = All;
             }
         }
-        addafter("Control 58")
+        addafter("Contact Person")
         {
-            field("Home Page 2"; "Home Page 2")
+            field("Home Page 2"; Rec."Home Page 2")
             {
+                ToolTip = 'Specifies the value of the Home Page field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 74")
-        {
-            field("IFSC Code"; "IFSC Code")
+
+            field("IFSC Code"; Rec."IFSC Code")
             {
+                ToolTip = 'Specifies the value of the IFSC Code field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 1500009")
-        {
-            field("LUT No."; "LUT No.")
+            field("LUT No."; Rec."LUT No.")
             {
+                ToolTip = 'Specifies the value of the LUT No. field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 105")
-        {
-            field("C.I.N. No."; CIN)
+            field("C.I.N. No."; Rec.CIN)
             {
+                ToolTip = 'Specifies the value of the CIN field.';
+                ApplicationArea = All;
             }
         }
     }

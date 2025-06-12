@@ -1,12 +1,12 @@
-tableextension 50036 tableextension50036 extends "SMTP Mail Setup"
+tableextension 50036 EmailParameter extends "Email Parameter"
 {
     fields
     {
-        field(8; CC; Text[30])
+        field(50008; CC; Text[30])
         {
             DataClassification = ToBeClassified;
         }
-        field(9; BCC; Text[30])
+        field(50009; BCC; Text[30])
         {
             DataClassification = ToBeClassified;
         }

@@ -1,4 +1,4 @@
-pageextension 50044 pageextension50044 extends Navigate
+pageextension 50044 Navigate extends Navigate
 {
 
     //Unsupported feature: Code Modification on "FindUnpostedSalesDocs(PROCEDURE 14)".

@@ -1,4 +1,4 @@
-pageextension 50055 pageextension50055 extends "Sales List"
+pageextension 50055 SalesList extends "Sales List"
 {
     layout
     {

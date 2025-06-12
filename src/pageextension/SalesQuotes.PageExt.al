@@ -1,32 +1,21 @@
-pageextension 50108 pageextension50108 extends "Sales Quotes"
+pageextension 50108 SalesQuotes extends "Sales Quotes"
 {
     layout
     {
 
         //Unsupported feature: Property Modification (SourceExpr) on "Control 17".
 
-        addafter("Control 153")
+        addafter(Control1)
         {
-            field(Amount; Amount)
+            field("Enquiry No."; Rec."Enquiry No.")
             {
+                ToolTip = 'Specifies the value of the Enquiry No. field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 119")
-        {
-            field("Enquiry No."; "Enquiry No.")
+            field(Validity; Rec.Validity)
             {
-            }
-            field("Due Date"; "Due Date")
-            {
-            }
-            field("Amount to Customer"; "Amount to Customer")
-            {
-            }
-        }
-        addafter("Control 1102601007")
-        {
-            field(Validity; Validity)
-            {
+                ToolTip = 'Specifies the value of the Validity field.';
+                ApplicationArea = All;
             }
         }
     }

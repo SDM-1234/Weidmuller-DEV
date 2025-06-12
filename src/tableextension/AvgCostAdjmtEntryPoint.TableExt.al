@@ -1,4 +1,4 @@
-tableextension 50044 tableextension50044 extends "Avg. Cost Adjmt. Entry Point"
+tableextension 50044 AvgCostAdjmtEntryPoint extends "Avg. Cost Adjmt. Entry Point"
 {
 
     //Unsupported feature: Code Modification on "SetAvgCostAjmtFilter(PROCEDURE 10)".

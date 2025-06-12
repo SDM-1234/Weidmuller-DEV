@@ -1,21 +1,14 @@
-pageextension 50118 pageextension50118 extends "Sales Cr. Memo Subform"
+pageextension 50118 SalesCrMemoSubform extends "Sales Cr. Memo Subform"
 {
     layout
     {
-        addfirst("Control 1")
+        addfirst(Control1)
         {
-            field("Line No."; "Line No.")
+            field("Line No."; Rec."Line No.")
             {
                 Editable = false;
-            }
-        }
-        addafter("Control 6")
-        {
-            field("Gen. Bus. Posting Group"; "Gen. Bus. Posting Group")
-            {
-            }
-            field("Gen. Prod. Posting Group"; "Gen. Prod. Posting Group")
-            {
+                ToolTip = 'Specifies the line number.';
+                ApplicationArea = All;
             }
         }
     }

@@ -1,9 +1,8 @@
-tableextension 50001 tableextension50001 extends "Sales Shipment Header"
+tableextension 50001 SalesShipmentHeader extends "Sales Shipment Header"
 {
     fields
     {
 
-        //Unsupported feature: Property Modification (Editable) on ""Currency Code"(Field 32)".
 
         field(50000; "Package No."; Code[20])
         {

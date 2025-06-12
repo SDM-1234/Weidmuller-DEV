@@ -4,26 +4,41 @@ codeunit 50000 "Single Instance CU"
 
     trigger OnRun()
     begin
-        IF NOT StoreToTemp THEN BEGIN
-            StoreToTemp := TRUE;
-        END ELSE
+        IF NOT StoreToTemp THEN
+            StoreToTemp := TRUE
+        ELSE
             PAGE.RUNMODAL(0, TempGLEntry);
     end;
 
     var
-        TempGLEntry: Record "17" temporary;
+        TempGLEntry: Record "G/L Entry" temporary;
         StoreToTemp: Boolean;
 
-    [Scope('Internal')]
-    procedure InsertGL(GLEntry: Record "17")
+    procedure InsertGL(GLEntry: Record "G/L Entry")
     begin
         IF StoreToTemp THEN BEGIN
             TempGLEntry := GLEntry;
-            IF NOT TempGLEntry.INSERT THEN BEGIN
-                TempGLEntry.DELETEALL;
-                TempGLEntry.INSERT;
+            IF NOT TempGLEntry.INSERT() THEN BEGIN
+                TempGLEntry.DELETEALL();
+                TempGLEntry.INSERT();
             END;
         END;
     end;
+
+    procedure SetBlockParameterFromDocs()
+    begin
+        SetBlockParameterFromDocsValue := TRUE;
+    end;
+
+    procedure GetBlockParameterFromDocs(): Boolean
+    begin
+        exit(SetBlockParameterFromDocsValue);
+    end;
+
+    var
+        SetBlockParameterFromDocsValue: Boolean;
+
+    // Need to shift in single instance
+
 }
 

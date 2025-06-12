@@ -1,32 +1,30 @@
-pageextension 50007 pageextension50007 extends "Posted Sales Invoice Subform"
+pageextension 50007 PostedSalesInvoiceSubform extends "Posted Sales Invoice Subform"
 {
     layout
     {
-        addafter("Control 66")
+        addafter(Control9)
         {
-            field("OC No"; "OC No")
+            field("OC No"; Rec."OC No")
             {
+                ToolTip = 'Specifies the value of the OC No field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 72")
-        {
-            field("Location Code"; "Location Code")
+
+
+            field("GST Place of Supply"; Rec."GST Place of Supply")
             {
+                ToolTip = 'Specifies the value of the GST Place of Supply field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 70")
-        {
-            field("GST Place of Supply"; "GST Place of Supply")
+            field("GST Group Type"; Rec."GST Group Type")
             {
+                ToolTip = 'Specifies the value of the GST Group Type field.';
+                ApplicationArea = All;
             }
-            field("GST Group Type"; "GST Group Type")
+            field("Shipment No."; Rec."Shipment No.")
             {
-            }
-            field("Shipment No."; "Shipment No.")
-            {
-            }
-            field("GST %"; "GST %")
-            {
+                ToolTip = 'Specifies the value of the Shipment No. field.';
+                ApplicationArea = All;
             }
         }
     }

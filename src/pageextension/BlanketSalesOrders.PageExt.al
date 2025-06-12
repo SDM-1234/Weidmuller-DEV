@@ -1,4 +1,4 @@
-pageextension 50111 pageextension50111 extends "Blanket Sales Orders"
+pageextension 50111 BlanketSalesOrders extends "Blanket Sales Orders"
 {
     layout
     {

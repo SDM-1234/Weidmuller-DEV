@@ -1,0 +1,104 @@
+codeunit 50100 SalesSubscriber
+{
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnBeforeCodeInsertInvLineFromShptLine, '', false, false)]
+    local procedure OnBeforeCodeInsertInvLineFromShptLine_WM(var SalesLine: Record "Sales Line"; var SalesShipmentLine: Record "Sales Shipment Line")
+    begin
+        //SalesLine."OC No" := SalesShipmentLine."Order No.";//SE-E859
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::Customer, 'OnBeforeCheckBlockedCust', '', false, false)]
+    local procedure OnBeforeCheckBlockedCust_WM(var IsHandled: Boolean; Customer: Record Customer; DocType: Option; Shipment: Boolean; Transaction: Boolean)
+    var
+        SingleInstanceCU: Codeunit "Single Instance CU";
+    begin
+        //SE-E859.s
+        IsHandled := true;
+        //WITH Customer DO BEGIN
+        IF Customer."Privacy Blocked" THEN
+            Customer.CustPrivacyBlockedErrorMessage(Customer, Transaction);
+
+        IF ((Customer.Blocked = Customer.Blocked::All) OR
+            ((Customer.Blocked = Customer.Blocked::Invoice) AND (DocType IN [0, 1, 2, 4]) AND (NOT SingleInstanceCU.GetBlockParameterFromDocs())) OR
+            ((Customer.Blocked = Customer.Blocked::Ship) AND (DocType IN [0, 1, 4]) AND
+             (NOT Transaction) AND (NOT SingleInstanceCU.GetBlockParameterFromDocs())) OR
+            ((Customer.Blocked = Customer.Blocked::Ship) AND (DocType IN [0, 1, 2, 4]) AND
+             Shipment AND Transaction) AND (NOT SingleInstanceCU.GetBlockParameterFromDocs()))
+        THEN
+            Customer.CustBlockedErrorMessage(Customer, Transaction);
+        //END;
+        //SE-E859.e
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs, '', false, false)]
+    local procedure OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs_WM(var Cust: Record Customer)
+    begin
+        //(Rec, Customer, IsHandled);
+        //SE-E859.s
+        IF Cust.Blocked IN [Cust.Blocked::Ship, Cust.Blocked::Invoice] THEN
+            Cust.SetBlockParameterFromDocs();
+        //SE-E859.e
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidatePostingDateOnBeforeAssignDocumentDate, '', false, false)]
+    local procedure OnValidatePostingDateOnBeforeAssignDocumentDate_WM(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    begin
+        IsHandled := true;
+        //>> ZE.SAGAR T932 26092023
+        //IF "Incoming Document Entry No." = 0 THEN
+        //VALIDATE("Document Date","Posting Date");
+        IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN
+            SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
+        //<< ZE.SAGAR T932 26092023
+    end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnAfterCopyFromItem, '', false, false)]
+    local procedure OnAfterCopyFromItem_WM(var SalesLine: Record "Sales Line"; xSalesLine: Record "Sales Line"; Item: Record Item)
+    var
+        SalesHeader: Record "Sales Header";
+    begin
+        //SE-E859.s
+        SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
+        IF SalesHeader."Document Type" = SalesHeader."Document Type"::Quote THEN
+            IF SalesHeader."Sell-to Customer No." <> '' THEN
+                IF SalesLine."No." <> xSalesLine."No." THEN
+                    IF SalesLine."No." <> '' THEN
+                        SalesLine.UpdateLatestUnitPrice(SalesHeader)
+                    ELSE BEGIN
+                        SalesLine."Latest UnitPrice" := 0;
+                        CLEAR(SalesLine."Latest Invoice Date");
+                    END;
+        //SE-E859.e
+    END;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnUpdateAmountsOnAfterCalcLineAmount, '', false, false)]
+    local procedure OnUpdateAmountsOnAfterCalcLineAmount_WM(var LineAmount: Decimal; sender: Record "Sales Line"; var SalesLine: Record "Sales Line")
+
+    var
+        Currency: Record Currency;
+    begin
+        Currency.Get(SalesLine."Currency Code");
+        IF SalesLine."Line Amount" <> ROUND(SalesLine.Quantity * SalesLine."Unit Price", Currency."Amount Rounding Precision") - SalesLine."Line Discount Amount" THEN BEGIN
+            //"Line Amount" := ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision") - "Line Discount Amount";//Se-E859
+            SalesLine."Line Amount" := (SalesLine.Quantity * SalesLine."Unit Price") - SalesLine."Line Discount Amount";
+            SalesLine."VAT Difference" := 0;
+            //SalesLine.LineAmountChanged := TRUE;
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnCheckItemAvailableOnBeforeSalesLineCheck, '', false, false)]
+    local procedure OnCheckItemAvailableOnBeforeSalesLineCheck_WM(var SalesLine: Record "Sales Line")
+    var
+        ItemCheckAvail: COdeunit "Item-Check Avail.";
+    begin
+        if ItemCheckAvail.SalesLineCheck(SalesLine) then
+            ItemCheckAvail.RaiseUpdateInterruptedError()
+        //else
+        //  ItemCheckAvail.GetCurrSalesLine(SalesLine);//SE-E859
+
+        //OnCheckItemAvailableOnBeforeSalesLineCheck(Rec, CalledByFieldNo, CurrFieldNo, xRec, IsHandled);
+
+    end;
+
+}

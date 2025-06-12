@@ -1,8 +1,8 @@
 table 50000 "Industry Segment Group"
 {
     Caption = 'Industry Segment Group';
-    DrillDownPageID = 50009;
-    LookupPageID = 50009;
+    //DrillDownPageID = 50009;
+    //LookupPageID = 50009;
 
     fields
     {
@@ -31,4 +31,3 @@ table 50000 "Industry Segment Group"
     {
     }
 }
-

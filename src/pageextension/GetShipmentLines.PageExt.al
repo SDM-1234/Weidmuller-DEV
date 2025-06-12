@@ -1,11 +1,13 @@
-pageextension 50083 pageextension50083 extends "Get Shipment Lines"
+pageextension 50083 GetShipmentLines extends "Get Shipment Lines"
 {
     layout
     {
-        addafter("Control 26")
+        addafter(Control1)
         {
-            field("Order No."; "Order No.")
+            field("Order No."; rec."Order No.")
             {
+                ToolTip = 'Specifies the value of the Order No. field.';
+                ApplicationArea = All;
             }
         }
     }

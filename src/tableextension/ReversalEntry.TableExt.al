@@ -1,4 +1,4 @@
-tableextension 50023 tableextension50023 extends "Reversal Entry"
+tableextension 50023 ReversalEntry extends "Reversal Entry"
 {
 
     //Unsupported feature: Code Modification on "CheckFAPostingDate(PROCEDURE 24)".

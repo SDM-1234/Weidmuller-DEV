@@ -10,6 +10,6 @@ codeunit 50095 "Test CU"
     end;
 
     var
-        Customer: Record "18";
+        Customer: Record Customer;
 }
 

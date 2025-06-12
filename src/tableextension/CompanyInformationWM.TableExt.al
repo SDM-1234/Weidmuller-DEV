@@ -1,12 +1,7 @@
-tableextension 50053 tableextension50053 extends "Company Information"
+tableextension 50053 CompanyInformationWM extends "Company Information"
 {
     fields
     {
-
-        //Unsupported feature: Property Modification (Data type) on ""Registration No."(Field 20)".
-
-
-        //Unsupported feature: Property Modification (Data type) on ""Company Registration  No."(Field 13737)".
 
         field(50001; "Home Page 2"; Text[80])
         {
@@ -19,10 +14,9 @@ tableextension 50053 tableextension50053 extends "Company Information"
         field(50003; "IFSC Code"; Code[11])
         {
         }
-        field(50004; "Terms Picture"; BLOB)
+        field(50004; "Terms Picture"; Media)
         {
             Caption = 'Picture';
-            SubType = Bitmap;
         }
         field(50005; "LUT No."; Code[30])
         {

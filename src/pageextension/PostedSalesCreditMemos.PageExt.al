@@ -1,4 +1,4 @@
-pageextension 50013 pageextension50013 extends "Posted Sales Credit Memos"
+pageextension 50013 PostedSalesCreditMemos extends "Posted Sales Credit Memos"
 {
     actions
     {

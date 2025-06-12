@@ -1,11 +1,13 @@
-pageextension 50003 pageextension50003 extends "User Setup"
+pageextension 50003 UserSetup extends "User Setup"
 {
     layout
     {
-        addafter("Control 3")
+        addafter(PhoneNo)
         {
-            field("Update Pricing"; "Update Pricing")
+            field("Update Pricing"; Rec."Update Pricing")
             {
+                ToolTip = 'Specifies the value of the Update Pricing field.';
+                ApplicationArea = All;
             }
         }
     }

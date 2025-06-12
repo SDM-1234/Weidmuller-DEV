@@ -1,12 +1,14 @@
-pageextension 50012 pageextension50012 extends "Posted Sales Invoices"
+pageextension 50012 PostedSalesInvoices extends "Posted Sales Invoices"
 {
     layout
     {
-        addafter("Control 13")
+        addafter(Amount)
         {
             field("Amount(LCY)"; AmountLCY)
             {
                 Caption = 'Amount(LCY)';
+                ToolTip = 'Specifies the value of the Amount(LCY) field.';
+                ApplicationArea = All;
             }
         }
     }
@@ -36,13 +38,15 @@ pageextension 50012 pageextension50012 extends "Posted Sales Invoices"
             {
                 Caption = 'Print Invoice';
                 Image = Print;
+                ToolTip = 'Executes the Print Invoice action.';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 begin
                     //ZE_LIJO 25.06.2019
                     //<<
                     CurrPage.SETSELECTIONFILTER(Rec);
-                    SaInvHdr.RESET;
+                    SaInvHdr.RESET();
                     SaInvHdr.COPY(Rec);
                     CLEAR(Rec);
                     REPORT.RUN(50015, TRUE, FALSE, SaInvHdr);
@@ -53,13 +57,15 @@ pageextension 50012 pageextension50012 extends "Posted Sales Invoices"
             {
                 Caption = 'Print Invoice Certificate';
                 Image = Print;
+                ToolTip = 'Executes the Print Invoice Certificate action.';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 begin
                     //ZE_LIJO 05.08.2019
                     //<<
                     CurrPage.SETSELECTIONFILTER(Rec);
-                    SaInvHdr.RESET;
+                    SaInvHdr.RESET();
                     SaInvHdr.COPY(Rec);
                     CLEAR(Rec);
                     REPORT.RUN(50023, TRUE, FALSE, SaInvHdr);
@@ -70,32 +76,38 @@ pageextension 50012 pageextension50012 extends "Posted Sales Invoices"
     }
 
     var
-        SaInvHdr: Record "112";
+        SaInvHdr: Record "Sales Invoice Header";
         AmountLCY: Decimal;
 
 
-        //Unsupported feature: Code Modification on "OnAfterGetRecord".
+    //Unsupported feature: Code Modification on "OnAfterGetRecord".
 
-        //trigger OnAfterGetRecord()
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        DocExchStatusStyle := GetDocExchStatusStyle;
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        DocExchStatusStyle := GetDocExchStatusStyle;
-        //ZE_LIJO 08.08.2019
-        //++
-        CALCFIELDS(Amount);
-        IF "Currency Factor"<>0 THEN
-          AmountLCY:=(1/"Currency Factor")*Amount
-        ELSE
-          AmountLCY:=Amount;
-        //--
-        */
-        //end;
+    trigger OnAfterGetRecord()
+    var
+        myInt: Integer;
+    begin
+
+    end;
+    //trigger OnAfterGetRecord()
+    //>>>> ORIGINAL CODE:
+    //begin
+    /*
+    DocExchStatusStyle := GetDocExchStatusStyle;
+    */
+    //end;
+    //>>>> MODIFIED CODE:
+    //begin
+    /*
+    DocExchStatusStyle := GetDocExchStatusStyle;
+    //ZE_LIJO 08.08.2019
+    //++
+    CALCFIELDS(Amount);
+    IF "Currency Factor"<>0 THEN
+      AmountLCY:=(1/"Currency Factor")*Amount
+    ELSE
+      AmountLCY:=Amount;
+    //--
+    */
+    //end;
 }
 

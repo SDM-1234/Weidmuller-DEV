@@ -1,4 +1,4 @@
-pageextension 50032 pageextension50032 extends "Customer Card"
+pageextension 50032 CustomerCard extends "Customer Card"
 {
     layout
     {
@@ -31,119 +31,28 @@ pageextension 50032 pageextension50032 extends "Customer Card"
         //--
         */
         //end;
-        modify("Control 104")
+
+        addafter("Tax Area Code")
         {
-            Visible = false;
-        }
-        modify("Control 154")
-        {
-            Visible = false;
-        }
-        modify("Control 23")
-        {
-            Visible = false;
-        }
-        modify("Control 29")
-        {
-            Visible = false;
-        }
-        modify("Control 58")
-        {
-            Visible = false;
-        }
-        modify("Control 1500028")
-        {
-            Visible = false;
-        }
-        modify("Control 66")
-        {
-            Visible = false;
-        }
-        modify("Control 1500021")
-        {
-            Visible = false;
-        }
-        modify("Control 1500011")
-        {
-            Visible = false;
-        }
-        modify("Control 1500010")
-        {
-            Visible = false;
-        }
-        modify("Control 1500026")
-        {
-            Visible = false;
-        }
-        modify("Control 1500022")
-        {
-            Visible = false;
-        }
-        modify("Control 1500009")
-        {
-            Visible = false;
-        }
-        modify("Control 1500008")
-        {
-            Visible = false;
-        }
-        modify("Control 1500007")
-        {
-            Visible = false;
-        }
-        modify("Control 1500006")
-        {
-            Visible = false;
-        }
-        modify("Control 1500000")
-        {
-            Visible = false;
-        }
-        modify("Control 1500002")
-        {
-            Visible = false;
-        }
-        modify("Control 1500001")
-        {
-            Visible = false;
-        }
-        modify("Control 1500023")
-        {
-            Visible = false;
-        }
-        modify("Control 1500032")
-        {
-            Visible = false;
-        }
-        modify("Control 1500035")
-        {
-            Visible = false;
-        }
-        addafter("Control 20")
-        {
-            field(Structure; Structure)
+            field("No. of Industry Segments"; Rec."No. of Industry Segments")
             {
+                ToolTip = 'Specifies the value of the No. of Industry Segments field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 28")
-        {
-            field("No. of Industry Segments"; "No. of Industry Segments")
+            field("Invoice Print Check"; Rec."Invoice Print Check")
             {
+                ToolTip = 'Specifies the value of the Invoice Print Check field.';
+                ApplicationArea = All;
             }
-            field("Invoice Print Check"; "Invoice Print Check")
+            field(Freight; Rec.Freight)
             {
+                ToolTip = 'Specifies the value of the Freight field.';
+                ApplicationArea = All;
             }
-            field(Freight; Freight)
+            field("Freight GL Account"; Rec."Freight GL Account")
             {
-            }
-            field("Freight GL Account"; "Freight GL Account")
-            {
-            }
-        }
-        addafter("Control 1500017")
-        {
-            field("Tax Liable"; "Tax Liable")
-            {
+                ToolTip = 'Specifies the value of the Freight GL Account field.';
+                ApplicationArea = All;
             }
         }
     }
@@ -166,32 +75,31 @@ pageextension 50032 pageextension50032 extends "Customer Card"
 
     //Unsupported feature: Code Insertion on "OnModifyRecord".
 
-    //trigger OnModifyRecord(): Boolean
-    //begin
-    /*
-    //++ ZT0207 06.05.2020
-    IF "E-Mail" = '' THEN
-      ERROR('Kindly enter Customer mail');
-    //-- ZT0207 06.05.2020
-    //++ ZT0207 19.08.2020
-    //IF(COMPANYNAME='PreGOLIVE') THEN BEGIN
-      IF (xRec."Customer Price Group" <> Rec."Customer Price Group") OR (xRec."Customer Posting Group" <> Rec."Customer Posting Group")
-        OR (xRec."Gen. Bus. Posting Group" <> Rec."Gen. Bus. Posting Group") THEN
-          Rec.Blocked := Blocked::All;
-    //END;
-    //-- ZT0207 19.08.2020
-    */
+
+    // trigger OnModifyRecord()
+    // var
+    //     myInt: Integer;
+    // begin
+    //     //++ ZT0207 06.05.2020
+    //     IF Rec."E-Mail" = '' THEN
+    //         ERROR('Kindly enter Customer mail');
+    //     //-- ZT0207 06.05.2020
+    //     //++ ZT0207 19.08.2020
+    //     //IF(COMPANYNAME='PreGOLIVE') THEN BEGIN
+    //     IF (xRec."Customer Price Group" <> Rec."Customer Price Group") OR (xRec."Customer Posting Group" <> Rec."Customer Posting Group")
+    //       OR (xRec."Gen. Bus. Posting Group" <> Rec."Gen. Bus. Posting Group") THEN
+    //         Rec.Blocked := Rec.Blocked::All;
+    //     //END;
+    //     //-- ZT0207 19.08.2020
+
     //end;
 
+    trigger OnQueryClosePage(CloseAction: Action): Boolean
+    begin
 
-    //Unsupported feature: Code Insertion on "OnQueryClosePage".
+        IF Rec."Currency Code" = '' THEN
+            Rec.TESTFIELD("Currency Code");
 
-    //trigger OnQueryClosePage(CloseAction: Action): Boolean
-    //begin
-    /*
-    IF "Currency Code" = '' THEN
-      TESTFIELD("Currency Code");
-    */
-    //end;
+    end;
 }
 

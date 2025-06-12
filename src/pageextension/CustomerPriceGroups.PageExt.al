@@ -1,7 +1,8 @@
-pageextension 50094 pageextension50094 extends "Customer Price Groups"
+pageextension 50094 CustomerPriceGroups extends "Customer Price Groups"
 {
 
     //Unsupported feature: Code Insertion on "OnDeleteRecord".
+
 
     //trigger OnDeleteRecord(): Boolean
     //begin
@@ -32,13 +33,13 @@ pageextension 50094 pageextension50094 extends "Customer Price Groups"
 
     local procedure UserCheck()
     var
-        UserSetup: Record "91";
+        UserSetup: Record "User Setup";
     begin
         //IF (COMPANYNAME='PreGOLIVE') THEN BEGIN
         IF GUIALLOWED THEN BEGIN
-            UserSetup.RESET;
+            UserSetup.RESET();
             UserSetup.SETFILTER("User ID", USERID);
-            IF UserSetup.FINDFIRST THEN BEGIN
+            IF UserSetup.FINDFIRST() THEN BEGIN
                 IF NOT UserSetup."Update Pricing" = TRUE THEN
                     ERROR('Pricing update is not enabled for user ID:%1', USERID);
             END ELSE

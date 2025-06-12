@@ -1,4 +1,4 @@
-pageextension 50091 pageextension50091 extends "Requests to Approve"
+pageextension 50091 RequeststoApprove extends "Requests to Approve"
 {
     actions
     {
@@ -9,9 +9,9 @@ pageextension 50091 pageextension50091 extends "Requests to Approve"
         }
     }
     var
-        Cust: Record "18";
+        Cust: Record Customer;
 
-    procedure CustomerUnblock(ApprovalEntry: Record "454")
+    procedure CustomerUnblock(ApprovalEntry: Record "Approval Entry")
     begin
         IF (STRPOS(ApprovalEntry.RecordDetails, 'Customer') = 1) THEN BEGIN
             Cust.RESET;

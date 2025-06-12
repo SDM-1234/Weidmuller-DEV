@@ -1,24 +1,27 @@
-pageextension 50004 pageextension50004 extends "Posted Sales Shipment"
+pageextension 50004 PostedSalesShipment extends "Posted Sales Shipment"
 {
     actions
     {
-        addafter("Action 50")
+        addafter("F&unctions")
         {
             action("Packing List")
             {
-                Image = "report";
+                Image = Report;
                 Promoted = true;
                 PromotedCategory = Process;
+                ToolTip = 'Executes the Packing List action.';
+                ApplicationArea = All;
 
                 trigger OnAction()
                 var
-                    PackingList: Report "50004";
+                    SalesShptHeader: Record "Sales Shipment Header";
+                //PackingList: Report "Packing List";
                 begin
-                    SalesShptHeader.RESET;
-                    SalesShptHeader.SETRANGE(SalesShptHeader."No.", "No.");
-                    IF SalesShptHeader.FINDFIRST THEN BEGIN
-                        PackingList.SETTABLEVIEW(SalesShptHeader);
-                        PackingList.RUN;
+                    SalesShptHeader.RESET();
+                    SalesShptHeader.SETRANGE(SalesShptHeader."No.", Rec."No.");
+                    IF SalesShptHeader.FINDFIRST() THEN BEGIN
+                        //PackingList.SETTABLEVIEW(SalesShptHeader);
+                        //PackingList.RUN();
                     END;
 
                     /*

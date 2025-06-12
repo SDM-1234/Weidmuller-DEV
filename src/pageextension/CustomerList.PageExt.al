@@ -1,91 +1,64 @@
-pageextension 50033 pageextension50033 extends "Customer List"
+pageextension 50033 CustomerList extends "Customer List"
 {
     layout
     {
-        modify("Control 40")
+
+        addafter("Name 2")
         {
-            Visible = false;
-        }
-        modify("Control 32")
-        {
-            Visible = false;
-        }
-        modify("Control 79")
-        {
-            Visible = false;
-        }
-        modify("Control 52")
-        {
-            Visible = false;
-        }
-        modify("Control 61")
-        {
-            Visible = false;
-        }
-        modify("Control 48")
-        {
-            Visible = false;
-        }
-        modify("Control 50")
-        {
-            Visible = false;
-        }
-        modify("Control 1102601016")
-        {
-            Visible = false;
-        }
-        addafter("Control 43")
-        {
-            field("State Code"; "State Code")
+            field("E-Mail"; Rec."E-Mail")
             {
+                ToolTip = 'Specifies the value of the Email field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 6")
-        {
-            field("E-Mail"; "E-Mail")
+
+            field("No. of Industry Segments"; Rec."No. of Industry Segments")
             {
+                ToolTip = 'Specifies the value of the No. of Industry Segments field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 34")
-        {
-            field("No. of Industry Segments"; "No. of Industry Segments")
+
+            field("Outstanding Orders (LCY)"; Rec."Outstanding Orders (LCY)")
             {
+                ToolTip = 'Specifies the value of the Outstanding Orders (LCY) field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 8")
-        {
-            field("Outstanding Orders (LCY)"; "Outstanding Orders (LCY)")
+            field("GST Registration No."; Rec."GST Registration No.")
             {
+                ToolTip = 'Specifies the value of the GST Registration No. field.';
+                ApplicationArea = All;
             }
-            field("GST Registration No."; "GST Registration No.")
+            field(Balance; Rec.Balance)
             {
+                ToolTip = 'Specifies the value of the Balance field.';
+                ApplicationArea = All;
             }
-            field(Balance; Balance)
+
+            field(Freight; Rec.Freight)
             {
+                ToolTip = 'Specifies the value of the Freight field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 1102601008")
-        {
-            field(Freight; Freight)
+            field("Freight GL Account"; Rec."Freight GL Account")
             {
+                ToolTip = 'Specifies the value of the Freight GL Account field.';
+                ApplicationArea = All;
             }
-            field("Freight GL Account"; "Freight GL Account")
+
+            field(Address; Rec.Address)
             {
+                ToolTip = 'Specifies the value of the Address field.';
+                ApplicationArea = All;
             }
-        }
-        addafter("Control 1102601014")
-        {
-            field(Address; Address)
+            field("Address 2"; Rec."Address 2")
             {
-            }
-            field("Address 2"; "Address 2")
-            {
+                ToolTip = 'Specifies the value of the Address 2 field.';
+                ApplicationArea = All;
             }
         }
     }
     actions
     {
-        addafter("Action 1905171704")
+        addafter("C&ontact")
         {
             group("Customer Blocking")
             {
@@ -94,6 +67,8 @@ pageextension 50033 pageextension50033 extends "Customer List"
                 {
                     Caption = 'Block/Unblock';
                     Image = Post;
+                    ToolTip = 'Executes the Block/Unblock action.';
+                    ApplicationArea = All;
 
                     trigger OnAction()
                     begin
@@ -106,17 +81,20 @@ pageextension 50033 pageextension50033 extends "Customer List"
                 }
             }
         }
-        addafter("Action 1904039606")
+        addafter(ReportCustomerDetailTrial)
         {
             action("Customer-wise Dunning")
             {
                 Caption = 'Customer-wise Dunning';
-                RunObject = Report 50024;
+                //RunObject = Report 50024;
+                Image = Customer;
+                ToolTip = 'Executes the Customer-wise Dunning action.';
+                ApplicationArea = All;
             }
         }
     }
 
     var
-        CustomerCreditCheck: Codeunit "50003";
+        CustomerCreditCheck: Codeunit "Customer Credit Check";
 }
 

@@ -29,109 +29,109 @@ codeunit 50003 "Customer Credit Check"
         Cust1.SETFILTER(Blocked, '<>%1', Cust1.Blocked::Ship);
         //<< ZE.SAGAR
         //--
-        IF Cust1.FINDSET THEN
+        IF Cust1.FINDSET() THEN
             REPEAT
-                BalanceAmount := Cust1.CalcOverdueBalance;
+                BalanceAmount := Cust1.CalcOverdueBalance();
                 IF BalanceAmount >= 5000 THEN BEGIN
                     OpenOrdersCredit := OpenOrderCreditCheck(Cust1."No.");
                     //BalanceAmount:=Cust1.CalcOverdueBalance;
                     CreditLimit := Cust1."Credit Limit (LCY)";
                     PayTermsExceed := PaymentTermsCheck(Cust1."No.");
-                    IF (CreditLimit < BalanceAmount + OpenOrdersCredit) THEN BEGIN
+                    IF (CreditLimit < BalanceAmount + OpenOrdersCredit) THEN
                         BlockCustomer(Cust1."No.")
-                    END ELSE
-                        IF NOT (PayTermsExceed) THEN BEGIN
+                    ELSE
+                        IF NOT (PayTermsExceed) THEN
                             BlockCustomer(Cust1."No.");
-                        END; //ELSE
-                             //UnBlockCustomer(Cust1."No.");
+                    //ELSE
+                    //UnBlockCustomer(Cust1."No.");
                 END;
-            UNTIL Cust1.NEXT = 0;
+            UNTIL Cust1.NEXT() = 0;
         //END;
 
-        COMMIT;
+        COMMIT();
         SetJobQueueLogEntry(FALSE, RetunMinutes);//ZE.SAGAR
     end;
 
     var
-        Cust: Record "18";
-        Cust1: Record "18";
+        Cust: Record Customer;
+        Cust1: Record Customer;
         OpenOrdersCredit: Decimal;
         BalanceAmount: Decimal;
         CreditLimit: Decimal;
         PayTermsExceed: Boolean;
-        SalesLn: Record "37";
-        SalesHead: Record "36";
+        SalesLn: Record "Sales Line";
+        SalesHead: Record "Sales Header";
         RetunMinutes: Integer;
 
     local procedure BlockCustomer(CustomerNo: Code[20])
     begin
-        Cust.RESET;
+        Cust.RESET();
         Cust.GET(CustomerNo);
         IF Cust.Blocked = Cust.Blocked::" " THEN BEGIN
             Cust.Blocked := Cust.Blocked::Invoice;
-            Cust.MODIFY;
+            Cust.MODIFY();
         END;
     end;
 
     local procedure UnBlockCustomer(CustomerNo: Code[20])
     begin
-        Cust.RESET;
+        Cust.RESET();
         Cust.GET(CustomerNo);
         IF Cust.Blocked = Cust.Blocked::Invoice THEN BEGIN
             Cust.Blocked := Cust.Blocked::" ";
-            Cust.MODIFY;
+            Cust.MODIFY();
         END;
     end;
 
     local procedure OpenOrderCreditCheck(CustomerNo: Code[20]): Decimal
     var
-        SalesHeader: Record "36";
-        SalesLine: Record "37";
+        SalesHeader: Record "Sales Header";
+        SalesLine: Record "Sales Line";
         SalesAmt: Decimal;
     begin
         SalesAmt := 0;
-        SalesLine.RESET;
+        SalesLine.RESET();
         SalesLine.SETFILTER(SalesLine."Sell-to Customer No.", CustomerNo);
         SalesLine.SETFILTER(SalesLine."Shipped Not Invoiced", '>0');
         SalesLine.SETRANGE(SalesLine."Document Type", SalesLine."Document Type"::Order);
-        IF SalesLine.FINDSET THEN
+        IF SalesLine.FINDSET() THEN
             REPEAT
-                SalesAmt += SalesLine."Amount To Customer";
-            UNTIL SalesLine.NEXT = 0;
+                SalesAmt += SalesLine.Amount;
+            UNTIL SalesLine.NEXT() = 0;
         EXIT(SalesAmt);
     end;
 
     local procedure PaymentTermsCheck(CustomerNo: Code[20]): Boolean
     var
-        PaymentTerms: Record "3";
+        PaymentTerms: Record "Payment Terms";
         PaymentTermsDate: Date;
         Txt: Text[30];
-        CustLedger: Record "21";
+        CustLedger: Record "Cust. Ledger Entry";
     begin
-        Cust.RESET;
+        Cust.RESET();
         Cust.GET(CustomerNo);
         IF Cust."Payment Terms Code" <> '' THEN BEGIN
-            PaymentTerms.RESET;
+            PaymentTerms.RESET();
             PaymentTerms.SETFILTER(PaymentTerms.Code, Cust."Payment Terms Code");
-            IF PaymentTerms.FINDFIRST THEN BEGIN
-                CustLedger.RESET;
+            IF PaymentTerms.FINDFIRST() THEN BEGIN
+                CustLedger.RESET();
                 CustLedger.SETFILTER(CustLedger."Customer No.", CustomerNo);
                 CustLedger.SETFILTER(CustLedger.Open, 'TRUE');
                 CustLedger.SETRANGE(CustLedger."Document Type", CustLedger."Document Type"::Invoice);
                 CustLedger.SETFILTER(CustLedger."Remaining Amount", '>%1', 0);
-                IF CustLedger.FINDSET THEN
+                IF CustLedger.FINDSET() THEN
                     REPEAT
-                        IF ((TODAY - CustLedger."Due Date") >= 31) THEN BEGIN
+                        IF ((TODAY - CustLedger."Due Date") >= 31) THEN
                             EXIT(FALSE);
-                        END;
-                        /*
-                        CustLedger.CALCFIELDS("Remaining Amount");
-                        Txt:=FORMAT(PaymentTerms."Due Date Calculation");
-                        PaymentTermsDate:=CALCDATE(Txt,CustLedger."Due Date");
-                        IF TODAY>PaymentTermsDate THEN BEGIN
-                          EXIT(FALSE);
-                        END;
-                        */
+
+                    /*
+                    CustLedger.CALCFIELDS("Remaining Amount");
+                    Txt:=FORMAT(PaymentTerms."Due Date Calculation");
+                    PaymentTermsDate:=CALCDATE(Txt,CustLedger."Due Date");
+                    IF TODAY>PaymentTermsDate THEN BEGIN
+                      EXIT(FALSE);
+                    END;
+                    */
                     UNTIL CustLedger.NEXT = 0;
             END;
         END;
@@ -139,7 +139,6 @@ codeunit 50003 "Customer Credit Check"
 
     end;
 
-    [Scope('Internal')]
     procedure MakeOrderfromBlnktOrder(BlanketOrder: Code[20])
     var
         BlanketAmt: Decimal;
@@ -147,34 +146,35 @@ codeunit 50003 "Customer Credit Check"
         BalanceAmount := 0;
         CreditLimit := 0;
         OpenOrdersCredit := 0;
-        SalesHead.RESET;
+        SalesHead.RESET();
         SalesHead.SETFILTER(SalesHead."No.", BlanketOrder);
         SalesHead.SETRANGE(SalesHead."Document Type", SalesHead."Document Type"::"Blanket Order");
-        IF SalesHead.FINDFIRST THEN BEGIN
-            Cust1.RESET;
+        IF SalesHead.FINDFIRST() THEN BEGIN
+            Cust1.RESET();
             Cust1.SETFILTER(Cust1."No.", SalesHead."Sell-to Customer No.");
-            IF Cust1.FINDFIRST THEN BEGIN
+            IF Cust1.FINDFIRST() THEN BEGIN
                 OpenOrdersCredit := OpenOrderCreditCheck(Cust1."No.");
-                BalanceAmount := Cust1.CalcOverdueBalance;
+                BalanceAmount := Cust1.CalcOverdueBalance();
                 CreditLimit := Cust1."Credit Limit (LCY)";
                 PayTermsExceed := PaymentTermsCheck(Cust1."No.");
                 BlanketAmt := 0;
-                SalesLn.RESET;
+                SalesLn.RESET();
                 SalesLn.SETFILTER(SalesLn."Document No.", BlanketOrder);
                 SalesLn.SETRANGE(SalesLn."Document Type", SalesLn."Document Type"::"Blanket Order");
-                IF SalesLn.FINDSET THEN
+                IF SalesLn.FINDSET() THEN
                     REPEAT
-                        BlanketAmt += SalesLn."Amount To Customer";
-                    UNTIL SalesLn.NEXT = 0;
-                IF (CreditLimit < BalanceAmount + OpenOrdersCredit + BlanketAmt) AND (PayTermsExceed) THEN BEGIN
+                        //BlanketAmt += SalesLn."Amount To Customer";
+                        BlanketAmt += SalesLn."Amount";
+
+                    UNTIL SalesLn.NEXT() = 0;
+                IF (CreditLimit < BalanceAmount + OpenOrdersCredit + BlanketAmt) AND (PayTermsExceed) THEN
                     //BlockCustomer(Cust1."No.");
                     ERROR('Customer: %1 is lacking credit limit', Cust1.Name);
-                END;
+
             END;
         END;
     end;
 
-    [Scope('Internal')]
     procedure ReleasingSalesOrder(SalesOrder: Code[20])
     var
         SalesOrderAmt: Decimal;
@@ -182,29 +182,31 @@ codeunit 50003 "Customer Credit Check"
         BalanceAmount := 0;
         CreditLimit := 0;
         OpenOrdersCredit := 0;
-        SalesHead.RESET;
+        SalesHead.RESET();
         SalesHead.SETFILTER(SalesHead."No.", SalesOrder);
         SalesHead.SETRANGE(SalesHead."Document Type", SalesHead."Document Type"::Order);
-        IF SalesHead.FINDFIRST THEN BEGIN
-            Cust1.RESET;
+        IF SalesHead.FINDFIRST() THEN BEGIN
+            Cust1.RESET();
             Cust1.SETFILTER(Cust1."No.", SalesHead."Sell-to Customer No.");
-            IF Cust1.FINDFIRST THEN BEGIN
+            IF Cust1.FINDFIRST() THEN BEGIN
                 OpenOrdersCredit := OpenOrderCreditCheck(Cust1."No.");
-                BalanceAmount := Cust1.CalcOverdueBalance;
+                BalanceAmount := Cust1.CalcOverdueBalance();
                 CreditLimit := Cust1."Credit Limit (LCY)";
                 PayTermsExceed := PaymentTermsCheck(Cust1."No.");
                 SalesOrderAmt := 0;
-                SalesLn.RESET;
+                SalesLn.RESET();
                 SalesLn.SETFILTER(SalesLn."Document No.", SalesOrder);
                 SalesLn.SETRANGE(SalesLn."Document Type", SalesLn."Document Type"::"Blanket Order");
-                IF SalesLn.FINDSET THEN
+                IF SalesLn.FINDSET() THEN
                     REPEAT
-                        SalesOrderAmt += SalesLn."Amount To Customer";
-                    UNTIL SalesLn.NEXT = 0;
+                        //SalesOrderAmt += SalesLn."Amount To Customer";
+                        SalesOrderAmt += SalesLn."Amount";
 
-                IF (CreditLimit < BalanceAmount + OpenOrdersCredit + SalesOrderAmt) AND (PayTermsExceed) THEN BEGIN
+                    UNTIL SalesLn.NEXT() = 0;
+
+                IF (CreditLimit < BalanceAmount + OpenOrdersCredit + SalesOrderAmt) AND (PayTermsExceed) THEN
                     ERROR('Customer: %1 is lacking credit limit', Cust1.Name);
-                END;
+
 
             END;
         END;
@@ -216,7 +218,7 @@ codeunit 50003 "Customer Credit Check"
         Days21: Duration;
         Date8: Date;
         Date21: Date;
-        JobQueueEntry: Record "472";
+        JobQueueEntry: Record "Job Queue Entry";
         NextMontthDate: Date;
     begin
         //>> ZE.SAGAR
@@ -228,12 +230,12 @@ codeunit 50003 "Customer Credit Check"
             IF TODAY IN [Date8, Date21, NextMontthDate] THEN
                 EXIT;
 
-        JobQueueEntry.RESET;
+        JobQueueEntry.RESET();
         JobQueueEntry.SETRANGE("Object Type to Run", JobQueueEntry."Object Type to Run"::Codeunit);
         JobQueueEntry.SETRANGE("Object ID to Run", CODEUNIT::"Customer Credit Check");
         IF IsItFirst THEN
             JobQueueEntry.SETFILTER("No. of Minutes between Runs", '%1', 1);
-        IF JobQueueEntry.FINDFIRST THEN BEGIN
+        IF JobQueueEntry.FINDFIRST() THEN BEGIN
             RetunMinutes := JobQueueEntry."No. of Minutes between Runs";
 
             IF TODAY < Date8 THEN
@@ -249,7 +251,7 @@ codeunit 50003 "Customer Credit Check"
         //<< ZE.SAGAR
     end;
 
-    local procedure SetNoofMinutestorun(var JobQueueEntry: Record "472"; NoOfMinutes: Integer; NextstartDate: Date)
+    local procedure SetNoofMinutestorun(var JobQueueEntry: Record "Job Queue Entry"; NoOfMinutes: Integer; NextstartDate: Date)
     begin
         //>> ZE.SAGAR
         JobQueueEntry.Status := JobQueueEntry.Status::"On Hold";

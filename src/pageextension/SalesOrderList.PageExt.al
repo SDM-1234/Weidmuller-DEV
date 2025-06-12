@@ -1,30 +1,22 @@
-pageextension 50113 pageextension50113 extends "Sales Order List"
+pageextension 50113 SalesOrderList extends "Sales Order List"
 {
     layout
     {
 
         //Unsupported feature: Property Modification (SourceExpr) on "Control 17".
 
-        addafter("Control 1102601005")
+        addafter(Control1)
         {
-            field(Amount; Amount)
+            field("Order Date"; Rec."Order Date")
             {
+                ToolTip = 'Specifies the date when the order was created.';
+                ApplicationArea = All;
             }
-            field("Amount to Customer"; "Amount to Customer")
-            {
-            }
-        }
-        addafter("Control 5")
-        {
-            field("Order Date"; "Order Date")
-            {
-            }
-            field("Quote No."; "Quote No.")
-            {
-            }
-            field(Validity; Validity)
+            field(Validity; Rec.Validity)
             {
                 Editable = false;
+                ToolTip = 'Specifies the value of the Validity field.';
+                ApplicationArea = All;
             }
         }
     }

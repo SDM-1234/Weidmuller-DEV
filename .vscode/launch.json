@@ -2,11 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "DEV",
+            "name": "PKFUAT",
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "DEV",
+            "environmentName": "PKFUAT",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
@@ -15,5 +15,5 @@
             "enableSqlInformationDebugger": true,
             "schemaUpdateMode": "ForceSync"
         }
-    ]
+   ]
 }

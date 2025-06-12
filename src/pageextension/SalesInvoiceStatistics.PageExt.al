@@ -1,4 +1,4 @@
-pageextension 50047 pageextension50047 extends "Sales Invoice Statistics"
+pageextension 50047 SalesInvoiceStatistics extends "Sales Invoice Statistics"
 {
 
     //Unsupported feature: Code Modification on "OnAfterGetRecord".

@@ -1,4 +1,4 @@
-pageextension 50112 pageextension50112 extends "Sales Return Order List"
+pageextension 50112 SalesReturnOrderList extends "Sales Return Order List"
 {
     layout
     {
