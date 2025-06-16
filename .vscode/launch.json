@@ -2,11 +2,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "PKFUAT",
+            "name": "Weidmuller",
             "request": "launch",
             "type": "al",
             "environmentType": "Sandbox",
-            "environmentName": "PKFUAT",
+            "environmentName": "WM",
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",

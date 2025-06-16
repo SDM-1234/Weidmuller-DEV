@@ -126,7 +126,7 @@ table 50004 "Industry Segment"
             UNTIL IndustrySegment.NEXT() = 0;
     end;
 
-    local procedure UpdateUnassignedPercentage(CustNo: Code[20])
+    procedure UpdateUnassignedPercentage(CustNo: Code[20])
     var
         IndustrySegment: Record "Industry Segment";
         TotalSalesPercentage: Decimal;
