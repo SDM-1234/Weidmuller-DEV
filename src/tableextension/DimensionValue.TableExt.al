@@ -1,4 +1,4 @@
-tableextension 50030 tableextension50030 extends "Dimension Value"
+tableextension 50030 DimensionValue extends "Dimension Value"
 {
     fields
     {

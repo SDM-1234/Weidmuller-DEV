@@ -1,4 +1,4 @@
-tableextension 50052 tableextension50052 extends "Posted Whse. Shipment Header"
+tableextension 50052 PostedWhseShipmentHeader extends "Posted Whse. Shipment Header"
 {
     fields
     {

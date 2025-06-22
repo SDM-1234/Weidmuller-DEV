@@ -101,4 +101,14 @@ codeunit 50100 SalesSubscriber
 
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"To-do", OnBeforeValidateEvent, "Contact No.", true, true)]
+    local procedure OnBeforeValidateEvent_ContactNo(CurrFieldNo: Integer; var Rec: Record "To-do"; var xRec: Record "To-do")
+    var
+        Cont: Record Contact;
+    begin
+        IF Cont.GET(Rec."Contact No.") THEN
+            IF Rec."Salesperson Code" = '' THEN
+                Rec."Salesperson Code" := Cont."Salesperson Code";
+    end;
+
 }

@@ -1,4 +1,4 @@
-tableextension 50015 tableextension50015 extends "G/L Account"
+tableextension 50015 GLAccount extends "G/L Account"
 {
     fields
     {
