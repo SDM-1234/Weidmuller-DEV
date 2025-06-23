@@ -111,4 +111,37 @@ codeunit 50100 SalesSubscriber
                 Rec."Salesperson Code" := Cont."Salesperson Code";
     end;
 
+    [EventSubscriber(ObjectType::Page, Page::"Apply Customer Entries", OnPostDirectApplicationBeforeApply, '', false, false)]
+    local procedure "Apply Customer Entries_OnPostDirectApplicationBeforeApply"(GLSetup: Record "General Ledger Setup"; var NewApplyUnapplyParameters: Record "Apply Unapply Parameters" temporary)
+    var
+        RecCust: Record Customer;
+    begin
+        if NewApplyUnapplyParameters."Account Type" <> NewApplyUnapplyParameters."Account Type"::Customer then
+            exit;
+        IF NOT RecCust.GET(NewApplyUnapplyParameters."Account No.") THEN
+            EXIT;
+        IF NOT NewApplyUnapplyParameters.UpdateBackBlocked THEN BEGIN
+            IF RecCust.Blocked <> RecCust.Blocked::Invoice THEN
+                EXIT;
+            IF (NewApplyUnapplyParameters."Document Type" = NewApplyUnapplyParameters."Document Type"::" ") THEN BEGIN
+                RecCust.Blocked := RecCust.Blocked::" ";
+                RecCust.MODIFY(TRUE);
+                NewApplyUnapplyParameters.UpdateBackBlocked := TRUE;
+            END;
+        END;
+    END;
+
+    [EventSubscriber(ObjectType::Page, Page::"Apply Customer Entries", OnPostDirectApplicationOnAfterApply, '', false, false)]
+    local procedure "Apply Customer Entries_OnPostDirectApplicationOnAfterApply"(var CustLedgerEntry: Record "Cust. Ledger Entry"; var NewApplyUnapplyParameters: Record "Apply Unapply Parameters" temporary; PreviewMode: Boolean; Applied: Boolean)
+    var
+        RecCust: Record Customer;
+    begin
+        IF NewApplyUnapplyParameters.UpdateBackBlocked THEN BEGIN
+            RecCust.Blocked := Reccust.Blocked::Invoice;
+            RecCust.MODIFY(TRUE);
+        END;
+    end;
+
+
+
 }

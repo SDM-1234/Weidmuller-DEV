@@ -1,8 +1,5 @@
 pageextension 50070 CreateOpportunity extends "Create Opportunity"
 {
-
-    //Unsupported feature: Property Modification (PageType) on ""Create Opportunity"(Page 5126)".
-
     layout
     {
         addafter("Sales Cycle Code")

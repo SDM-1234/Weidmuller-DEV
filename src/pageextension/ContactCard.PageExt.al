@@ -2,7 +2,7 @@ pageextension 50060 ContactCard extends "Contact Card"
 {
     layout
     {
-        addafter(Control1900383207)
+        addlast(General)
         {
             field("Resigned - Left Company"; Rec."Resigned - Left Company")
             {
