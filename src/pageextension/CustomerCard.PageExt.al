@@ -3,36 +3,7 @@ pageextension 50032 CustomerCard extends "Customer Card"
     layout
     {
 
-        //Unsupported feature: Code Insertion on "Control 6".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //var
-        //CustNameChaneEvent: Codeunit "50092";
-        //begin
-        /*
-        //CustNameChaneEvent.OnAddresslineChanged(Address); E963 Commented due to Execute issue of the codeunit
-        */
-        //end;
-
-
-        //Unsupported feature: Code Insertion on "Control 26".
-
-        //trigger OnValidate()
-        //Parameters and return type have not been exported.
-        //begin
-        /*
-        //ZE_LIJO 19.02.2020
-        //++
-        IF (xRec.Blocked=Blocked::All) OR (xRec.Blocked=Blocked::Invoice) THEN BEGIN
-          IF xRec."No." <> 'C001' THEN
-          ERROR('Send Approval Request for Customer Unblocking');
-        END;
-        //--
-        */
-        //end;
-
-        addafter("Tax Area Code")
+        addlast(General)
         {
             field("No. of Industry Segments"; Rec."No. of Industry Segments")
             {
@@ -44,6 +15,9 @@ pageextension 50032 CustomerCard extends "Customer Card"
                 ToolTip = 'Specifies the value of the Invoice Print Check field.';
                 ApplicationArea = All;
             }
+        }
+        addlast(Shipping)
+        {
             field(Freight; Rec.Freight)
             {
                 ToolTip = 'Specifies the value of the Freight field.';
