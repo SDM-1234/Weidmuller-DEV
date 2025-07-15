@@ -172,9 +172,10 @@ report 50024 "Customer-wise Dunning"
                 Balance := Customer.Balance;
                 DunReminder := FALSE;
                 PayTerms.RESET();
-                PayTerms.SETFILTER(PayTerms.Code, Customer."Payment Terms Code");
-                IF PayTerms.FINDFIRST() THEN
-                    PayTermsDesc := PayTerms.Description;
+                if PayTerms.Get(Customer."Payment Terms Code") then
+                    PayTermsDesc := PayTerms.Description
+                else
+                    Clear(PayTermsDesc);
             end;
 
             trigger OnPreDataItem()
