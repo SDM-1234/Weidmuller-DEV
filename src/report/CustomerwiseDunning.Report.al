@@ -3,6 +3,9 @@ report 50024 "Customer-wise Dunning"
     DefaultLayout = RDLC;
     RDLCLayout = 'src/reportlayout/CustomerwiseDunning.rdl';
     PreviewMode = PrintLayout;
+    ApplicationArea = All;
+    UsageCategory = ReportsAndAnalysis;
+    Caption = 'Customer-wise Dunning';
 
     dataset
     {

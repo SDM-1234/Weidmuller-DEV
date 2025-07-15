@@ -2,6 +2,9 @@ report 50000 "Delivery Challan New"
 {
     DefaultLayout = RDLC;
     RDLCLayout = 'src/reportlayout/DeliveryChallanNew.rdl';
+    ApplicationArea = All;
+    UsageCategory = ReportsAndAnalysis;
+    Caption = 'Delivery Challan New';
 
     dataset
     {
