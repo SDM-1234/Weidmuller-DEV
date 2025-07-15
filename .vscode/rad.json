@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[],"Removed":[{"Id":50009,"Kind":17,"Name":"ApplyUnapplyParameters","Namespace":""}]}
+﻿{"Added":[{"Kind":106,"Name":"RequestOptionsPage","Namespace":""}],"Modified":[{"Id":50024,"Kind":13,"Name":"Customer-wise Dunning","Namespace":""},{"Id":50000,"Kind":13,"Name":"Delivery Challan New","Namespace":""}],"Removed":[{"Id":0,"Kind":13,"Name":"1401","Namespace":""},{"Id":50009,"Kind":13,"Name":"Export Invoice -Weidmueller","Namespace":""}]}

@@ -66,15 +66,8 @@ tableextension 50024 Customer extends Customer
         }
     }
 
-    // procedure SetBlockParameterFromDocs()
-    // begin
-    //     SetBlockParameterFromDocsValue := TRUE;
-    // end;
-
-
     var
         MailManagement: Codeunit "Mail Management";
-        SetBlockParameterFromDocsValue: Boolean;
 
 }
 

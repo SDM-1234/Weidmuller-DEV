@@ -28,12 +28,15 @@ codeunit 50100 SalesSubscriber
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidatePostingDateOnBeforeAssignDocumentDate, '', false, false)]
     local procedure OnValidatePostingDateOnBeforeAssignDocumentDate_WM(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
     begin
-        IsHandled := true;
-        IF SalesHeader."Incoming Document Entry No." = 0 THEN
-            SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
-        IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN
-            SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
+        SalesSetup.Get();
+        if not SalesSetup."Link Doc. Date To Posting Date" then
+            IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN begin
+                SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
+                IsHandled := true;
+            end;
     end;
 
 

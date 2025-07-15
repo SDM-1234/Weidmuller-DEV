@@ -112,7 +112,10 @@ page 50013 "Industry Segments"
         IndustrySegment.RESET();
         IndustrySegment.SETRANGE("Customer No.", Rec."Customer No.");
         IndustrySegment.SETRANGE("Sales %", 0);
-        IndustrySegment.DELETE();
+        IF IndustrySegment.FINDSET() THEN
+            REPEAT
+                IndustrySegment.DELETE();
+            UNTIL IndustrySegment.NEXT() = 0;
     end;
 }
 

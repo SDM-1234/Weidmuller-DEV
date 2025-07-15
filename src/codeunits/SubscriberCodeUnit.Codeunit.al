@@ -10,12 +10,9 @@ codeunit 50004 "Subscriber CodeUnit"
     var
         RequeststoApprove: Page "Requests to Approve";
     begin
-        //ZE_SIDD 31.10.2022
-        //++
         ApprovalEntry.CALCFIELDS("Pending Approvals");
         IF ApprovalEntry."Pending Approvals" = 0 THEN
             RequeststoApprove.CustomerUnblock(ApprovalEntry);
-        //--
     end;
 }
 

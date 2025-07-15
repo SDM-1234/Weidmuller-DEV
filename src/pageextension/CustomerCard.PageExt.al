@@ -73,7 +73,8 @@ pageextension 50032 CustomerCard extends "Customer Card"
 
         IF Rec."Currency Code" = '' THEN
             Rec.TESTFIELD("Currency Code");
-
+        IF Rec."E-Mail" = '' THEN
+            ERROR('Kindly enter Customer mail');
     end;
 }
 
