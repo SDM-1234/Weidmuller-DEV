@@ -29,7 +29,7 @@ report 50014 "Calculate Industry Segments"
                         SalesSegment.RESET();
                         SalesSegment.SETRANGE("Sales Order No.", "Sales Header"."No.");
                         IF NOT SalesSegment.FINDSET() THEN
-                            InsertSalesSegments("Sales Header");
+                            InsertSalesSegments();
                     END ELSE
                         IF "Sales Header"."Document Type" = "Sales Header"."Document Type"::Invoice THEN BEGIN
                             SalesSegment.RESET();
@@ -105,27 +105,6 @@ report 50014 "Calculate Industry Segments"
 
     var
         Counter: Integer;
-
-    local procedure InsertSalesSegments(SalesHeader: Record "Sales Header")
-    var
-        SalesSegment: Record "Sales Segment";
-        IndustrySegment: Record "Industry Segment";
-    begin
-        IndustrySegment.RESET();
-        IndustrySegment.SETRANGE("Customer No.", SalesHeader."Sell-to Customer No.");
-        IF IndustrySegment.FINDSET() THEN BEGIN
-            REPEAT
-                SalesSegment.INIT();
-                SalesSegment."Customer No." := IndustrySegment."Customer No.";
-                SalesSegment."Industry Group Code" := IndustrySegment."Industry Group Code";
-                SalesSegment."Sales Order No." := SalesHeader."No.";
-                SalesSegment."Sales %" := IndustrySegment."Sales %";
-                SalesSegment.Amount := FindLineAmount(SalesHeader) * (IndustrySegment."Sales %" / 100);
-                SalesSegment.INSERT();
-            UNTIL IndustrySegment.NEXT() = 0;
-            Counter += 1;
-        END;
-    end;
 
     local procedure FindLineAmount(SalesHeader: Record "Sales Header") TotalLineAmt: Decimal
     var

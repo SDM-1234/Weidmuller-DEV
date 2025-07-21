@@ -26,9 +26,9 @@ tableextension 50032 SalesLine extends "Sales Line"
                         IF (xRec.Quantity <> Quantity) THEN
                             IF (Item."Order Multiple" <> 0) AND (Quantity >= Item."Order Multiple") THEN BEGIN
                                 IF (Quantity MOD Item."Order Multiple") <> 0 THEN
-                                    FIELDERROR(Quantity, STRSUBSTNO(Text061, Item."Order Multiple"));
+                                    FIELDERROR(Quantity, STRSUBSTNO(Text061Lbl, Item."Order Multiple"));
                             END ELSE
-                                FIELDERROR(Quantity, STRSUBSTNO(Text061, Item."Order Multiple"));
+                                FIELDERROR(Quantity, STRSUBSTNO(Text061Lbl, Item."Order Multiple"));
                     END;
 
                 //SE-E859.e
@@ -94,6 +94,7 @@ tableextension 50032 SalesLine extends "Sales Line"
             CalcFormula = Lookup(Item."Minimum Order Quantity" WHERE("No." = FIELD("No.")));
             Description = 'ZE_LIJO';
             FieldClass = FlowField;
+            editable = false;
         }
         field(50081; Status; Option)
         {
@@ -118,7 +119,7 @@ tableextension 50032 SalesLine extends "Sales Line"
         SalesHeader2: Record "Sales Header";
     begin
         IF SalesHeader2.GET("Document Type", "Document No.") THEN;
-        Status := SalesHeader2.Status;
+        Status := SalesHeader2.Status.AsInteger();
         "Payment Terms Code" := SalesHeader2."Payment Terms Code";
 
         "PO No." := SalesHeader2."External Document No.";
@@ -143,7 +144,7 @@ tableextension 50032 SalesLine extends "Sales Line"
         IF "Document Type" = "Document Type"::Quote THEN begin
             IF Type = Type::Item THEN
                 IF (SalesHeader."Posting Date" <> 0D) THEN BEGIN
-                    GetItem;
+                    GetItem();
                     VALIDATE("Confirm Shipping Date", CALCDATE(Item."Lead Time Calculation", SalesHeader."Posting Date"));
                 END ELSE
                     VALIDATE("Confirm Shipping Date", WORKDATE());
@@ -173,9 +174,48 @@ tableextension 50032 SalesLine extends "Sales Line"
         END;
     end;
 
+    procedure GetGSTAmounts(): Decimal
+    var
+        GSTSetup: Record "GST Setup";
+        TaxTransactionValue: Record "Tax Transaction Value";
+        OrderConfReport: Report "Order Confirmation GST";
+        SGSTAmt, CGSTAmt, IGSTAmt, CessAmount : Decimal;
+    begin
+        GSTSetup.Get();
+        TaxTransactionValue.Reset();
+        TaxTransactionValue.SetRange("Tax Record ID", Rec.RecordId);
+        TaxTransactionValue.SetRange("Tax Type", GSTSetup."GST Tax Type");
+        TaxTransactionValue.SetRange("Value Type", TaxTransactionValue."Value Type"::COMPONENT);
+        TaxTransactionValue.SetFilter(Percent, '<>%1', 0);
+        if TaxTransactionValue.FindSet() then
+            repeat
+                case TaxTransactionValue."Value ID" of
+                    6:
+                        SGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(SGSTLbl));
+                    2:
+                        CGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(CGSTLbl));
+                    3:
+                        IGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(IGSTLbl));
+                end;
+            until TaxTransactionValue.Next() = 0;
+
+        TaxTransactionValue.SetRange("Tax Type", GSTSetup."Cess Tax Type");
+        TaxTransactionValue.SetFilter(Percent, '<>%1', 0);
+        TaxTransactionValue.SetRange("Value Type");
+        if TaxTransactionValue.FindSet() then
+            repeat
+                CessAmount += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(SGSTLbl));
+            until TaxTransactionValue.Next() = 0;
+        exit(SGSTAmt + CGSTAmt + IGSTAmt + CessAmount);
+    end;
+
     var
         SalesPriceManagement: Codeunit "Sales Price Management";
-        SpecialInstMsg: Label 'Special Instruction';
-        Text061: Label 'must be Multiple of %1';
+#pragma warning disable
+        Text061Lbl: Label 'must be Multiple of %1';
+        IGSTLbl: Label 'IGST';
+        SGSTLbl: Label 'SGST';
+        CGSTLbl: Label 'CGST';
+#pragma warning restore
 }
 

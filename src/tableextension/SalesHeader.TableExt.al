@@ -114,5 +114,88 @@ tableextension 50031 SalesHeader extends "Sales Header"
             UNTIL SalesLine.NEXT() = 0;
     end;
 
+    PROCEDURE CheckIndustrySegments();
+    VAR
+        IndustrySegment: Record "Industry Segment";
+        SalesSegment: Record "Sales Segment";
+    BEGIN
+        IndustrySegment.RESET();
+        IndustrySegment.SETRANGE("Customer No.", "Sell-to Customer No.");
+        IF not IndustrySegment.IsEmpty THEN BEGIN
+            SalesSegment.RESET();
+            SalesSegment.SETRANGE("Customer No.", "Sell-to Customer No.");
+            SalesSegment.SETRANGE("Sales Order No.", "No.");
+            IF SalesSegment.IsEmpty THEN
+                ERROR('Industrial Segments need to be assigned');
+        END;
+    END;
+
+    PROCEDURE InsertSalesSegments();
+    VAR
+        IndustrySegment: Record "Industry Segment";
+        SalesSegment: Record "Sales Segment";
+    BEGIN
+        IndustrySegment.RESET();
+        IndustrySegment.SETRANGE("Customer No.", "Sell-to Customer No.");
+        IF IndustrySegment.FINDSET() THEN
+            REPEAT
+                SalesSegment.INIT();
+                SalesSegment."Customer No." := IndustrySegment."Customer No.";
+                SalesSegment."Industry Group Code" := IndustrySegment."Industry Group Code";
+                SalesSegment."Sales Order No." := "No.";
+                SalesSegment."Sales %" := IndustrySegment."Sales %";
+                SalesSegment.Amount := (Amount + GetGSTAmounts()) * (IndustrySegment."Sales %" / 100);
+                SalesSegment.INSERT();
+            UNTIL IndustrySegment.NEXT() = 0;
+    END;
+
+    procedure GetGSTAmounts(): Decimal
+    var
+        SalesLine: Record "Sales Line";
+        GSTSetup: Record "GST Setup";
+        TaxTransactionValue: Record "Tax Transaction Value";
+        OrderConfReport: Report "Order Confirmation GST";
+        SGSTAmt, CGSTAmt, IGSTAmt, CessAmount : Decimal;
+    begin
+        GSTSetup.Get();
+
+        SalesLine.setfilter(Type, '<>%1', SalesLine.Type::" ");
+        SalesLine.setrange("Document Type", "Document Type");
+        SalesLine.setrange("Document No.", "No.");
+        if SalesLine.FindSet() then
+            repeat
+                TaxTransactionValue.Reset();
+                TaxTransactionValue.SetRange("Tax Record ID", SalesLine.RecordId);
+                TaxTransactionValue.SetRange("Tax Type", GSTSetup."GST Tax Type");
+                TaxTransactionValue.SetRange("Value Type", TaxTransactionValue."Value Type"::COMPONENT);
+                TaxTransactionValue.SetFilter(Percent, '<>%1', 0);
+                if TaxTransactionValue.FindSet() then
+                    repeat
+                        case TaxTransactionValue."Value ID" of
+                            6:
+                                SGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(SGSTLbl));
+                            2:
+                                CGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(CGSTLbl));
+                            3:
+                                IGSTAmt += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(IGSTLbl));
+                        end;
+                    until TaxTransactionValue.Next() = 0;
+
+                TaxTransactionValue.SetRange("Tax Type", GSTSetup."Cess Tax Type");
+                TaxTransactionValue.SetFilter(Percent, '<>%1', 0);
+                TaxTransactionValue.SetRange("Value Type");
+                if TaxTransactionValue.FindSet() then
+                    repeat
+                        CessAmount += Round(TaxTransactionValue.Amount, OrderConfReport.GetGSTRoundingPrecision(SGSTLbl));
+                    until TaxTransactionValue.Next() = 0;
+            until SalesLine.Next() = 0;
+        exit(SGSTAmt + CGSTAmt + IGSTAmt + CessAmount);
+    end;
+
+    var
+        IGSTLbl: Label 'IGST';
+        SGSTLbl: Label 'SGST';
+        CGSTLbl: Label 'CGST';
+
 }
 

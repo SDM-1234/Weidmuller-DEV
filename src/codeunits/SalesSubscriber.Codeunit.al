@@ -127,6 +127,35 @@ codeunit 50100 SalesSubscriber
         END;
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnBeforePerformManualReleaseProcedure, '', false, false)]
+    local procedure "Release Sales Document_OnBeforePerformManualReleaseProcedure"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforePostSalesDoc, '', false, false)]
+    local procedure "Sales-Post_OnBeforePostSalesDoc"(var Sender: Codeunit "Sales-Post"; var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean; var HideProgressWindow: Boolean; var IsHandled: Boolean; var CalledBy: Integer)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        if SalesHeader."Document Type" <> SalesHeader."Document Type"::Order then
+            exit;
+        SalesHeader.TESTFIELD("Currency Code");
+        SalesHeader.TESTFIELD("External Document No.");
+        SalesHeader.CheckIndustrySegments();
+        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnInsertInvLineFromShptLineOnBeforeAssigneSalesLine, '', false, false)]
+    local procedure "Sales Shipment Line_OnInsertInvLineFromShptLineOnBeforeAssigneSalesLine"(var SalesShipmentLine: Record "Sales Shipment Line"; SalesHeaderInv: Record "Sales Header"; SalesHeaderOrder: Record "Sales Header"; var SalesLine: Record "Sales Line"; var SalesOrderLine: Record "Sales Line"; Currency: Record Currency)
+    begin
+        SalesLine."OC No" := SalesShipmentLine."Order No.";
+    end;
+
+
+
 
 
 }
