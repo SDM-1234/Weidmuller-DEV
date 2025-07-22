@@ -1,6 +1,5 @@
 pageextension 50054 SalesInvoice extends "Sales Invoice"
 {
-    Caption = 'PO No.';
     layout
     {
         modify("External Document No.")

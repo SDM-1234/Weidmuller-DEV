@@ -19,5 +19,38 @@ tableextension 50003 SalesInvoiceHeader extends "Sales Invoice Header"
     keys
     {
     }
+
+    procedure AmountToCustomer(): Decimal
+    var
+        SalesInvLIne: Record "Sales Invoice Line";
+        AmtToCustCU: Codeunit "Amount To Customer";
+        CGSTLineAmount: Decimal;
+        SGSTLineAmount: Decimal;
+        IGSTLineAmount: Decimal;
+        CESSLineAmount: Decimal;
+        TotGstAmt: Decimal;
+    begin
+        SalesInvLIne.SetFilter(Type, '<>%1', SalesInvLIne.Type::" ");
+        SalesInvLIne.SetRange("Document No.", Rec."No.");
+        if SalesInvLIne.FindSet(false) then
+            repeat
+                CGSTLineAmount := 0;
+                SGSTLineAmount := 0;
+                IGSTLineAmount := 0;
+                CESSLineAmount := 0;
+
+                AmtToCustCU.GetGSTValueForLine(
+                    SalesInvLIne."Document No.",
+                    SalesInvLIne."Line No.",
+                    CGSTLineAmount,
+                    SGSTLineAmount,
+                    IGSTLineAmount,
+                    CESSLineAmount);
+
+                TotGstAmt += SalesInvLIne."Line Amount" + CGSTLineAmount + SGSTLineAmount + IGSTLineAmount + CESSLineAmount;
+            until SalesInvLIne.Next() = 0;
+        Rec.CalcFields("Amount");
+        exit(TotGstAmt + Rec.Amount);
+    end;
 }
 
