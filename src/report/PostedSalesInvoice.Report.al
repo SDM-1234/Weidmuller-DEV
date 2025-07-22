@@ -258,7 +258,7 @@ report 50005 "Posted Sales Invoice"
                     column(Phone_CompanyInfo; CompanyInfo."Phone No.")
                     {
                     }
-                    column(HomePage_CompanyInfo; CompanyInfo."Home Page")
+                    column(HomePage_CompanyInfo; CompanyInfo."Home Page 2")
                     {
                     }
                     column(LUTNo_CompanyInfo; CompanyInfo."LUT No.")

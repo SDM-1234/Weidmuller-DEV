@@ -132,7 +132,8 @@ codeunit 50100 SalesSubscriber
     var
         SalesPriceManagement: Codeunit "Sales Price Management";
     begin
-        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+        if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then
+            SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforePostSalesDoc, '', false, false)]
@@ -140,7 +141,7 @@ codeunit 50100 SalesSubscriber
     var
         SalesPriceManagement: Codeunit "Sales Price Management";
     begin
-        if SalesHeader."Document Type" <> SalesHeader."Document Type"::Order then
+        if not (SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order]) then
             exit;
         SalesHeader.TESTFIELD("Currency Code");
         SalesHeader.TESTFIELD("External Document No.");
@@ -153,6 +154,22 @@ codeunit 50100 SalesSubscriber
     begin
         SalesLine."OC No" := SalesShipmentLine."Order No.";
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document-Print", OnBeforeDoPrintSalesHeader, '', false, false)]
+    local procedure "Document-Print_OnBeforeDoPrintSalesHeader"(var SalesHeader: Record "Sales Header"; ReportUsage: Integer; SendAsEmail: Boolean; var IsPrinted: Boolean)
+    begin
+        if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then
+            SalesHeader.TESTFIELD("Currency Code");//SDM-RSF_ZOHO.1583
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Quote to Order (Yes/No)", OnBeforeRun, '', false, false)]
+    local procedure "Sales-Quote to Order (Yes/No)_OnBeforeRun"(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
 
 
 

@@ -37,12 +37,10 @@ pageextension 50005 PostedSalesInvoice extends "Posted Sales Invoice"
         }
         addafter(Print)
         {
-            action("Posted Sales Invoice")
+            action(PostedSalesInvoice)
             {
                 Caption = 'Posted Sales Invoice';
                 Image = Report;
-                Promoted = true;
-                PromotedCategory = Process;
                 ToolTip = 'Executes the Posted Sales Invoice action.';
                 ApplicationArea = All;
 
@@ -96,6 +94,12 @@ pageextension 50005 PostedSalesInvoice extends "Posted Sales Invoice"
             //             END;
             //         end;
             //     }
+        }
+        addafter(Print_Promoted)
+        {
+            actionref(Posted_Sales_Invoice_Promoted; PostedSalesInvoice)
+            {
+            }
         }
     }
 
