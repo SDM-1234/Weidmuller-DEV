@@ -2,7 +2,7 @@ table 50004 "Industry Segment"
 {
 
     Caption = 'Industry Segment';
-    //DrillDownPageID = 50013;
+    DrillDownPageID = 50013;
 
     fields
     {
