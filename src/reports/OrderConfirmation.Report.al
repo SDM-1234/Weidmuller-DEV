@@ -549,7 +549,7 @@ report 50001 "Order-Confirmation"
 
                 //SE
                 SalesHeaderArchaive.SETRANGE(SalesHeaderArchaive."No.", "Sales Header"."No.");
-                IF SalesHeaderArchaive.FINDLAST THEN
+                IF SalesHeaderArchaive.FINDLAST() THEN
                     SalesHeadNo := "Sales Header"."No." + ' -R ' + FORMAT(SalesHeaderArchaive."Version No.")
                 ELSE
                     SalesHeadNo := "Sales Header"."No.";
@@ -558,7 +558,7 @@ report 50001 "Order-Confirmation"
 
 
                 IF "Shipment Method Code" = '' THEN
-                    ShipmentMethod.INIT
+                    ShipmentMethod.INIT()
                 ELSE BEGIN
                     ShipmentMethod.GET("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Sales Header"."Language Code");
@@ -566,7 +566,7 @@ report 50001 "Order-Confirmation"
                 END;
 
                 IF "Transport Method" = '' THEN
-                    TransportMethod.INIT
+                    TransportMethod.INIT()
                 ELSE BEGIN
                     TransportMethod.GET("Transport Method");
                     //TransportMethod.TranslateDescription(TransportMethod,"Sales Header"."Language Code");
@@ -589,16 +589,16 @@ report 50001 "Order-Confirmation"
                     CurrencyCaption := 'EURO';
                 END;
 
-                ShiptoAddress.RESET;
+                ShiptoAddress.RESET();
                 //ZE_LIJO 26.6.2019
                 ShiptoAddress.SETFILTER(ShiptoAddress."Customer No.", "Sales Header"."Sell-to Customer No.");
                 //
                 ShiptoAddress.SETFILTER(ShiptoAddress.Code, "Ship-to Code");
-                IF ShiptoAddress.FINDFIRST THEN;
+                IF ShiptoAddress.FINDFIRST() THEN;
 
-                PaymentTerms.RESET;
+                PaymentTerms.RESET();
                 PaymentTerms.SETRANGE(PaymentTerms.Code, "Payment Terms Code");
-                IF PaymentTerms.FINDFIRST THEN
+                IF PaymentTerms.FINDFIRST() THEN
                     PaymentTermsDesc := PaymentTerms.Description;
 
                 // ItemCrossReference.RESET;
@@ -628,11 +628,12 @@ report 50001 "Order-Confirmation"
 
     trigger OnInitReport()
     begin
-        CompanyInfo.GET;
+        CompanyInfo.GET();
     end;
 
     var
         CompanyInfo: Record "Company Information";
+#pragma warning disable
         PageCaptionCap: Label 'Page %1 of %2';
         OrderNoCaptionLbl: Label 'Order No.';
         EMailCaptionLbl: Label 'E-Mail';
