@@ -292,7 +292,7 @@ report 50001 "Order-Confirmation"
                 column(GrossWeight; GrossWeight)
                 {
                 }
-                column(Tax_Amount; 0)//Need to map with GST RSF
+                column(Tax_Amount; 0)
                 {
                 }
                 column(GstAmount; GstAmount)
@@ -388,7 +388,7 @@ report 50001 "Order-Confirmation"
                 column(Description_SalesLineCaption; "Sales Line".FIELDCAPTION(Description))
                 {
                 }
-                column(SalesLine_AmountToCustomer; "Sales Line"."Amount Including VAT")//Need to map with GST RSF
+                column(SalesLine_AmountToCustomer; Amount + GetGstAmounts())
                 {
                 }
                 column(PrepmtPaymentTermsDescription; PrepmtPaymentTerms.Description)
@@ -486,29 +486,9 @@ report 50001 "Order-Confirmation"
                         Unitcost := "Amount Including VAT" / Quantity;
 
 
-                    // // for Add VAT %
-                    // IF "Sales Line"."Tax %" = 5 THEN
-                    //     Tax5 := "Sales Line"."Tax Amount"
-                    // ELSE
-                    //     Tax5 := 0;
-
-                    // IF "Sales Line"."Tax %" = 14.5 THEN
-                    //     Tax14 += "Sales Line"."Tax Amount"
-                    // ELSE
-                    //     Tax14 := 0;
-                    // IF "Sales Line"."No." <> '' THEN
-                    //     IF Item.GET("Sales Line"."No.") THEN
-                    //         GrossWeight := ROUND((Item."Gross Weight" * "Sales Line".Quantity), 0.01);
-
-                    /*StateForms.RESET;
-                    StateForms.SETRANGE(StateForms.State,State);
-                    StateForms.SETRANGE(StateForms."Form Code","Form Code");
-                    IF StateForms.FINDFIRST THEN BEGIN
-                      Taxform:=StateForms."Form Description";
-                    END;*/
                     LineAmt_SalesLine := "Sales Line".Quantity * "Sales Line"."Unit Price";
-                    //GstAmount := "Sales Line"."Total GST Amount";
-                    GstAmount := "Sales Line"."Amount Including VAT";//Need to map with Total GST Amt
+                    GstAmount := "Sales Line".GetGSTAmounts();
+
 
                 end;
 
@@ -538,9 +518,9 @@ report 50001 "Order-Confirmation"
                 ELSE IF "Document Type" = "Document Type"::Quote THEN
                     OrderText := 'Proforma  Invoice';
 
-                CurrReport.LANGUAGE := Language."Windows Language ID";
+                //CurrReport.LANGUAGE := LanguageMgt."Windows Language ID";
 
-                //CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
+                CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
                 CompanyInfo.GET();
                 //CompanyInfo.CALCFIELDS(Picture);
 
@@ -704,7 +684,7 @@ report 50001 "Order-Confirmation"
         SalesLine: Record "Sales Line" temporary;
         ShipmentMethod: Record "Shipment Method";
         TransportMethod: Record "Transport Method";
-        Language: Record Language;
+        LanguageMgt: Codeunit Language;
         loopint: Integer;
         tempint: Integer;
         space: Text;
