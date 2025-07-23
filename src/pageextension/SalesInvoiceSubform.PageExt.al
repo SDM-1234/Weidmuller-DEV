@@ -2,7 +2,7 @@ pageextension 50058 SalesInvoiceSubform extends "Sales Invoice Subform"
 {
     layout
     {
-        addafter(Control1)
+        addlast(Control1)
         {
             field("OC No"; Rec."OC No")
             {

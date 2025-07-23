@@ -19,6 +19,10 @@ pageextension 50113 SalesOrderList extends "Sales Order List"
                 ApplicationArea = All;
             }
         }
+        modify("Document Date")
+        {
+            Caption = 'PO Date';
+        }
     }
     actions
     {

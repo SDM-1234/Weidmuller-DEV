@@ -2,10 +2,7 @@ pageextension 50108 SalesQuotes extends "Sales Quotes"
 {
     layout
     {
-
-        //Unsupported feature: Property Modification (SourceExpr) on "Control 17".
-
-        addafter(Control1)
+        addlast(Control1)
         {
             field("Enquiry No."; Rec."Enquiry No.")
             {

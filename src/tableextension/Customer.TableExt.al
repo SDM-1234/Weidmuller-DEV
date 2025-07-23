@@ -7,11 +7,8 @@ tableextension 50024 Customer extends Customer
         {
             trigger OnAfterValidate()
             begin
-                //ZT0207 06.05.2020
-                //++
                 IF "E-Mail" = '' THEN
                     ERROR('Kindly enter Customer mail');
-                //--
             end;
         }
 
@@ -19,11 +16,8 @@ tableextension 50024 Customer extends Customer
         {
             trigger OnAfterValidate()
             begin
-                //ZT0207 06.05.2020
-                //++
                 IF "Customer Posting Group" = 'LOCAL' THEN
                     "Currency Code" := 'INR';
-                //--
             end;
         }
 
@@ -31,13 +25,11 @@ tableextension 50024 Customer extends Customer
         {
             trigger OnAfterValidate()
             begin
-                //ZE.RSF.373
                 IF ("Customer Posting Group" = 'LOCAL') OR ("Customer Posting Group" = 'EMPLOYEE') THEN
                     TESTFIELD("Currency Code", 'INR');
 
                 IF "Currency Code" = 'INR' THEN
                     TESTFIELD("Customer Posting Group", 'LOCAL|EMPOYEE')
-                //ZE.RSF.373
             end;
         }
 
@@ -45,15 +37,8 @@ tableextension 50024 Customer extends Customer
 
         {
             trigger OnAfterValidate()
-            var
-                myInt: Integer;
             begin
-                //ZT0207 15.05.2020
-                //++
-                //Needto Restructure
-                //MailManagement.CheckValidEmailAddress("E-Mail");
-                //--
-
+                MailManagement.CheckValidEmailAddress("E-Mail");
             end;
         }
 
@@ -81,88 +66,8 @@ tableextension 50024 Customer extends Customer
         }
     }
 
-
-    //Unsupported feature: Code Modification on "CheckBlockedCustOnDocs(PROCEDURE 5)".
-
-    //procedure CheckBlockedCustOnDocs();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    WITH Cust2 DO BEGIN
-      IF "Privacy Blocked" THEN
-        CustPrivacyBlockedErrorMessage(Cust2,Transaction);
-
-      IF ((Blocked = Blocked::All) OR
-          ((Blocked = Blocked::Invoice) AND (DocType IN [DocType::Quote,DocType::Order,DocType::Invoice,DocType::"Blanket Order"])) OR
-          ((Blocked = Blocked::Ship) AND (DocType IN [DocType::Quote,DocType::Order,DocType::"Blanket Order"]) AND
-           (NOT Transaction)) OR
-          ((Blocked = Blocked::Ship) AND (DocType IN [DocType::Quote,DocType::Order,DocType::Invoice,DocType::"Blanket Order"]) AND
-           Shipment AND Transaction))
-      THEN
-        CustBlockedErrorMessage(Cust2,Transaction);
-    END;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    //SE-E859.s
-    #1..5
-          ((Blocked = Blocked::Invoice) AND (DocType IN [DocType::Quote,DocType::Order,DocType::Invoice,DocType::"Blanket Order"]) AND (NOT SetBlockParameterFromDocsValue)) OR
-          ((Blocked = Blocked::Ship) AND (DocType IN [DocType::Quote,DocType::Order,DocType::"Blanket Order"]) AND
-           (NOT Transaction) AND (NOT SetBlockParameterFromDocsValue)) OR
-          ((Blocked = Blocked::Ship) AND (DocType IN [DocType::Quote,DocType::Order,DocType::Invoice,DocType::"Blanket Order"]) AND
-           Shipment AND Transaction) AND (NOT SetBlockParameterFromDocsValue))
-      THEN
-        CustBlockedErrorMessage(Cust2,Transaction);
-     END;
-    //SE-E859.e
-    */
-    //end;
-
-
-    //Unsupported feature: Code Modification on "CheckBlockedCustOnJnls(PROCEDURE 7)".
-
-    //procedure CheckBlockedCustOnJnls();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    WITH Cust2 DO BEGIN
-      IF "Privacy Blocked" THEN
-        CustPrivacyBlockedErrorMessage(Cust2,Transaction);
-
-      IF (Blocked = Blocked::All) OR
-         ((Blocked = Blocked::Invoice) AND (DocType IN [DocType::Invoice,DocType::" "]))
-      THEN
-        CustBlockedErrorMessage(Cust2,Transaction)
-    END;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..5
-         ((Blocked = Blocked::Invoice) AND (DocType IN [DocType::Invoice]))//,DocType::" " //ZE.RSF.540|627
-
-    #7..9
-    */
-    //end;
-
-    local procedure "****SE-E859******"()
-    begin
-    end;
-
-    procedure SetBlockParameterFromDocs()
-    begin
-        SetBlockParameterFromDocsValue := TRUE;
-    end;
-
-
     var
-        MailManagement: Codeunit Email;
-        SetBlockParameterFromDocsValue: Boolean;
+        MailManagement: Codeunit "Mail Management";
 
 }
 

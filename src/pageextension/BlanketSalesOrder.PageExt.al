@@ -2,9 +2,10 @@ pageextension 50062 BlanketSalesOrder extends "Blanket Sales Order"
 {
     layout
     {
-
-        //Unsupported feature: Property Modification (SourceExpr) on "Control 507".
-
+        modify("External Document No.")
+        {
+            Caption = 'PO No.';
+        }
         addafter(Control21)
         {
             field(Validity; Rec.Validity)

@@ -4,7 +4,7 @@ codeunit 50100 SalesSubscriber
     [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnBeforeCodeInsertInvLineFromShptLine, '', false, false)]
     local procedure OnBeforeCodeInsertInvLineFromShptLine_WM(var SalesLine: Record "Sales Line"; var SalesShipmentLine: Record "Sales Shipment Line")
     begin
-        //SalesLine."OC No" := SalesShipmentLine."Order No.";//SE-E859
+        SalesLine."OC No" := SalesShipmentLine."Order No.";
     end;
 
     [EventSubscriber(ObjectType::Table, Database::Customer, 'OnBeforeCheckBlockedCust', '', false, false)]
@@ -12,9 +12,7 @@ codeunit 50100 SalesSubscriber
     var
         SingleInstanceCU: Codeunit "Single Instance CU";
     begin
-        //SE-E859.s
         IsHandled := true;
-        //WITH Customer DO BEGIN
         IF Customer."Privacy Blocked" THEN
             Customer.CustPrivacyBlockedErrorMessage(Customer, Transaction);
 
@@ -26,30 +24,19 @@ codeunit 50100 SalesSubscriber
              Shipment AND Transaction) AND (NOT SingleInstanceCU.GetBlockParameterFromDocs()))
         THEN
             Customer.CustBlockedErrorMessage(Customer, Transaction);
-        //END;
-        //SE-E859.e
-    end;
-
-    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs, '', false, false)]
-    local procedure OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs_WM(var Cust: Record Customer)
-    begin
-        //(Rec, Customer, IsHandled);
-        //SE-E859.s
-        IF Cust.Blocked IN [Cust.Blocked::Ship, Cust.Blocked::Invoice] THEN
-            Cust.SetBlockParameterFromDocs();
-        //SE-E859.e
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidatePostingDateOnBeforeAssignDocumentDate, '', false, false)]
     local procedure OnValidatePostingDateOnBeforeAssignDocumentDate_WM(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    var
+        SalesSetup: Record "Sales & Receivables Setup";
     begin
-        IsHandled := true;
-        //>> ZE.SAGAR T932 26092023
-        //IF "Incoming Document Entry No." = 0 THEN
-        //VALIDATE("Document Date","Posting Date");
-        IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN
-            SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
-        //<< ZE.SAGAR T932 26092023
+        SalesSetup.Get();
+        if not SalesSetup."Link Doc. Date To Posting Date" then
+            IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN begin
+                SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
+                IsHandled := true;
+            end;
     end;
 
 
@@ -58,7 +45,6 @@ codeunit 50100 SalesSubscriber
     var
         SalesHeader: Record "Sales Header";
     begin
-        //SE-E859.s
         SalesHeader.Get(SalesLine."Document Type", SalesLine."Document No.");
         IF SalesHeader."Document Type" = SalesHeader."Document Type"::Quote THEN
             IF SalesHeader."Sell-to Customer No." <> '' THEN
@@ -69,7 +55,6 @@ codeunit 50100 SalesSubscriber
                         SalesLine."Latest UnitPrice" := 0;
                         CLEAR(SalesLine."Latest Invoice Date");
                     END;
-        //SE-E859.e
     END;
 
     [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnUpdateAmountsOnAfterCalcLineAmount, '', false, false)]
@@ -80,7 +65,7 @@ codeunit 50100 SalesSubscriber
     begin
         Currency.Get(SalesLine."Currency Code");
         IF SalesLine."Line Amount" <> ROUND(SalesLine.Quantity * SalesLine."Unit Price", Currency."Amount Rounding Precision") - SalesLine."Line Discount Amount" THEN BEGIN
-            //"Line Amount" := ROUND(Quantity * "Unit Price",Currency."Amount Rounding Precision") - "Line Discount Amount";//Se-E859
+            SalesLine."Line Amount" := ROUND(SalesLine.Quantity * SalesLine."Unit Price", Currency."Amount Rounding Precision") - SalesLine."Line Discount Amount";//Se-E859
             SalesLine."Line Amount" := (SalesLine.Quantity * SalesLine."Unit Price") - SalesLine."Line Discount Amount";
             SalesLine."VAT Difference" := 0;
             //SalesLine.LineAmountChanged := TRUE;
@@ -110,5 +95,84 @@ codeunit 50100 SalesSubscriber
             IF Rec."Salesperson Code" = '' THEN
                 Rec."Salesperson Code" := Cont."Salesperson Code";
     end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Apply Customer Entries", OnPostDirectApplicationBeforeApply, '', false, false)]
+    local procedure "Apply Customer Entries_OnPostDirectApplicationBeforeApply"(GLSetup: Record "General Ledger Setup"; var NewApplyUnapplyParameters: Record "Apply Unapply Parameters" temporary)
+    var
+        RecCust: Record Customer;
+    begin
+        if NewApplyUnapplyParameters."Account Type" <> NewApplyUnapplyParameters."Account Type"::Customer then
+            exit;
+        IF NOT RecCust.GET(NewApplyUnapplyParameters."Account No.") THEN
+            EXIT;
+        IF NOT NewApplyUnapplyParameters.UpdateBackBlocked THEN BEGIN
+            IF RecCust.Blocked <> RecCust.Blocked::Invoice THEN
+                EXIT;
+            IF (NewApplyUnapplyParameters."Document Type" = NewApplyUnapplyParameters."Document Type"::" ") THEN BEGIN
+                RecCust.Blocked := RecCust.Blocked::" ";
+                RecCust.MODIFY(TRUE);
+                NewApplyUnapplyParameters.UpdateBackBlocked := TRUE;
+            END;
+        END;
+    END;
+
+    [EventSubscriber(ObjectType::Page, Page::"Apply Customer Entries", OnPostDirectApplicationOnAfterApply, '', false, false)]
+    local procedure "Apply Customer Entries_OnPostDirectApplicationOnAfterApply"(var CustLedgerEntry: Record "Cust. Ledger Entry"; var NewApplyUnapplyParameters: Record "Apply Unapply Parameters" temporary; PreviewMode: Boolean; Applied: Boolean)
+    var
+        RecCust: Record Customer;
+    begin
+        IF NewApplyUnapplyParameters.UpdateBackBlocked THEN BEGIN
+            RecCust.Blocked := Reccust.Blocked::Invoice;
+            RecCust.MODIFY(TRUE);
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnBeforePerformManualReleaseProcedure, '', false, false)]
+    local procedure "Release Sales Document_OnBeforePerformManualReleaseProcedure"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then
+            SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforePostSalesDoc, '', false, false)]
+    local procedure "Sales-Post_OnBeforePostSalesDoc"(var Sender: Codeunit "Sales-Post"; var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean; PreviewMode: Boolean; var HideProgressWindow: Boolean; var IsHandled: Boolean; var CalledBy: Integer)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        if not (SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order]) then
+            exit;
+        SalesHeader.TESTFIELD("Currency Code");
+        SalesHeader.TESTFIELD("External Document No.");
+        SalesHeader.CheckIndustrySegments();
+        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnInsertInvLineFromShptLineOnBeforeAssigneSalesLine, '', false, false)]
+    local procedure "Sales Shipment Line_OnInsertInvLineFromShptLineOnBeforeAssigneSalesLine"(var SalesShipmentLine: Record "Sales Shipment Line"; SalesHeaderInv: Record "Sales Header"; SalesHeaderOrder: Record "Sales Header"; var SalesLine: Record "Sales Line"; var SalesOrderLine: Record "Sales Line"; Currency: Record Currency)
+    begin
+        SalesLine."OC No" := SalesShipmentLine."Order No.";
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Document-Print", OnBeforeDoPrintSalesHeader, '', false, false)]
+    local procedure "Document-Print_OnBeforeDoPrintSalesHeader"(var SalesHeader: Record "Sales Header"; ReportUsage: Integer; SendAsEmail: Boolean; var IsPrinted: Boolean)
+    begin
+        if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then
+            SalesHeader.TESTFIELD("Currency Code");//SDM-RSF_ZOHO.1583
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Quote to Order (Yes/No)", OnBeforeRun, '', false, false)]
+    local procedure "Sales-Quote to Order (Yes/No)_OnBeforeRun"(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    var
+        SalesPriceManagement: Codeunit "Sales Price Management";
+    begin
+        SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
+    end;
+
+
+
+
+
 
 }
