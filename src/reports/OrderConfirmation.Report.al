@@ -9,7 +9,7 @@ report 50001 "Order-Confirmation"
     // -+--------+---------+--------+---------+----+--------------------------------------
     // ?|ZE_LIJO |         |26.06.19|         |Lijo     | Customer No Filter added for ShiptoAddress, to display proper Shipping details
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/layout/OrderConfirmation.rdl';
+    RDLCLayout = 'src/reportlayout/OrderConfirmation.rdl';
 
 
     dataset

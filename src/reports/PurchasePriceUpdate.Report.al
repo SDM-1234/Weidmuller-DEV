@@ -1,7 +1,7 @@
 report 50050 "Purchase Price Update"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/layout/PurchasePriceUpdate/PurchasePriceUpdate.rdl';
+    ProcessingOnly = true;
 
     dataset
     {
