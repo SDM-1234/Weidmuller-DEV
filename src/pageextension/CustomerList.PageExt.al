@@ -86,7 +86,7 @@ pageextension 50033 CustomerList extends "Customer List"
             action("Customer-wise Dunning")
             {
                 Caption = 'Customer-wise Dunning';
-                //RunObject = Report 50024;
+                RunObject = Report "Customer-wise Dunning";
                 Image = Customer;
                 ToolTip = 'Executes the Customer-wise Dunning action.';
                 ApplicationArea = All;

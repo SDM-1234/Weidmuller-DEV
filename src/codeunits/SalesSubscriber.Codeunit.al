@@ -170,6 +170,110 @@ codeunit 50100 SalesSubscriber
         SalesPriceManagement.ApprovalProcessMandatory(SalesHeader);
     end;
 
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnBeforeCodeInsertInvLineFromShptLine, '', false, false)]
+    local procedure "Sales Shipment Line_OnBeforeCodeInsertInvLineFromShptLine"(var SalesShipmentLine: Record "Sales Shipment Line"; var SalesLine: Record "Sales Line"; var IsHandled: Boolean)
+    var
+        recCust: Record Customer;
+        SingleInstanceCU: Codeunit "Single Instance CU";
+        txt50000Err: TextConst ENU = 'Selecting Multiple Shipment is Restricted for Customer %1';
+    begin
+        IF SalesLine."Bill-to Customer No." <> '' THEN BEGIN
+            recCust.RESET();
+            recCust.SETRANGE("No.", SalesLine."Sell-to Customer No.");
+            recCust.SETRANGE("Invoice Print Check", TRUE);
+            IF not recCust.IsEmpty THEN BEGIN
+                IF SingleInstanceCU.GetLastDocNo() = '' THEN
+                    SingleInstanceCU.SetLastDocNo(SalesShipmentLine."Document No.");
+                IF (SingleInstanceCU.GetLastDocNo() <> '') AND (SingleInstanceCU.GetLastDocNo() <> SalesShipmentLine."Document No.") THEN
+                    ERROR(txt50000Err, SalesLine."Bill-to Customer No.");
+            END;
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Get Shipment", OnBeforeCreateInvLines, '', false, false)]
+    local procedure "Sales-Get Shipment_OnBeforeCreateInvLines"(var Sender: Codeunit "Sales-Get Shipment"; var SalesShipmentLine2: Record "Sales Shipment Line"; var SalesHeader: Record "Sales Header"; var SalesLine: Record "Sales Line"; SalesShipmentHeader: Record "Sales Shipment Header"; var IsHandled: Boolean)
+    var
+        SingleInstanceCU: Codeunit "Single Instance CU";
+    begin
+        SingleInstanceCU.SetLastDocNo('');
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnInsertPostedHeadersOnAfterInsertInvoiceHeader, '', false, false)]
+    local procedure "Sales-Post_OnInsertPostedHeadersOnAfterInsertInvoiceHeader"(var SalesHeader: Record "Sales Header"; var SalesInvoiceHeader: Record "Sales Invoice Header")
+    var
+        SalesSegment: Record "Sales Segment";
+    begin
+        SalesSegment.RESET();
+        SalesSegment.SETRANGE("Sales Invoice No.", SalesHeader."No.");
+        IF SalesSegment.FINDSET(true) THEN
+            REPEAT
+                SalesSegment."Posted Sales Invoice No." := SalesInvoiceHeader."No.";
+                SalesSegment.MODIFY();
+            UNTIL SalesSegment.NEXT() = 0;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnBeforeCreatePostedWhseRcptHeader, '', false, false)]
+    local procedure "Sales-Post_OnBeforeCreatePostedWhseRcptHeader"(var PostedWhseReceiptHeader: Record "Posted Whse. Receipt Header"; WarehouseReceiptHeader: Record "Warehouse Receipt Header"; SalesHeader: Record "Sales Header")
+    var
+        SingleInstanceCU: Codeunit "Single Instance CU";
+    begin
+        SingleInstanceCU.SetWhseDocNo(WarehouseReceiptHeader."No.");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterInsertShipmentHeader, '', false, false)]
+    local procedure "Sales-Post_OnAfterInsertShipmentHeader"(var SalesHeader: Record "Sales Header"; var SalesShipmentHeader: Record "Sales Shipment Header")
+    var
+        SingleInstanceCU: Codeunit "Single Instance CU";
+    begin
+        SalesShipmentHeader."WarehouseShip No." := SingleInstanceCU.GetWhseDocNo()
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Post", OnAfterCheckMandatoryFields, '', false, false)]
+    local procedure "Sales-Post_OnAfterCheckMandatoryFields"(var SalesHeader: Record "Sales Header"; CommitIsSuppressed: Boolean)
+    begin
+        IF SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice THEN BEGIN
+            SalesHeader.TESTFIELD("Total No of Boxes");
+            SalesHeader.TESTFIELD("Total Weight");
+            SalesHeader.TESTFIELD("Shipment Method Code");
+            SalesHeader.TESTFIELD("Invoice Type");
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Blnkt Sales Ord. to Ord. (Y/N)", OnBeforeRun, '', false, false)]
+    local procedure "Blnkt Sales Ord. to Ord. (Y/N)_OnBeforeRun"(var SalesHeader: Record "Sales Header"; var IsHandled: Boolean)
+    var
+        CustomerCreditCheck: Codeunit "Customer Credit Check";
+    begin
+        CustomerCreditCheck.MakeOrderfromBlnktOrder(SalesHeader."No.");
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnCodeOnAfterCheckCustomerCreated, '', false, false)]
+    local procedure "Release Sales Document_OnCodeOnAfterCheckCustomerCreated"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean; var IsHandled: Boolean; var LinesWereModified: Boolean)
+    begin
+        IF SalesHeader."Document Type" = SalesHeader."Document Type"::Invoice THEN BEGIN
+            SalesHeader.TESTFIELD("Shipment Method Code");
+            SalesHeader.TESTFIELD("Invoice Type");
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Release Sales Document", OnBeforeManualReleaseSalesDoc, '', false, false)]
+    local procedure "Release Sales Document_OnBeforeManualReleaseSalesDoc"(var SalesHeader: Record "Sales Header"; PreviewMode: Boolean)
+    var
+        CustomerCreditCheck: Codeunit "Customer Credit Check";
+    begin
+        IF SalesHeader."Document Type" = SalesHeader."Document Type"::Order THEN
+            CustomerCreditCheck.ReleasingSalesOrder(SalesHeader."No.");
+    end;
+
+
+
+
+
+
+
+
+
+
 
 
 
