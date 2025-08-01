@@ -18,26 +18,6 @@ pageextension 50108 SalesQuotes extends "Sales Quotes"
     }
     actions
     {
-
-
-        //Unsupported feature: Code Modification on "Action 69.OnAction".
-
-        //trigger OnAction()
-        //Parameters and return type have not been exported.
-        //>>>> ORIGINAL CODE:
-        //begin
-        /*
-        DocPrint.PrintSalesHeader(Rec);
-        */
-        //end;
-        //>>>> MODIFIED CODE:
-        //begin
-        /*
-        TESTFIELD("Currency Code");//SDM-RSF_ZOHO.1583
-
-        DocPrint.PrintSalesHeader(Rec);
-        */
-        //end;
     }
 }
 

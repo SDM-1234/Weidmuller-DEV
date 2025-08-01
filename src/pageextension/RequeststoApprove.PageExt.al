@@ -13,12 +13,12 @@ pageextension 50091 RequeststoApprove extends "Requests to Approve"
 
     procedure CustomerUnblock(ApprovalEntry: Record "Approval Entry")
     begin
-        IF (STRPOS(ApprovalEntry.RecordDetails, 'Customer') = 1) THEN BEGIN
-            Cust.RESET;
-            Cust.SETFILTER(Cust."No.", COPYSTR(ApprovalEntry.RecordDetails, 11, STRLEN(ApprovalEntry.RecordDetails)));
-            IF Cust.FINDFIRST THEN BEGIN
+        IF (STRPOS(ApprovalEntry.RecordDetails(), 'Customer') = 1) THEN BEGIN
+            Cust.RESET();
+            Cust.SETFILTER(Cust."No.", COPYSTR(ApprovalEntry.RecordDetails(), 11, STRLEN(ApprovalEntry.RecordDetails())));
+            IF Cust.FINDFIRST() THEN BEGIN
                 Cust.Blocked := Cust.Blocked::" ";
-                Cust.MODIFY;
+                Cust.MODIFY();
             END;
         END;
     end;

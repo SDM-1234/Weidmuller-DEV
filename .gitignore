@@ -21,3 +21,4 @@ cache_*
 ~$*
 .vscode/rad.json
 .vscode/rad.json
+.vscode/.alcache/cache_*.json

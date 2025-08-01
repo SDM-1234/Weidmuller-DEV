@@ -2,27 +2,24 @@ codeunit 50000 "Single Instance CU"
 {
     SingleInstance = true;
 
-    trigger OnRun()
+    procedure SetLastDocNo(pDocNO: Code[20])
     begin
-        IF NOT StoreToTemp THEN
-            StoreToTemp := TRUE
-        ELSE
-            PAGE.RUNMODAL(0, TempGLEntry);
+        DocNO := pDocNO;
     end;
 
-    var
-        TempGLEntry: Record "G/L Entry" temporary;
-        StoreToTemp: Boolean;
-
-    procedure InsertGL(GLEntry: Record "G/L Entry")
+    procedure GetLastDocNo(): Code[20]
     begin
-        IF StoreToTemp THEN BEGIN
-            TempGLEntry := GLEntry;
-            IF NOT TempGLEntry.INSERT() THEN BEGIN
-                TempGLEntry.DELETEALL();
-                TempGLEntry.INSERT();
-            END;
-        END;
+        exit(DocNO);
+    end;
+
+    procedure SetWhseDocNo(pDocNO: Code[20])
+    begin
+        DocNO := pDocNO;
+    end;
+
+    procedure GetWhseDocNo(): Code[20]
+    begin
+        exit(DocNO);
     end;
 
     procedure SetBlockParameterFromDocs()
@@ -37,6 +34,7 @@ codeunit 50000 "Single Instance CU"
 
     var
         SetBlockParameterFromDocsValue: Boolean;
+        DocNO: Code[20];
 
     // Need to shift in single instance
 

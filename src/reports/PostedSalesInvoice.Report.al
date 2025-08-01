@@ -291,10 +291,10 @@ report 50005 "Posted Sales Invoice"
                     column(GSTCompAmount1; ABS(CGSTAmt))
                     {
                     }
-                    column(GSTCompAmount2; ABS(SGSTAmt))
+                    column(GSTCompAmount2; ABS(IGSTAmt))
                     {
                     }
-                    column(GSTCompAmount3; ABS(IGSTAmt))
+                    column(GSTCompAmount3; ABS(SGSTAmt))
                     {
                     }
                     column(GSTCompAmount4; ABS(CessAmt))
@@ -303,10 +303,10 @@ report 50005 "Posted Sales Invoice"
                     column(GSTCompPer1; CGSTPer)
                     {
                     }
-                    column(GSTCompPer2; SGSTPer)
+                    column(GSTCompPer2; IgstPer)
                     {
                     }
-                    column(GSTCompPer3; IgstPer)
+                    column(GSTCompPer3; SGSTPer)
                     {
                     }
                     column(IsGSTApplicable; IsGSTApplicable)
@@ -638,6 +638,8 @@ report 50005 "Posted Sales Invoice"
 
                         trigger OnAfterGetRecord()
                         begin
+                            if "Sales Invoice Line"."No." = '' then
+                                CurrReport.Skip();
                             IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::Item THEN
                                 SL += 1;
                             CLEAR(LineType);
@@ -1571,8 +1573,13 @@ report 50005 "Posted Sales Invoice"
         Clear(CGSTAmt);
         Clear(SGSTAmt);
         Clear(CessAmt);
+        Clear(IGSTPer);
+        Clear(CGSTPer);
+        Clear(SGSTPer);
+        Clear(CessPer);
         DetailedGSTLedgerEntry.Reset();
         DetailedGSTLedgerEntry.SetRange("Document No.", SalesInvoiceLine."Document No.");
+        DetailedGSTLedgerEntry.SetRange("Document Line No.", SalesInvoiceLine."Line No.");
         DetailedGSTLedgerEntry.SetRange("Entry Type", DetailedGSTLedgerEntry."Entry Type"::"Initial Entry");
         if DetailedGSTLedgerEntry.FindSet() then
             repeat
@@ -1587,20 +1594,20 @@ report 50005 "Posted Sales Invoice"
 
                 if (DetailedGSTLedgerEntry."GST Component Code" = SGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
                     SGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
-                    SGSTAmt := DetailedGSTLedgerEntry."GST %";
+                    SGSTPer := DetailedGSTLedgerEntry."GST %";
                 end else
                     if (DetailedGSTLedgerEntry."GST Component Code" = SGSTLbl) then begin
                         SGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
-                        SGSTAmt := DetailedGSTLedgerEntry."GST %";
+                        SGSTPer := DetailedGSTLedgerEntry."GST %";
                     end;
 
                 if (DetailedGSTLedgerEntry."GST Component Code" = IGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
                     IGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
-                    IGSTAmt := DetailedGSTLedgerEntry."GST %";
+                    IGSTPer := DetailedGSTLedgerEntry."GST %";
                 end else
                     if (DetailedGSTLedgerEntry."GST Component Code" = IGSTLbl) then begin
                         IGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
-                        IGSTAmt := DetailedGSTLedgerEntry."GST %";
+                        IGSTPer := DetailedGSTLedgerEntry."GST %";
                     end;
                 if (DetailedGSTLedgerEntry."GST Component Code" = CessLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
                     CessAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
