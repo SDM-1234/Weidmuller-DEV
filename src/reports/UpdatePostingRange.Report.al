@@ -1,8 +1,8 @@
 report 50025 "Update Posting Range"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './UpdatePostingRange.rdlc';
     ApplicationArea = All;
+    ProcessingOnly = true;
 
     dataset
     {

@@ -10,7 +10,7 @@ report 50018 "Purchase Order-Bulk"
     // ?|ZE    |         |25.07.19|ZE_LIJO  |LIJO     | GST Calculation is added.
     //  |                                             |
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/layout/PurchasePriceUpdate/PurchaseOrderBulk.rdl';
+    RDLCLayout = 'src/reportlayout/PurchaseOrderBulk.rdl';
 
     PreviewMode = Normal;
 
