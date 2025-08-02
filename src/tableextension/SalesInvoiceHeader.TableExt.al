@@ -47,7 +47,7 @@ tableextension 50003 SalesInvoiceHeader extends "Sales Invoice Header"
                     IGSTLineAmount,
                     CESSLineAmount);
 
-                TotGstAmt += SalesInvLIne."Line Amount" + CGSTLineAmount + SGSTLineAmount + IGSTLineAmount + CESSLineAmount;
+                TotGstAmt += CGSTLineAmount + SGSTLineAmount + IGSTLineAmount + CESSLineAmount;
             until SalesInvLIne.Next() = 0;
         Rec.CalcFields("Amount");
         exit(TotGstAmt + Rec.Amount);

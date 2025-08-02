@@ -1,14 +1,16 @@
 report 50002 "Proforma Invoice"
 {
-    DefaultLayout = RDLC;
-    RDLCLayout = 'src/reportlayout/ProformaInvoice.rdl';
-
+    Caption = 'Proforma Invoice';
+    DefaultRenderingLayout = RdlCLayout;
+    WordMergeDataItem = "Sales Header";
     dataset
     {
         dataitem("Sales Header"; "Sales Header")
         {
-            RequestFilterFields = "No.";
-            column(ItemCrossReference_Cross_ReferenceNo; '')//ItemCrossReference."Cross-Reference No."
+            DataItemTableView = sorting("Document Type", "No.");
+            RequestFilterFields = "No.", "Sell-to Customer No.", "No. Printed";
+            RequestFilterHeading = 'Pro Forma Invoice';
+            column(ItemCrossReference_Cross_ReferenceNo; '')
             {
             }
             column(Continued; ContinuedLbl)
@@ -526,7 +528,6 @@ report 50002 "Proforma Invoice"
             begin
                 OrderText := 'Proforma  Invoice';
 
-                CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
                 CompanyInfo.GET();
                 //CompanyInfo.CALCFIELDS(Picture);
 
@@ -604,14 +605,23 @@ report 50002 "Proforma Invoice"
         {
         }
     }
-
+    rendering
+    {
+        layout(RdlCLayout)
+        {
+            Type = RDLC;
+            LayoutFile = 'src/reportlayout/ProformaInvoice.rdl';
+            Caption = 'Sales Proforma Invoice (RDLC)';
+            Summary = 'The Sales Proforma Invoice (RDLC) provides a detailed layout.';
+        }
+    }
     labels
     {
     }
 
-    trigger OnInitReport()
+    trigger OnPreReport()
     begin
-        CompanyInfo.GET;
+        CompanyInfo.GET();
     end;
 
     var
