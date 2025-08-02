@@ -7,15 +7,17 @@ tableextension 50031 SalesHeader extends "Sales Header"
         {
             trigger OnAfterValidate()
             var
-            //SalesPriceManagement: Codeunit "50007";
+            //SalesPriceManagement: Codeunit Sales;
             begin
                 //SalesPriceManagement.ConfirmTransactionType(Rec, xRec);//1065
             end;
         }
 
 
+
         modify("External Document No.")
         {
+            Caption = 'PO No.';
             trigger OnBeforeValidate()
             var
                 SalesHeader: Record "Sales Header";
@@ -61,44 +63,18 @@ tableextension 50031 SalesHeader extends "Sales Header"
             DataClassification = ToBeClassified;
             Description = 'SE_LIJO';
         }
+
     }
     keys
     {
         key(SK1; "Sell-to Customer No.", "External Document No.")
         {
         }
+        key(SK2; "No.", "Document Type", "Status", "Document Date")
+        {
+        }
+
     }
-
-
-
-    //Unsupported feature: Code Modification on "InitSellToCustFromCustomer(PROCEDURE 1500010)".
-
-    //procedure InitSellToCustFromCustomer();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    WITH SalesHeader DO BEGIN
-      Cust.CheckBlockedCustOnDocs(Cust,"Document Type",FALSE,FALSE);
-      Cust.TESTFIELD("Gen. Bus. Posting Group");
-      "Sell-to Customer Template Code" := '';
-    #5..31
-      CheckShipToCustomer;
-      CheckShipToCode;
-    END;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    WITH SalesHeader DO BEGIN
-      //SE-E859.s
-      IF Cust.Blocked IN[Cust.Blocked::Ship,Cust.Blocked::Invoice] THEN
-       Cust.SetBlockParameterFromDocs;
-      //SE-E859.e
-    #2..34
-    */
-    //end;
 
     procedure UpdatePoNo()
     begin

@@ -10,44 +10,5 @@ tableextension 50041 Opportunity extends Opportunity
         }
     }
 
-
-    //Unsupported feature: Code Modification on "CreateOppFromOpp(PROCEDURE 1)".
-
-    //procedure CreateOppFromOpp();
-    //Parameters and return type have not been exported.
-    //>>>> ORIGINAL CODE:
-    //begin
-    /*
-    DELETEALL;
-    INIT;
-    "Creation Date" := WORKDATE;
-    #4..15
-      "Salesperson Code" := Cont."Salesperson Code";
-      SETRANGE("Contact No.","Contact No.");
-    END;
-    IF SalesPurchPerson.GET(Opp.GETFILTER("Salesperson Code")) THEN BEGIN
-      "Salesperson Code" := SalesPurchPerson.Code;
-      SETRANGE("Salesperson Code","Salesperson Code");
-    END;
-    IF Campaign.GET(Opp.GETFILTER("Campaign No.")) THEN BEGIN
-      "Campaign No." := Campaign."No.";
-      "Salesperson Code" := Campaign."Salesperson Code";
-    #26..35
-    END;
-
-    StartWizard;
-    */
-    //end;
-    //>>>> MODIFIED CODE:
-    //begin
-    /*
-    #1..18
-    {
-    IF SalesPurchPerson.GET(Opp.GETFILTER("Salesperson Code")) THEN BEGIN  //Santosh
-    #20..22
-    }
-    #23..38
-    */
-    //end;
 }
 

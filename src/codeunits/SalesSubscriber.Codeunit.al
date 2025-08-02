@@ -266,7 +266,44 @@ codeunit 50100 SalesSubscriber
     end;
 
 
+[EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs, '', False, False)]
+    local procedure OnValidateBillToCustomerNoOnBeforeCheckBlockedCustOnDocs(var Cust: Record Customer; var IsHandled: Boolean)
+    var
+        SingleInstaneCU: Codeunit "Single Instance CU";
+    begin
+        //SE-E859.s
+        IF Cust.Blocked IN [Cust.Blocked::Ship, Cust.Blocked::Invoice] THEN
+            SingleInstaneCU.SetBlockParameterFromDocs();
+        //SE-E859.e
+        //IsHandled := true;
+    end;
 
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidateSellToCustomerNoOnBeforeCheckBlockedCustOnDocs, '', False, False)]
+    local procedure OnValidateSellToCustomerNoOnBeforeCheckBlockedCustOnDocs(var Cust: Record Customer; var IsHandled: Boolean)
+    var
+        SingleInstaneCU: Codeunit "Single Instance CU";
+    begin
+        //SE-E859.s
+        IF Cust.Blocked IN [Cust.Blocked::Ship, Cust.Blocked::Invoice] THEN
+            SingleInstaneCU.SetBlockParameterFromDocs();
+        //SE-E859.e
+        //IsHandled := true;
+    end;
+
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Header", OnValidatePostingDateOnBeforeAssignDocumentDate, '', False, False)]
+    local procedure OnValidatePostingDateOnBeforeAssignDocumentDate(var IsHandled: Boolean; var SalesHeader: Record "Sales Header")
+    begin
+
+        //>> ZE.SAGAR T932 26092023
+        //IF "Incoming Document Entry No." = 0 THEN
+        //VALIDATE("Document Date","Posting Date");
+        IF (SalesHeader."Incoming Document Entry No." = 0) AND (SalesHeader."Document Type" <> SalesHeader."Document Type"::Order) THEN
+            SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
+        //<< ZE.SAGAR T932 26092023
+        IsHandled := true;
+    end;
 
 
 
