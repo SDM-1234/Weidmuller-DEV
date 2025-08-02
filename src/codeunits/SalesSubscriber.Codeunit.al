@@ -265,6 +265,19 @@ codeunit 50100 SalesSubscriber
             CustomerCreditCheck.ReleasingSalesOrder(SalesHeader."No.");
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Copy Document Mgt.", OnCopySalesDocUpdateHeaderOnBeforeUpdateCustLedgerEntry, '', false, false)]
+    local procedure "Copy Document Mgt._OnCopySalesDocUpdateHeaderOnBeforeUpdateCustLedgerEntry"(var ToSalesHeader: Record "Sales Header"; FromDocType: Option; FromDocNo: Code[20]; OldSalesHeader: Record "Sales Header")
+    var
+        SalesHeader: Record "Sales Header";
+        FromDocTypeEnum: Enum "Sales Document Type From";
+    begin
+        FromDocTypeEnum := Enum::"Sales Document Type From".FromInteger(FromDocType);
+        if FromDocTypeEnum = FromDocTypeEnum::Quote then
+            if SalesHeader.Get(FromDocType, FromDocNo) then
+                ToSalesHeader."Quote No." := SalesHeader."No.";
+    end;
+
+
 
 
 
