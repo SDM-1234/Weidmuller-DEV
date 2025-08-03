@@ -520,7 +520,7 @@ report 50001 "Order-Confirmation"
 
                 //CurrReport.LANGUAGE := LanguageMgt."Windows Language ID";
 
-                CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
+                //CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
                 CompanyInfo.GET();
                 //CompanyInfo.CALCFIELDS(Picture);
 
