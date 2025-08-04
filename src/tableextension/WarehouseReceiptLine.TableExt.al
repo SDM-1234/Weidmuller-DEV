@@ -1,4 +1,4 @@
-tableextension 50049 WarehouseReceiptLine extends "Warehouse Receipt Line"
+tableextension 50046 WarehouseReceiptLine extends "Warehouse Receipt Line"
 {
     fields
     {

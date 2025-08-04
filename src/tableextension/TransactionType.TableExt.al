@@ -1,4 +1,4 @@
-tableextension 50026 TransactionType extends "Transaction Type"
+tableextension 50025 TransactionType extends "Transaction Type"
 {
     fields
     {

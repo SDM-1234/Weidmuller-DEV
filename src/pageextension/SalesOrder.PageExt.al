@@ -9,7 +9,6 @@ pageextension 50053 SalesOrder extends "Sales Order"
         modify("External Document No.")
         {
             Caption = 'PO No.';
-            Editable = false;
         }
         modify(Status)
         {

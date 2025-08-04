@@ -17,6 +17,11 @@ tableextension 50058 UserSetup extends "User Setup"
             DataClassification = ToBeClassified;
             Description = 'ZT0207';
         }
+        field(50004; "Team Code"; Code[10])
+        {
+            DataClassification = ToBeClassified;
+            TableRelation = Team;
+        }
     }
 }
 

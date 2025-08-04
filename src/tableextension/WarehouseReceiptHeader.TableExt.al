@@ -1,4 +1,4 @@
-tableextension 50048 WarehouseReceiptHeader extends "Warehouse Receipt Header"
+tableextension 50045 WarehouseReceiptHeader extends "Warehouse Receipt Header"
 {
     fields
     {

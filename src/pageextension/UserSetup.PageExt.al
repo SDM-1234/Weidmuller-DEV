@@ -9,6 +9,11 @@ pageextension 50003 UserSetup extends "User Setup"
                 ToolTip = 'Specifies the value of the Update Pricing field.';
                 ApplicationArea = All;
             }
+            field("Team Code"; Rec."Team Code")
+            {
+                ToolTip = 'Specifies the team code for the user.';
+                ApplicationArea = All;
+            }
         }
     }
 }

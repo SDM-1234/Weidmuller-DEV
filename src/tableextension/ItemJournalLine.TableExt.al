@@ -1,4 +1,4 @@
-tableextension 50012 ItemJournalLine extends "Item Journal Line"
+tableextension 50049 ItemJournalLine extends "Item Journal Line"
 {
     fields
     {
@@ -8,14 +8,11 @@ tableextension 50012 ItemJournalLine extends "Item Journal Line"
 
             trigger OnValidate()
             begin
-                //SE-E859.s
                 IF "EAN No." <> xRec."EAN No." THEN
                     CheckIsValidEANandUpdateItem("EAN No.");
-                //SE-E859.e
             end;
         }
     }
-
 
     local procedure CheckIsValidEANandUpdateItem(L_EAN_No: Code[13])
     var

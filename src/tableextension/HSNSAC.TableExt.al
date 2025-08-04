@@ -1,4 +1,4 @@
-tableextension 50025 HSNSAC extends "HSN/SAC"
+tableextension 50016 HSNSAC extends "HSN/SAC"
 {
     fields
     {

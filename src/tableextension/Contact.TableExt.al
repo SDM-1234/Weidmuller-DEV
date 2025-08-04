@@ -1,4 +1,4 @@
-tableextension 50038 Contact extends Contact
+tableextension 50036 Contact extends Contact
 {
     fields
     {

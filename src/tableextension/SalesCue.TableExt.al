@@ -1,10 +1,10 @@
-tableextension 50011 SalesCue extends "Sales Cue"
+tableextension 50055 SalesCue extends "Sales Cue"
 {
     fields
     {
         field(50000; "Item Below Safty Qty"; Integer)
         {
-            CalcFormula = Count(Item WHERE("Inv Below Safety Qty" = FILTER(true)));
+            CalcFormula = Count(Item WHERE("Inv Below Safety Qty" = FILTER(True)));
             Description = 'SE E963';
             FieldClass = FlowField;
         }
@@ -40,10 +40,6 @@ tableextension 50011 SalesCue extends "Sales Cue"
             Editable = false;
             FieldClass = FlowField;
         }
-        // field(50005; "User ID Filter"; Code[50])
-        // {
-        //     FieldClass = FlowFilter;
-        // } 
     }
 }
 
