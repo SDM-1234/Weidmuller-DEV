@@ -43,10 +43,8 @@ tableextension 50030 SalesLine extends "Sales Line"
             var
                 myInt: Integer;
             begin
-                //>> 1065
                 IF ((Rec."Unit Price" > 0) AND (xRec."Unit Price" <> 0)) AND (Rec.Quantity = xRec.Quantity) THEN
                     SalesPriceManagement.UnitPriceChangeValidation(Rec);
-                //<< 1065
 
             end;
         }

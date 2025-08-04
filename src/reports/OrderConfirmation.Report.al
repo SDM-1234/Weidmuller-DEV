@@ -1,13 +1,5 @@
 report 50001 "Order-Confirmation"
 {
-    // Project: Weidmuller
-    // ********************************************************************************************************************************
-    // Developer: SourceEdge
-    // ********************************************************************************************************************************
-    // -+--------+---------+--------+---------+----+--------------------------------------
-    // T|ID_RIC  |MOD  REL |DATE    |SEARCH   |Developer|DESCRIPTION
-    // -+--------+---------+--------+---------+----+--------------------------------------
-    // ?|ZE_LIJO |         |26.06.19|         |Lijo     | Customer No Filter added for ShiptoAddress, to display proper Shipping details
     DefaultLayout = RDLC;
     RDLCLayout = 'src/reportlayout/OrderConfirmation.rdl';
 
@@ -518,11 +510,8 @@ report 50001 "Order-Confirmation"
                 ELSE IF "Document Type" = "Document Type"::Quote THEN
                     OrderText := 'Proforma  Invoice';
 
-                //CurrReport.LANGUAGE := LanguageMgt."Windows Language ID";
-
-                //CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
                 CompanyInfo.GET();
-                //CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.CALCFIELDS(Picture);
 
                 Customer.RESET();
                 IF Customer.GET("Sales Header"."Bill-to Customer No.") THEN;

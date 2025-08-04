@@ -14,9 +14,10 @@ tableextension 50053 CompanyInformationWM extends "Company Information"
         field(50003; "IFSC Code"; Code[11])
         {
         }
-        field(50004; "Terms Picture"; Media)
+        field(50004; "Terms Picture"; Blob)
         {
             Caption = 'Picture';
+            Subtype = Bitmap;
         }
         field(50005; "LUT No."; Code[30])
         {

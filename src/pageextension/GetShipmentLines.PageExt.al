@@ -2,7 +2,7 @@ pageextension 50083 GetShipmentLines extends "Get Shipment Lines"
 {
     layout
     {
-        addafter(Control1)
+        addafter("Unit of Measure")
         {
             field("Order No."; rec."Order No.")
             {

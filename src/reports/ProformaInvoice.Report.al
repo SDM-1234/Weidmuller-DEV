@@ -529,7 +529,7 @@ report 50002 "Proforma Invoice"
                 OrderText := 'Proforma  Invoice';
 
                 CompanyInfo.GET();
-                //CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.CALCFIELDS(Picture);
 
                 Customer.RESET();
                 IF Customer.GET("Sales Header"."Bill-to Customer No.") THEN;
@@ -545,7 +545,7 @@ report 50002 "Proforma Invoice"
 
 
                 IF "Shipment Method Code" = '' THEN
-                    ShipmentMethod.INIT
+                    ShipmentMethod.INIT()
                 ELSE BEGIN
                     ShipmentMethod.GET("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Sales Header"."Language Code");
@@ -553,7 +553,7 @@ report 50002 "Proforma Invoice"
                 END;
 
                 IF "Transport Method" = '' THEN
-                    TransportMethod.INIT
+                    TransportMethod.INIT()
                 ELSE BEGIN
                     TransportMethod.GET("Transport Method");
                     //TransportMethod.TranslateDescription(TransportMethod,"Sales Header"."Language Code");

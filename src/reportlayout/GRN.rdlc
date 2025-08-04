@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="DataSource">
+      <ConnectionProperties>
+        <DataProvider>SQL</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
+    </DataSource>
+  </DataSources>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <Height>2in</Height>
+        <Style />
+      </Body>
+      <Width>6.5in</Width>
+      <Page>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <Code>Public Function BlankZero(ByVal Value As Decimal)
+    if Value = 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankPos(ByVal Value As Decimal)
+    if Value &gt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankZeroAndPos(ByVal Value As Decimal)
+    if Value &gt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNeg(ByVal Value As Decimal)
+    if Value &lt; 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+
+Public Function BlankNegAndZero(ByVal Value As Decimal)
+    if Value &lt;= 0 then
+        Return ""
+    end if
+    Return Value
+End Function
+</Code>
+  <Language>=User!Language</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Fields>
+        <Field Name="PurchRcptHeader_No">
+          <DataField>PurchRcptHeader_No</DataField>
+        </Field>
+        <Field Name="BuyfromVendorNo_PurchRcptHeader">
+          <DataField>BuyfromVendorNo_PurchRcptHeader</DataField>
+        </Field>
+        <Field Name="TotalWeight">
+          <DataField>TotalWeight</DataField>
+        </Field>
+        <Field Name="TotalWeightFormat">
+          <DataField>TotalWeightFormat</DataField>
+        </Field>
+        <Field Name="PurchRcptHeader_OrderDate">
+          <DataField>PurchRcptHeader_OrderDate</DataField>
+        </Field>
+        <Field Name="PurchRcptHeader_PostingDate">
+          <DataField>PurchRcptHeader_PostingDate</DataField>
+        </Field>
+        <Field Name="PurchRcptHeader_OrderNo">
+          <DataField>PurchRcptHeader_OrderNo</DataField>
+        </Field>
+        <Field Name="VendorShipmentNo_PurchRcptHeader">
+          <DataField>VendorShipmentNo_PurchRcptHeader</DataField>
+        </Field>
+        <Field Name="Description_Payment_Terms">
+          <DataField>Description_Payment_Terms</DataField>
+        </Field>
+        <Field Name="Picture_CompanyInfo">
+          <DataField>Picture_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Name_CompanyInfo">
+          <DataField>Name_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Name2_CompanyInfo">
+          <DataField>Name2_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Address_CompanyInfo">
+          <DataField>Address_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Address2_CompanyInfo">
+          <DataField>Address2_CompanyInfo</DataField>
+        </Field>
+        <Field Name="City_CompanyInfo">
+          <DataField>City_CompanyInfo</DataField>
+        </Field>
+        <Field Name="PhoneNo_CompanyInfo">
+          <DataField>PhoneNo_CompanyInfo</DataField>
+        </Field>
+        <Field Name="PhoneNo2_CompanyInfo">
+          <DataField>PhoneNo2_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Country_CompanyInfo">
+          <DataField>Country_CompanyInfo</DataField>
+        </Field>
+        <Field Name="PostCode_CompanyInfo">
+          <DataField>PostCode_CompanyInfo</DataField>
+        </Field>
+        <Field Name="Phone_No_Vendor">
+          <DataField>Phone_No_Vendor</DataField>
+        </Field>
+        <Field Name="GST_No_Vendor">
+          <DataField>GST_No_Vendor</DataField>
+        </Field>
+        <Field Name="Name_BuyfromVendor">
+          <DataField>Name_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Name2_BuyfromVendor">
+          <DataField>Name2_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Address_BuyfromVendor">
+          <DataField>Address_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Address2_BuyfromVendor">
+          <DataField>Address2_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="City_BuyfromVendor">
+          <DataField>City_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Contact_BuyfromVendor">
+          <DataField>Contact_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="PostCode_BuyfromVendor">
+          <DataField>PostCode_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Country_BuyfromVendor">
+          <DataField>Country_BuyfromVendor</DataField>
+        </Field>
+        <Field Name="Approvedbylblcaption">
+          <DataField>Approvedbylblcaption</DataField>
+        </Field>
+        <Field Name="Receivedbylblcaption">
+          <DataField>Receivedbylblcaption</DataField>
+        </Field>
+        <Field Name="GoodsReceiptCaption">
+          <DataField>GoodsReceiptCaption</DataField>
+        </Field>
+        <Field Name="CheckedbycaptionLbl">
+          <DataField>CheckedbycaptionLbl</DataField>
+        </Field>
+        <Field Name="Tcaption">
+          <DataField>Tcaption</DataField>
+        </Field>
+        <Field Name="CINCaption">
+          <DataField>CINCaption</DataField>
+        </Field>
+        <Field Name="SupplierNameCaption">
+          <DataField>SupplierNameCaption</DataField>
+        </Field>
+        <Field Name="SupplierCaption">
+          <DataField>SupplierCaption</DataField>
+        </Field>
+        <Field Name="GoodsReceiptDateCaption">
+          <DataField>GoodsReceiptDateCaption</DataField>
+        </Field>
+        <Field Name="TotalWeightCaption">
+          <DataField>TotalWeightCaption</DataField>
+        </Field>
+        <Field Name="TotalNoofBoxesCaption">
+          <DataField>TotalNoofBoxesCaption</DataField>
+        </Field>
+        <Field Name="PurchaseOrderCaption">
+          <DataField>PurchaseOrderCaption</DataField>
+        </Field>
+        <Field Name="SupplierInvoiceCaption">
+          <DataField>SupplierInvoiceCaption</DataField>
+        </Field>
+        <Field Name="GRNCaption">
+          <DataField>GRNCaption</DataField>
+        </Field>
+        <Field Name="DateCaption">
+          <DataField>DateCaption</DataField>
+        </Field>
+        <Field Name="ItemCaption">
+          <DataField>ItemCaption</DataField>
+        </Field>
+        <Field Name="DescCaption">
+          <DataField>DescCaption</DataField>
+        </Field>
+        <Field Name="POQtyCaption">
+          <DataField>POQtyCaption</DataField>
+        </Field>
+        <Field Name="RecdQtyCaption">
+          <DataField>RecdQtyCaption</DataField>
+        </Field>
+        <Field Name="RejectedQtyCaption">
+          <DataField>RejectedQtyCaption</DataField>
+        </Field>
+        <Field Name="RemarksCaption">
+          <DataField>RemarksCaption</DataField>
+        </Field>
+        <Field Name="BinCaption">
+          <DataField>BinCaption</DataField>
+        </Field>
+        <Field Name="SLNoCaption">
+          <DataField>SLNoCaption</DataField>
+        </Field>
+        <Field Name="SNo">
+          <DataField>SNo</DataField>
+        </Field>
+        <Field Name="No_PurchRcptLine">
+          <DataField>No_PurchRcptLine</DataField>
+        </Field>
+        <Field Name="Description_PurchRcptLine">
+          <DataField>Description_PurchRcptLine</DataField>
+        </Field>
+        <Field Name="Quantity_PurchRcptLine">
+          <DataField>Quantity_PurchRcptLine</DataField>
+        </Field>
+        <Field Name="Quantity_PurchRcptLineFormat">
+          <DataField>Quantity_PurchRcptLineFormat</DataField>
+        </Field>
+        <Field Name="TotalNoofBoxes_PurchRcptLine">
+          <DataField>TotalNoofBoxes_PurchRcptLine</DataField>
+        </Field>
+        <Field Name="BinCode_PurchRcptLine">
+          <DataField>BinCode_PurchRcptLine</DataField>
+        </Field>
+        <Field Name="space">
+          <DataField>space</DataField>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+    </DataSet>
+  </DataSets>
+</Report>

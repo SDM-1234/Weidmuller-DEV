@@ -57,21 +57,6 @@ codeunit 50100 SalesSubscriber
                     END;
     END;
 
-    [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnUpdateAmountsOnAfterCalcLineAmount, '', false, false)]
-    local procedure OnUpdateAmountsOnAfterCalcLineAmount_WM(var LineAmount: Decimal; sender: Record "Sales Line"; var SalesLine: Record "Sales Line")
-
-    var
-        Currency: Record Currency;
-    begin
-        Currency.Get(SalesLine."Currency Code");
-        IF SalesLine."Line Amount" <> ROUND(SalesLine.Quantity * SalesLine."Unit Price", Currency."Amount Rounding Precision") - SalesLine."Line Discount Amount" THEN BEGIN
-            SalesLine."Line Amount" := ROUND(SalesLine.Quantity * SalesLine."Unit Price", Currency."Amount Rounding Precision") - SalesLine."Line Discount Amount";//Se-E859
-            SalesLine."Line Amount" := (SalesLine.Quantity * SalesLine."Unit Price") - SalesLine."Line Discount Amount";
-            SalesLine."VAT Difference" := 0;
-            //SalesLine.LineAmountChanged := TRUE;
-        END;
-    end;
-
     [EventSubscriber(ObjectType::Table, Database::"Sales Line", OnCheckItemAvailableOnBeforeSalesLineCheck, '', false, false)]
     local procedure OnCheckItemAvailableOnBeforeSalesLineCheck_WM(var SalesLine: Record "Sales Line")
     var
@@ -305,9 +290,37 @@ codeunit 50100 SalesSubscriber
     [EventSubscriber(ObjectType::Table, Database::"Report Selections", OnBeforePrintDocument, '', false, false)]
     local procedure "Report Selections_OnBeforePrintDocument"(TempReportSelections: Record "Report Selections" temporary; IsGUI: Boolean; var RecVarToPrint: Variant; var IsHandled: Boolean)
     begin
-        if TempReportSelections.Usage = TempReportSelections.Usage::"Pro Forma S. Invoice" then
+        if TempReportSelections.Usage IN [TempReportSelections.Usage::"Pro Forma S. Invoice", TempReportSelections.Usage::"S.Order"] then
             Commit();
     end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Sales-Get Shipment", OnBeforeOnRun, '', false, false)]
+    local procedure OnBeforeOnRun_SalesGetShipment(var IsHandled: Boolean; var SalesLine: Record "Sales Line")
+    var
+        recSalesHeader: Record "Sales Header";
+        recCust: Record Customer;
+        txt50000Lbl: Label ' Selecting Multiple Shipments for Customer %1 Restricted.', Comment = '%1=Label for error message when multiple shipments are selected for a customer.';
+    begin
+        IF SalesLine.COUNT >= 1 THEN BEGIN
+            recSalesHeader.RESET();
+            recSalesHeader.SETRANGE("No.", SalesLine."Document No.");
+            IF recSalesHeader.FindFirst() THEN BEGIN
+                recCust.RESET();
+                recCust.SETRANGE("No.", recSalesHeader."Bill-to Customer No.");
+                recCust.SETRANGE("Invoice Print Check", TRUE);
+                IF not recCust.IsEmpty THEN
+                    ERROR(txt50000Lbl, SalesLine."Bill-to Customer No.")
+            END;
+            IsHandled := true;
+        END;
+    end;
+
+    [EventSubscriber(ObjectType::Table, Database::"Sales Shipment Line", OnBeforeInsertInvLineFromShptLine, '', false, false)]
+    local procedure "Sales Shipment Line_OnBeforeInsertInvLineFromShptLine"(var SalesShptLine: Record "Sales Shipment Line"; var SalesLine: Record "Sales Line"; SalesOrderLine: Record "Sales Line"; var IsHandled: Boolean; var TransferOldExtTextLines: Codeunit "Transfer Old Ext. Text Lines")
+    begin
+        SalesLine."OC No" := SalesShptLine."Order No.";
+    end;
+
 
 
 

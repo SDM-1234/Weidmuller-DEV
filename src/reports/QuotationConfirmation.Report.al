@@ -520,8 +520,8 @@ report 50007 "Quotation-Confirmation"
                     OrderText := 'Quotation';
 
                 //CurrReport.LANGUAGE := Language.get("Language Code");
-                // CompanyInfo.CALCFIELDS(Picture);
-                // CompanyInfo.CALCFIELDS("Terms Picture");
+                CompanyInfo.CALCFIELDS(Picture);
+                CompanyInfo.CALCFIELDS("Terms Picture");
                 Customer.RESET();
                 IF Customer.GET("Sales Header"."Bill-to Customer No.") THEN;
 
