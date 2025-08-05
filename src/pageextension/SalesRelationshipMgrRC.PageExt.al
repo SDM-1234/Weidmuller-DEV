@@ -9,6 +9,10 @@ pageextension 50006 SalesRelationshipMgrRC extends "Sales & Relationship Mgr. RC
             {
                 ApplicationArea = RelationshipMgmt;
             }
+            part(OpportunityChartWm; "Opportunity Chart WM")
+            {
+                ApplicationArea = RelationshipMgmt;
+            }
         }
         Modify(Control1)
         {
@@ -47,6 +51,10 @@ pageextension 50006 SalesRelationshipMgrRC extends "Sales & Relationship Mgr. RC
             Visible = false;
         }
         Modify("My Job Queue")
+        {
+            Visible = false;
+        }
+        Modify(Control4)
         {
             Visible = false;
         }
