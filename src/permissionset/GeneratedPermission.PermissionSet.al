@@ -38,5 +38,16 @@ permissionset 50100 GeneratedPermission
         codeunit AmountToWords = X,
         codeunit "Inventory Subscriber" = X,
         codeunit "Purchase Subscriber" = X,
-        codeunit "Warehouse Subscriber" = X;
+        codeunit "Warehouse Subscriber" = X,
+        tabledata "CRM Cue" = RIMD,
+        table "CRM Cue" = X,
+        report GoodsReceiptNote = X,
+        report "Packing List" = X,
+        report "Packing List-Bulk" = X,
+        report "Proforma Invoice" = X,
+        codeunit "Price Approval Mgmt" = X,
+        codeunit "Price Workflow Evt Handling" = X,
+        codeunit "Price Workflow Response" = X,
+        codeunit "Price workflow Setup" = X,
+        page "CRM Activities" = X;
 }
