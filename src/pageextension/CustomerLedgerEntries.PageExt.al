@@ -1,8 +1,17 @@
-pageextension 50036 CustomerLedgerEntries extends "Customer Ledger Entries"
+pageextension 50037 CustomerLedgerEntries extends "Customer Ledger Entries"
 {
     layout
     {
+        addafter("Customer Name")
+        {
+
+            field(CustName; CustName)
+            {
+                ApplicationArea = All;
+            }
+        }
     }
+
 
     var
         Cust: Record Customer;
