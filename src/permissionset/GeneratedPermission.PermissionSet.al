@@ -45,9 +45,12 @@ permissionset 50100 GeneratedPermission
         report "Packing List" = X,
         report "Packing List-Bulk" = X,
         report "Proforma Invoice" = X,
+        codeunit "CRM Subscriber" = X,
+        codeunit "Oppor Chart Mgt. WM" = X,
         codeunit "Price Approval Mgmt" = X,
         codeunit "Price Workflow Evt Handling" = X,
         codeunit "Price Workflow Response" = X,
         codeunit "Price workflow Setup" = X,
-        page "CRM Activities" = X;
+        page "CRM Activities" = X,
+        page "Opportunity Chart WM" = X;
 }
