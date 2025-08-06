@@ -2,7 +2,7 @@ pageextension 50042 TransactionTypes extends "Transaction Types"
 {
     layout
     {
-        addafter(Control1)
+        addlast(Control1)
         {
             field("Special Price"; Rec."Special Price")
             {

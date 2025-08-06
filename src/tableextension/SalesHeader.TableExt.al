@@ -7,9 +7,9 @@ tableextension 50029 SalesHeader extends "Sales Header"
         {
             trigger OnAfterValidate()
             var
-            //SalesPriceManagement: Codeunit Sales;
+                SalesPriceManagement: Codeunit "Sales Price Management";
             begin
-                //SalesPriceManagement.ConfirmTransactionType(Rec, xRec);//1065
+                SalesPriceManagement.ConfirmTransactionType(Rec, xRec);
             end;
         }
 
