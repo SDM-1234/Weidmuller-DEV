@@ -290,7 +290,8 @@ codeunit 50100 SalesSubscriber
     [EventSubscriber(ObjectType::Table, Database::"Report Selections", OnBeforePrintDocument, '', false, false)]
     local procedure "Report Selections_OnBeforePrintDocument"(TempReportSelections: Record "Report Selections" temporary; IsGUI: Boolean; var RecVarToPrint: Variant; var IsHandled: Boolean)
     begin
-        if TempReportSelections.Usage IN [TempReportSelections.Usage::"Pro Forma S. Invoice", TempReportSelections.Usage::"S.Order"] then
+        if TempReportSelections.Usage IN [TempReportSelections.Usage::"Pro Forma S. Invoice", TempReportSelections.Usage::"S.Order",
+                                            TempReportSelections.Usage::"S.Quote"] then
             Commit();
     end;
 

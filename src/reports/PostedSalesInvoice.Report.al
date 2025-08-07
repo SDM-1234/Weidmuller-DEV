@@ -638,8 +638,8 @@ report 50005 "Posted Sales Invoice"
 
                         trigger OnAfterGetRecord()
                         begin
-                            if "Sales Invoice Line"."No." = '' then
-                                CurrReport.Skip();
+                            // if "Sales Invoice Line"."No." = '' then
+                            //     CurrReport.Skip();
                             IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::Item THEN
                                 SL += 1;
                             CLEAR(LineType);

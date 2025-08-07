@@ -563,7 +563,10 @@ report 50007 "Quotation-Confirmation"
                         IF "Sales Header"."Currency Code" = 'EUR' THEN BEGIN
                             CurrencyCode := "Sales Header"."Currency Code";
                             CurrencyCaption := 'EURO';
-                        END;
+                        END Else begin
+                            CurrencyCode := "Sales Header"."Currency Code";
+                            CurrencyCaption := "Sales Header"."Currency Code";
+                        end;
 
                 ShiptoAddress.RESET;
                 ShiptoAddress.SETRANGE(ShiptoAddress.Code, "Ship-to Code");

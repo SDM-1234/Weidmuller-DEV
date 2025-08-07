@@ -30,7 +30,7 @@ report 50001 "Order-Confirmation"
             column(CompanyInfo_SWIFT_Code; CompanyInfo."SWIFT Code")
             {
             }
-            column(PONo_SalesHeader; '')//need to map rsf
+            column(PONo_SalesHeader; "External Document No.")//need to map rsf
             {
             }
             column(SalesHeader_No; "Sales Header"."No.")
@@ -464,12 +464,15 @@ report 50001 "Order-Confirmation"
                 column(DeliveryDateCaptionLbl; DeliveryDateCaptionLbl)
                 {
                 }
-                column(CrossReferenceNo_SalesLine; '')//"Sales Line"."Cross-Reference No."
+                column(CrossReferenceNo_SalesLine; "Sales Line"."Item Reference No.")//"Sales Line"."Cross-Reference No."
                 {
                 }
 
                 trigger OnAfterGetRecord()
                 begin
+                    if not Item.Get("Sales Line"."No.") then
+                        Clear(Item);
+
                     No += 1;
                     GrossWeight := 0;
                     Var_Count := "Sales Line".COUNT;
@@ -545,7 +548,7 @@ report 50001 "Order-Confirmation"
                 // IF "Sales Header"."Form Code" = 'C' THEN
                 //     Taxform := 'C Form';
 
-                IF "Sales Header"."Currency Code" = '' THEN BEGIN
+                IF "Sales Header"."Currency Code" IN ['', 'INR'] THEN BEGIN
                     CurrencyCode := 'INR';
                     CurrencyCaption := 'INR';
                 END;

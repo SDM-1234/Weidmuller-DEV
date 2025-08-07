@@ -5366,7 +5366,6 @@
                                             </Style>
                                           </Textbox>
                                           <ColSpan>11</ColSpan>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell />
@@ -5753,6 +5752,9 @@
                                             <KeepTogether>true</KeepTogether>
                                           </TablixMember>
                                         </TablixMembers>
+                                        <Visibility>
+                                          <Hidden>=Fields!Desc_.Value = ""</Hidden>
+                                        </Visibility>
                                       </TablixMember>
                                       <TablixMember>
                                         <KeepWithGroup>Before</KeepWithGroup>
