@@ -388,9 +388,8 @@ report 50018 "Purchase Order-Bulk"
                     //++
                     //TotalAmount := TotalAmount + "Purchase Line".Amount;
                     LnTotal := LnTotal + "Purchase Line".Amount;
-                    GSTAmt := GSTAmt + "Purchase Line"."VAT %";////Need to Change RSF
-                                                               //TotalAmount := TotalAmount + "Purchase Line".Amount + "Purchase Line"."Total GST Amount";
-                    TotalAmount := TotalAmount + "Purchase Line".Amount + "Purchase Line"."Amount Including VAT";////Need to Change RSF as per above line
+                    GSTAmt := GSTAmt + "Purchase Line".GetGSTAmounts();
+                    TotalAmount := TotalAmount + "Purchase Line".Amount + "Purchase Line".GetGSTAmounts();
 
                     //--
                     TotalLines := 0;
@@ -402,12 +401,11 @@ report 50018 "Purchase Order-Bulk"
                         UNTIL PurchLn.NEXT() = 0;
 
                     IF tempint >= loopint THEN BEGIN
-                        CurrReport.NEWPAGE();
+                        CurrReport.BREAK();
                         tempint := 0;
                     END;
                     tempint := tempint + 1;
 
-                    Var_Count := "Purchase Line".COUNT;
                 end;
 
                 trigger OnPreDataItem()
@@ -448,7 +446,7 @@ report 50018 "Purchase Order-Bulk"
                 tempint := CommentCounter;
 
                 IF "Payment Terms Code" = '' THEN
-                    PaymentTerms.INIT
+                    PaymentTerms.INIT()
                 ELSE BEGIN
                     PaymentTerms.GET("Payment Terms Code");
                     PaymentTerms.TranslateDescription(PaymentTerms, "Purchase Header"."Language Code");
@@ -489,21 +487,6 @@ report 50018 "Purchase Order-Bulk"
                     CurrencyCaption := 'EURO';
                 END;
 
-                //Commented By RSF
-
-                // StructureOrderDetails.RESET;
-                // StructureOrderDetails.SETRANGE(StructureOrderDetails."Document No.", "No.");
-                // IF StructureOrderDetails.FINDFIRST THEN
-                //     REPEAT
-                //         CASE StructureOrderDetails."Tax/Charge Group" OF
-                //             'PACK':
-                //                 PackingCharges := StructureOrderDetails."Calculation Value";
-                //             'INSURANCE':
-                //                 InsuranceCharges := StructureOrderDetails."Calculation Value";
-                //             'CARRIAGE':
-                //                 carriagecost := StructureOrderDetails."Calculation Value";
-                //         END;
-                //     UNTIL StructureOrderDetails.NEXT = 0;
 
                 PurchCommentLine.RESET();
                 PurchCommentLine.SETRANGE(PurchCommentLine."Document Type", "Document Type");
@@ -573,7 +556,7 @@ report 50018 "Purchase Order-Bulk"
 
     trigger OnInitReport()
     begin
-        CompanyInfo.GET;
+        CompanyInfo.GET();
         CompanyInfo.CALCFIELDS(Picture)
     end;
 
