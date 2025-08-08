@@ -340,7 +340,7 @@ report 50006 GoodsReceiptNote
 
     trigger OnInitReport()
     begin
-        CompanyInfo.GET;
+        CompanyInfo.GET();
         //CompanyInfo.CALCFIELDS(Picture)
     end;
 
