@@ -1,7 +1,7 @@
 report 50006 GoodsReceiptNote
 {
     DefaultLayout = RDLC;
-    RDLCLayout = 'src/reportlayout/GRN.rdlc';
+    RDLCLayout = 'src/reportlayout/GRN.rdl';
 
     dataset
     {
