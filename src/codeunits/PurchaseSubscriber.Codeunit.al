@@ -7,6 +7,15 @@ codeunit 50005 "Purchase Subscriber"
         PurchRcptLine."Total No of Boxes" := WarehouseReceiptLine."Total No of Boxes";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Approvals Mgmt.", OnAfterCheckPurchaseApprovalPossible, '', false, false)]
+    local procedure "Approvals Mgmt._OnAfterCheckPurchaseApprovalPossible"(var PurchaseHeader: Record "Purchase Header")
+    begin
+        if PurchaseHeader."Document Type" <> PurchaseHeader."Document Type"::Invoice then
+            exit;
+        PurchaseHeader.CheckAttachment(PurchaseHeader);
+    end;
+
+
 
 
 }
