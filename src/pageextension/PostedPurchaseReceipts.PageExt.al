@@ -19,14 +19,11 @@ pageextension 50014 PostedPurchaseReceipts extends "Posted Purchase Receipts"
                         GoodsReceiptNote: Report GoodsReceiptNote;
                         L_PurchRcptHeader: Record "Purch. Rcpt. Header";
                     begin
-                        //ZE_LIJO 25.06.2019
-                        //<<
                         CurrPage.SETSELECTIONFILTER(Rec);
                         PurchRcptHdr.RESET();
                         PurchRcptHdr.COPY(Rec);
                         CLEAR(Rec);
-                        REPORT.RUN(50021, TRUE, FALSE, PurchRcptHdr);
-                        //>>
+                        REPORT.RUN(50006, TRUE, FALSE, PurchRcptHdr);
                     end;
                 }
             }

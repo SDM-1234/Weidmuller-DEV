@@ -684,15 +684,15 @@ report 50005 "Posted Sales Invoice"
                             CLEAR(SalesInvoiceLine1);
                             IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::" " THEN BEGIN
                                 IF "Sales Invoice Line"."No." = '' THEN BEGIN
-                                    SalesInvoiceLine1.RESET;
+                                    SalesInvoiceLine1.RESET();
                                     SalesInvoiceLine1.SETRANGE(SalesInvoiceLine1."Document No.", "Sales Invoice Header"."No.");
                                     SalesInvoiceLine1.SETFILTER(SalesInvoiceLine1."Line No.", '>%1', "Sales Invoice Line"."Line No.");
-                                    IF SalesInvoiceLine1.FINDFIRST THEN
+                                    IF SalesInvoiceLine1.FINDFIRST() THEN
                                         IF SalesShipmentHeader1.GET(SalesInvoiceLine1."Shipment No.") THEN BEGIN
                                             Desc := "Sales Invoice Line".Description;
-                                            SalesOrder.RESET;
+                                            SalesOrder.RESET();
                                             SalesOrder.SETFILTER(SalesOrder."No.", SalesShipmentHeader1."Order No.");
-                                            IF SalesOrder.FINDFIRST THEN BEGIN
+                                            IF SalesOrder.FINDFIRST() THEN BEGIN
                                                 Desc1 := 'PO No.:' + '' + SalesShipmentHeader1."External Document No.";
                                                 Desc2 := 'PO Date.:' + FORMAT(SalesOrder."Document Date");
                                             END ELSE
