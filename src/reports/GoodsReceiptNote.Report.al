@@ -271,18 +271,6 @@ report 50006 GoodsReceiptNote
                     CurrencyCaption :='EURO';
                 END;
                 
-                StructureOrderDetails.RESET;
-                StructureOrderDetails.SETRANGE(StructureOrderDetails."Document No.","No.");
-                IF StructureOrderDetails.FINDFIRST THEN REPEAT
-                  IF StructureOrderDetails."Tax/Charge Group"='PACK' THEN  BEGIN
-                      PackingCharges :=StructureOrderDetails."Calculation Value";
-                  END
-                   ELSE IF StructureOrderDetails."Tax/Charge Group"='INSURANCE' THEN BEGIN
-                     InsuranceCharges :=StructureOrderDetails."Calculation Value";
-                  END
-                   ELSE IF StructureOrderDetails."Tax/Charge Group"='CARRIAGE' THEN
-                     carriagecost :=StructureOrderDetails."Calculation Value";
-                UNTIL StructureOrderDetails.NEXT=0;
                 
                 PurchCommentLine.RESET;
                 PurchCommentLine.SETRANGE(PurchCommentLine."Document Type","Document Type");
@@ -341,7 +329,7 @@ report 50006 GoodsReceiptNote
     trigger OnInitReport()
     begin
         CompanyInfo.GET();
-        //CompanyInfo.CALCFIELDS(Picture)
+        CompanyInfo.CALCFIELDS(Picture);
     end;
 
     var

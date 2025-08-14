@@ -18,9 +18,10 @@ tableextension 50031 PurchaseHeader extends "Purchase Header"
 
     procedure CheckAttachment(GRec: Record "Purchase Header")
     var
-        RecordLink: Record "Record Link";
+        RecordLink: Record "Document Attachment";
     begin
-        RecordLink.SETRANGE("Record ID", GRec.RECORDID);
+        RecordLink.SETRANGE("Table ID", Database::"Purchase Header");
+        RecordLink.SetRange("No.", GRec."No.");
         IF RecordLink.IsEmpty THEN
             ERROR('Link attachment is mandatory to send approval request');
     end;
