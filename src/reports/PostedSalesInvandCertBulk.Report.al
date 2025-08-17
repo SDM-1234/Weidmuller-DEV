@@ -1,28 +1,20 @@
 report 50022 "Posted Sales Inv and Cert-Bulk"
 {
-    // Project: Weidmuller
-    // ********************************************************************************************************************************
-    // Developer: ZiniosEdge
-    // ********************************************************************************************************************************
-    // -+------+---------+--------+---------+----+--------------------------------------
-    // T|ID_RIC|MOD  REL |DATE    |SEARCH   |Developer|DESCRIPTION
-    // -+------+---------+--------+---------+----+--------------------------------------
-    // 1|ZT0207|         |12.07.19|ZE_LIJO  |LIJO     |Variable to find GST Type
-    // 2|                |17.07.19|ZE_LIJO  |LIJO     |Description changes in the Report Body
-    // 3|                |02.08.19|ZE_LIJO  |LIJO     |Code to calculate 2.1 Certificate table
-    DefaultLayout = RDLC;
-    RDLCLayout = './PostedSalesInvandCertBulk.rdlc';
-
-    Caption = 'Sales - Invoice';
+    Caption = ' Bulk Sales - Invoice Certificate';
     Permissions = TableData 7190 = rimd;
+    DefaultLayout = RDLC;
+    RDLCLayout = 'src/reportlayout/PostedSalesInvandCertBulk.rdl';
     PreviewMode = PrintLayout;
     UseRequestPage = false;
+    ApplicationArea = All;
+    UsageCategory = ReportsAndAnalysis;
+
 
     dataset
     {
-        dataitem(DataItem5581; Table112)
+        dataitem("Sales Invoice Header"; "Sales Invoice Header")
         {
-            DataItemTableView = SORTING (No.);
+            DataItemTableView = SORTING("No.");
             RequestFilterHeading = 'Posted Sales Invoice';
             column(BillToCustNo_SalesInvHdrCaption; "Sales Invoice Header".FIELDCAPTION("Bill-to Customer No."))
             {
@@ -33,7 +25,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             column(BillToCustomerNo_SalesInvHdr; "Sales Invoice Header"."Bill-to Customer No.")
             {
             }
-            column(ExtDocNo_SalesInvHdr; SH."PO No.")
+            column(ExtDocNo_SalesInvHdr; SH."external document no.")
             {
             }
             column(ShippingAgentCode_SalesInvoiceHeader; SACode)
@@ -225,13 +217,13 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             column(DigitalSig; DigitalSig)
             {
             }
-            dataitem(CopyLoop; Table2000000026)
+            dataitem(CopyLoop; Integer)
             {
-                DataItemTableView = SORTING (Number);
-                dataitem(PageLoop; Table2000000026)
+                DataItemTableView = SORTING(Number);
+                dataitem(PageLoop; Integer)
                 {
-                    DataItemTableView = SORTING (Number)
-                                        WHERE (Number = CONST (1));
+                    DataItemTableView = SORTING(Number)
+                                        WHERE(Number = CONST(1));
                     column(TotalAmtInWords; TotalAmtInWords[1])
                     {
                     }
@@ -439,11 +431,11 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     column(GTitle; GTitle)
                     {
                     }
-                    dataitem(DataItem1570; Table113)
+                    dataitem("Sales Invoice Line"; "Sales Invoice Line")
                     {
-                        DataItemLink = Document No.=FIELD(No.);
+                        DataItemLink = "Document No." = FIELD("No.");
                         DataItemLinkReference = "Sales Invoice Header";
-                        DataItemTableView = SORTING (Document No., Line No.);
+                        DataItemTableView = SORTING("Document No.", "Line No.");
                         column(Item_Description2; Item."Description 2")
                         {
                         }
@@ -522,9 +514,8 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                             AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
-                        column(AmtInclVAT_SalesInvLine; "Amount To Customer")
+                        column(AmtInclVAT_SalesInvLine; 0)//"Amount To Customer"
                         {
-                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
                             AutoFormatType = 1;
                         }
                         column(TotalInclVATText; TotalInclVATText)
@@ -535,24 +526,24 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                             AutoFormatExpression = "Sales Invoice Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(TaxAmount_SalesInvLine; "Tax Amount")
+                        column(TaxAmount_SalesInvLine; 0)
                         {
-                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
                         column(ServiceTaxAmt; ServiceTaxAmt)
                         {
-                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
                         column(ChargesAmount; ChargesAmount)
                         {
-                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
                         column(OtherTaxesAmount; OtherTaxesAmount + OtherCharges)
                         {
-                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode;
+                            AutoFormatExpression = "Sales Invoice Line".GetCurrencyCode();
                             AutoFormatType = 1;
                         }
                         column(InsuranceCharges; InsuranceCharges)
@@ -624,10 +615,10 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                         column(HSNSACCode_SalesInvoiceLine; "Sales Invoice Line"."HSN/SAC Code")
                         {
                         }
-                        column(CrossReferenceNo_SalesInvoiceLine; "Sales Invoice Line"."Cross-Reference No.")
+                        column(CrossReferenceNo_SalesInvoiceLine; "Sales Invoice Line"."Item Reference No.")
                         {
                         }
-                        column(TotalGSTAmount_SalesInvoiceLine; "Sales Invoice Line"."Total GST Amount")
+                        column(TotalGSTAmount_SalesInvoiceLine; 0)//"Sales Invoice Line"."Total GST Amount"
                         {
                         }
                         column(GSTJurisdictionType_SalesInvoiceLine; GSTJurisdiction)
@@ -651,7 +642,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
                         trigger OnAfterGetRecord()
                         var
-                            StructureLineDetails: Record "13798";
+                        //StructureLineDetails: Record "13798";
                         begin
                             // IF (Type = Type::"G/L Account") AND ("Sales Invoice Line"."No." = '2430') THEN
                             //  CurrReport.SKIP;
@@ -669,20 +660,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                             CLEAR(Item);
                             IF "Sales Invoice Line"."No." <> '' THEN
                                 IF Item.GET("Sales Invoice Line"."No.") THEN;
-                            VATAmountLine.INIT;
-                            VATAmountLine."VAT Identifier" := "VAT Identifier";
-                            VATAmountLine."VAT Calculation Type" := "VAT Calculation Type";
-                            VATAmountLine."Tax Group Code" := "Tax Group Code";
-                            VATAmountLine."VAT %" := "VAT %";
-                            VATAmountLine."VAT Base" := Amount;
-                            VATAmountLine."Amount Including VAT" := "Amount Including VAT";
-                            VATAmountLine."Line Amount" := "Line Amount";
-                            IF "Allow Invoice Disc." THEN
-                                VATAmountLine."Inv. Disc. Base Amount" := "Line Amount";
-                            VATAmountLine."Invoice Discount Amount" := "Inv. Discount Amount";
-                            VATAmountLine.InsertLine;
 
-                            TotalTCSAmount += "Total TDS/TCS Incl. SHE CESS";
                             IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::"G/L Account" THEN BEGIN
                                 IF "Sales Invoice Line".Description = 'Paisa Roundoff' THEN BEGIN
                                     TotalSubTotal += 0;
@@ -693,122 +671,44 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                                 TotalSubTotal += "Sales Invoice Line"."Line Amount";
 
                             TotalInvoiceDiscountAmount -= "Inv. Discount Amount";
+
                             //TotalAmount += Amount;
+
                             TotalAmountVAT += "Amount Including VAT" - Amount;
-                            // TotalAmountInclVAT += "Amount Including VAT";
+
+                            TotalAmountInclVAT += AmountToCustomer();
+
                             TotalPaymentDiscountOnVAT += -("Line Amount" - "Inv. Discount Amount" - "Amount Including VAT");
-                            TotalAmountInclVAT += "Amount To Customer";
-                            TotalExciseAmt += "Excise Amount";
-                            TotalTaxAmt += "Tax Amount";
-                            ServiceTaxAmount += "Service Tax Amount";
-                            ServiceTaxeCessAmount += "Service Tax eCess Amount";
-                            ServiceTaxSHECessAmount += "Service Tax SHE Cess Amount";
-                            ServiceTaxSBCAmount += "Service Tax SBC Amount";
-                            KKCessAmount += "KK Cess Amount";
 
-                            CLEAR(GSTCompAmount);
-                            CLEAR(GSTComponentCode);
-                            CLEAR(GSTCompPer);
-                            IF IsGSTApplicable AND (Type <> Type::" ") THEN BEGIN
-                                J := 0;
-                                GSTComponent.RESET;
-                                //GSTComponent.SETRANGE("GST Jurisdiction Type","GST Jurisdiction Type");
-                                IF GSTComponent.FINDSET THEN
-                                    REPEAT
-                                        J += 1;
-                                        GSTComponentCode[J] := GSTComponent.Code;
-                                        DetailedGSTLedgerEntry.RESET;
-                                        DetailedGSTLedgerEntry.SETCURRENTKEY("Transaction Type", "Document Type", "Document No.", "Document Line No.");
-                                        DetailedGSTLedgerEntry.SETRANGE("Transaction Type", DetailedGSTLedgerEntry."Transaction Type"::Sales);
-                                        DetailedGSTLedgerEntry.SETRANGE("Document No.", "Document No.");
-                                        DetailedGSTLedgerEntry.SETRANGE("Document Line No.", "Line No.");
-                                        DetailedGSTLedgerEntry.SETRANGE("GST Component Code", GSTComponentCode[J]);
-                                        IF DetailedGSTLedgerEntry.FINDSET THEN BEGIN
-                                            REPEAT
-                                                GSTCompAmount[J] := DetailedGSTLedgerEntry."GST Amount";
-                                                GSTCompPer[J] := DetailedGSTLedgerEntry."GST %";
-                                            UNTIL DetailedGSTLedgerEntry.NEXT = 0;
-                                        END;
-                                    UNTIL GSTComponent.NEXT = 0;
-                            END;
+                            // TotalAmountInclVAT += "Amount To Customer";
+                            // TotalExciseAmt += "Excise Amount";
+                            //TotalTaxAmt += "Tax Amount";
 
-                            StructureLineDetails.RESET;
-                            StructureLineDetails.SETRANGE(Type, StructureLineDetails.Type::Sale);
-                            StructureLineDetails.SETRANGE("Document Type", StructureLineDetails."Document Type"::Invoice);
-                            StructureLineDetails.SETRANGE("Invoice No.", "Document No.");
-                            StructureLineDetails.SETRANGE("Item No.", "No.");
-                            StructureLineDetails.SETRANGE("Line No.", "Line No.");
-                            IF StructureLineDetails.FIND('-') THEN
-                                REPEAT
-                                    IF NOT StructureLineDetails."Payable to Third Party" THEN BEGIN
-                                        IF (StructureLineDetails."Tax/Charge Type" = StructureLineDetails."Tax/Charge Type"::Charges) AND
-                                           (StructureLineDetails."Tax/Charge Group" = 'FREIGHT') THEN
-                                            ChargesAmount := ChargesAmount + ABS(StructureLineDetails.Amount)
-                                        ELSE
-                                            IF (StructureLineDetails."Tax/Charge Type" = StructureLineDetails."Tax/Charge Type"::Charges) AND
-                                          (StructureLineDetails."Tax/Charge Group" = 'INSURANCE') THEN
-                                                InsuranceCharges := InsuranceCharges + ABS(StructureLineDetails.Amount)
-                                            ELSE
-                                                OtherCharges := OtherCharges + ABS(StructureLineDetails.Amount);
-                                        IF StructureLineDetails."Tax/Charge Type" = StructureLineDetails."Tax/Charge Type"::"Other Taxes" THEN
-                                            OtherTaxesAmount := OtherTaxesAmount + ABS(StructureLineDetails.Amount);
-                                    END;
-                                UNTIL StructureLineDetails.NEXT = 0;
-
-                            IF "Sales Invoice Header"."Transaction No. Serv. Tax" <> 0 THEN BEGIN
-                                ServiceTaxEntry.RESET;
-                                ServiceTaxEntry.SETRANGE(Type, ServiceTaxEntry.Type::Sale);
-                                ServiceTaxEntry.SETRANGE("Document Type", ServiceTaxEntry."Document Type"::Invoice);
-                                ServiceTaxEntry.SETRANGE("Document No.", "Document No.");
-                                IF ServiceTaxEntry.FINDFIRST THEN BEGIN
-
-                                    IF "Sales Invoice Header"."Currency Code" <> '' THEN BEGIN
-                                        ServiceTaxEntry."Service Tax Amount" :=
-                                          ROUND(CurrExchRate.ExchangeAmtLCYToFCY(
-                                          "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
-                                          ServiceTaxEntry."Service Tax Amount", "Sales Invoice Header"."Currency Factor"));
-                                        ServiceTaxEntry."eCess Amount" :=
-                                          ROUND(CurrExchRate.ExchangeAmtLCYToFCY(
-                                          "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
-                                          ServiceTaxEntry."eCess Amount", "Sales Invoice Header"."Currency Factor"));
-                                        ServiceTaxEntry."SHE Cess Amount" :=
-                                          ROUND(CurrExchRate.ExchangeAmtLCYToFCY(
-                                          "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
-                                          ServiceTaxEntry."SHE Cess Amount", "Sales Invoice Header"."Currency Factor"));
-                                        ServiceTaxEntry."Service Tax SBC Amount" :=
-                                          ROUND(CurrExchRate.ExchangeAmtLCYToFCY(
-                                          "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
-                                          ServiceTaxEntry."Service Tax SBC Amount", "Sales Invoice Header"."Currency Factor"));
-                                        ServiceTaxEntry."KK Cess Amount" :=
-                                          ROUND(CurrExchRate.ExchangeAmtLCYToFCY(
-                                          "Sales Invoice Header"."Posting Date", "Sales Invoice Header"."Currency Code",
-                                          ServiceTaxEntry."KK Cess Amount", "Sales Invoice Header"."Currency Factor"));
-                                    END;
-
-                                    ServiceTaxAmt := ABS(ServiceTaxEntry."Service Tax Amount");
-                                    ServiceTaxECessAmt := ABS(ServiceTaxEntry."eCess Amount");
-                                    ServiceTaxSHECessAmt := ABS(ServiceTaxEntry."SHE Cess Amount");
-                                    ServiceTaxSBCAmt := ABS(ServiceTaxEntry."Service Tax SBC Amount");
-                                    KKCessAmt := ABS(ServiceTaxEntry."KK Cess Amount");
-                                    AppliedServiceTaxAmt := ServiceTaxAmount - ABS(ServiceTaxEntry."Service Tax Amount");
-                                    AppliedServiceTaxECessAmt := ServiceTaxeCessAmount - ABS(ServiceTaxEntry."eCess Amount");
-                                    AppliedServiceTaxSHECessAmt := ServiceTaxSHECessAmount - ABS(ServiceTaxEntry."SHE Cess Amount");
-                                    AppliedServiceTaxSBCAmt := ServiceTaxSBCAmount - ABS(ServiceTaxEntry."Service Tax SBC Amount");
-                                    AppliedKKCessAmt := KKCessAmount - ABS(ServiceTaxEntry."KK Cess Amount");
-                                END ELSE BEGIN
-                                    AppliedServiceTaxAmt := ServiceTaxAmount;
-                                    AppliedServiceTaxECessAmt := ServiceTaxeCessAmount;
-                                    AppliedServiceTaxSHECessAmt := ServiceTaxSHECessAmount;
-                                    AppliedServiceTaxSBCAmt := ServiceTaxSBCAmount;
-                                    AppliedKKCessAmt := KKCessAmount;
-                                END;
-                            END ELSE BEGIN
-                                ServiceTaxAmt := ServiceTaxAmount;
-                                ServiceTaxECessAmt := ServiceTaxeCessAmount;
-                                ServiceTaxSHECessAmt := ServiceTaxSHECessAmount;
-                                ServiceTaxSBCAmt := ServiceTaxSBCAmount;
-                                KKCessAmt := KKCessAmount
-                            END;
+                            // CLEAR(GSTCompAmount);
+                            // CLEAR(GSTComponentCode);
+                            // CLEAR(GSTCompPer);
+                            // IF IsGSTApplicable AND (Type <> Type::" ") THEN BEGIN
+                            //     J := 0;
+                            //     GSTComponent.RESET;
+                            //     //GSTComponent.SETRANGE("GST Jurisdiction Type","GST Jurisdiction Type");
+                            //     IF GSTComponent.FINDSET THEN
+                            //         REPEAT
+                            //             J += 1;
+                            //             GSTComponentCode[J] := GSTComponent.Code;
+                            //             DetailedGSTLedgerEntry.RESET;
+                            //             DetailedGSTLedgerEntry.SETCURRENTKEY("Transaction Type", "Document Type", "Document No.", "Document Line No.");
+                            //             DetailedGSTLedgerEntry.SETRANGE("Transaction Type", DetailedGSTLedgerEntry."Transaction Type"::Sales);
+                            //             DetailedGSTLedgerEntry.SETRANGE("Document No.", "Document No.");
+                            //             DetailedGSTLedgerEntry.SETRANGE("Document Line No.", "Line No.");
+                            //             DetailedGSTLedgerEntry.SETRANGE("GST Component Code", GSTComponentCode[J]);
+                            //             IF DetailedGSTLedgerEntry.FINDSET THEN BEGIN
+                            //                 REPEAT
+                            //                     GSTCompAmount[J] := DetailedGSTLedgerEntry."GST Amount";
+                            //                     GSTCompPer[J] := DetailedGSTLedgerEntry."GST %";
+                            //                 UNTIL DetailedGSTLedgerEntry.NEXT = 0;
+                            //             END;
+                            //         UNTIL GSTComponent.NEXT = 0;
+                            // END;
 
 
                             IF "Sales Invoice Line".Type = "Sales Invoice Line".Type::"G/L Account" THEN BEGIN
@@ -854,7 +754,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
                         trigger OnPreDataItem()
                         begin
-                            VATAmountLine.DELETEALL;
+                            //VATAmountLine.DELETEALL;
                             SalesShipmentBuffer.RESET;
                             SalesShipmentBuffer.DELETEALL;
                             FirstValueEntryNo := 0;
@@ -864,10 +764,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                             IF NOT MoreLines THEN
                                 CurrReport.BREAK;
                             SETRANGE("Line No.", 0, "Line No.");
-                            CurrReport.CREATETOTALS("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount", "Excise Amount", "Tax Amount",
-                              "Service Tax Amount", "Service Tax eCess Amount", "Amount To Customer", "Service Tax SBC Amount");
-                            CurrReport.CREATETOTALS("KK Cess Amount");
-                            CurrReport.CREATETOTALS("Service Tax SHE Cess Amount");
                             SL := 0;
                         end;
                     }
@@ -947,21 +843,22 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
             trigger OnAfterGetRecord()
             var
-                SalesInvLine: Record "113";
-                Location: Record "14";
-                States: Record "13762";
+                SalesInvLine: Record "Sales Invoice Line";
+                Location: Record "Location";
+                States: Record State;
                 TotalAmttoCustomer: Decimal;
-                NumToWords: Report "1401";
+                NumToWords: Codeunit AmounttoWords;
             begin
-                CurrReport.LANGUAGE := Language.GetLanguageID("Language Code");
-                IsGSTApplicable := GSTManagement.IsGSTApplicable(Structure);
+                If "Language Code" <> '' then
+                CurrReport.LANGUAGE := Languagemgt.GetLanguageID("Language Code");
+                IsGSTApplicable := CheckGSTDoc("Sales Invoice Line");
                 Customer.GET("Bill-to Customer No.");
-                States.RESET;
+                States.RESET();
                 IF States.GET(Customer."State Code") THEN
                     StateName := States.Description;
-                ShipToAddress.RESET;
+                ShipToAddress.RESET();
                 IF ShipToAddress.GET("Sales Invoice Header"."Sell-to Customer No.", "Sales Invoice Header"."Ship-to Code") THEN BEGIN
-                    States.RESET;
+                    States.RESET();
                     IF States.GET(ShipToAddress.State) THEN
                         ShipToStateName := States.Description;
                 END;
@@ -979,7 +876,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                 ELSE
                     OrderNoText := FIELDCAPTION("Order No.");
                 IF "Salesperson Code" = '' THEN BEGIN
-                    SalesPurchPerson.INIT;
+                    SalesPurchPerson.INIT();
                     SalesPersonText := '';
                 END ELSE BEGIN
                     SalesPurchPerson.GET("Salesperson Code");
@@ -1008,48 +905,37 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     CLEAR(Cust);
 
                 IF "Payment Terms Code" = '' THEN
-                    PaymentTerms.INIT
+                    PaymentTerms.INIT()
                 ELSE BEGIN
                     PaymentTerms.GET("Payment Terms Code");
                     PaymentTerms.TranslateDescription(PaymentTerms, "Language Code");
                 END;
                 IF "Shipment Method Code" = '' THEN
-                    ShipmentMethod.INIT
+                    ShipmentMethod.INIT()
                 ELSE BEGIN
                     ShipmentMethod.GET("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 END;
-                FormatAddr.SalesInvShipTo(ShipToAddr, "Sales Invoice Header");
-                /*ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
-                FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
-                  IF ShipToAddr[i] <> CustAddr[i] THEN
-                    ShowShippingAddr := TRUE;*/
+                FormatAddr.SalesInvShipTo(ShipToAddr, ShipToAddr, "Sales Invoice Header");
 
                 GetLineFeeNoteOnReportHist("No.");
 
                 SupplementaryText := '';
                 SalesInvLine.SETRANGE("Document No.", "No.");
-                SalesInvLine.SETRANGE(Supplementary, TRUE);
-                IF SalesInvLine.FINDFIRST THEN
+                //SalesInvLine.SETRANGE(Supplementary, TRUE);
+                IF SalesInvLine.FINDFIRST() THEN
                     SupplementaryText := Text16500;
 
-                IF Location.GET("Location Code") THEN
-                    ServiceTaxRegistrationNo := Location."Service Tax Registration No."
-                ELSE
-                    ServiceTaxRegistrationNo := CompanyInfo."Service Tax Registration No.";
 
-                /*TotalAmttoCustomer :=0 ;
-                SalesInvLine.RESET;
-                SalesInvLine.SETRANGE("Document No.","Sales Invoice Header"."No.");
-                SalesInvLine.SETFILTER(Quantity,'>%1',0);
-                IF SalesInvLine.FINDSET THEN REPEAT
-                  TotalAmttoCustomer += SalesInvLine."Amount To Customer";
-                UNTIL(SalesInvLine.NEXT = 0);*/
 
-                "Sales Invoice Header".CALCFIELDS("Amount to Customer");
-                TotalAmount := "Sales Invoice Header"."Amount to Customer";
-                NumToWords.InitTextVariable;
-                //TotalAmttoCustomer:=ROUND(TotalAmount,GLSetup."Inv. Rounding Precision (LCY)");
+
+                TotalAmttoCustomer := 0;
+
+                TotalAmttoCustomer := "Sales Invoice Header".AmountToCustomer();
+
+                TotalAmount := "Sales Invoice Header".AmountToCustomer();
+                NumToWords.InitTextVariable();
+
                 NumToWords.FormatNoText(TotalAmtInWords, TotalAmount, "Sales Invoice Header"."Currency Code");
 
                 CLEAR(Currency);
@@ -1059,17 +945,17 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     Currency := "Sales Invoice Header"."Currency Code";
                 IF "Sales Invoice Header"."Location Code" <> '' THEN
                     IF NOT Location1.GET("Sales Invoice Header"."Location Code") THEN
-                        Location1.INIT;
+                        Location1.INIT();
 
                 CLEAR(SalesShipmentHeader);
                 CLEAR(SH);
-                SalesInvoiceLine.RESET;
+                SalesInvoiceLine.RESET();
                 SalesInvoiceLine.SETRANGE(SalesInvoiceLine."Document No.", "Sales Invoice Header"."No.");
                 SalesInvoiceLine.SETFILTER(SalesInvoiceLine.Type, '%1', SalesInvoiceLine.Type::Item);
-                IF SalesInvoiceLine.FINDFIRST THEN BEGIN
+                IF SalesInvoiceLine.FINDFIRST() THEN
                     IF SalesShipmentHeader.GET(SalesInvoiceLine."Shipment No.") THEN
                         IF SH.GET(SH."Document Type"::Order, SalesShipmentHeader."Order No.") THEN;
-                END;
+
                 CLEAR(SACode);
                 IF "Sales Invoice Header"."Shipping Agent Code" <> '' THEN
                     SACode := "Sales Invoice Header"."Shipping Agent Code"
@@ -1077,24 +963,17 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     SACode := SH."Shipping Agent Code";
 
 
-                //ZE_LIJO 12/7/2019
-                //++
                 CLEAR(GSTJurisdiction);
-                SalesInvoiceLine2.RESET;
+                SalesInvoiceLine2.RESET();
                 SalesInvoiceLine2.SETFILTER(SalesInvoiceLine2."Document No.", "Sales Invoice Header"."No.");
                 SalesInvoiceLine2.SETRANGE(SalesInvoiceLine2.Type, SalesInvoiceLine2.Type::Item);
-                IF SalesInvoiceLine2.FINDFIRST THEN BEGIN
+                IF SalesInvoiceLine2.FINDFIRST() THEN BEGIN
                     IF SalesInvoiceLine2."GST Jurisdiction Type" = SalesInvoiceLine2."GST Jurisdiction Type"::Interstate THEN
                         GSTJurisdiction := 'Interstate';
                     IF SalesInvoiceLine2."GST Jurisdiction Type" = SalesInvoiceLine2."GST Jurisdiction Type"::Intrastate THEN
                         GSTJurisdiction := 'Intrastate';
                 END;
-                //--
-                //ZE_LIJO 02.08.2019
-                //++
                 CLEAR(Cert_Ln);
-                //--
-
             end;
         }
     }
@@ -1113,70 +992,75 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     field("No. of Print"; NoOfPrint)
                     {
                         Caption = 'No. of Print';
+                        AppLicationArea = All;
 
                         trigger OnValidate()
                         begin
-                            //SE-E969
                             IF (NoOfPrint) THEN
                                 ControlBool := TRUE;
                             IF (NoOfCopies > 0) THEN
                                 ERROR('No. of Copy have value');
-                            //SE-E969
                         end;
                     }
                     field("Digital Signature"; DigitalSig)
                     {
                         Caption = 'Digital Signature';
+                        AppLicationArea = All;
+
                     }
                     field(NoOfCopies; NoOfCopies)
                     {
                         Caption = 'No. of Copies';
+                        AppLicationArea = All;
 
                         trigger OnValidate()
                         begin
-                            //SE-E969
                             IF (ControlBool) AND (NoOfCopies > 0) THEN
                                 ERROR('No. of print is enable.');
-                            //SE-E969
                         end;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
                     {
                         Caption = 'Show Internal Information';
+                        AppLicationArea = All;
+
                     }
                     field(LogInteraction; LogInteraction)
                     {
                         Caption = 'Log Interaction';
                         Enabled = LogInteractionEnable;
+                        AppLicationArea = All;
+
                     }
                     field(DisplayAsmInformation; DisplayAssemblyInformation)
                     {
                         Caption = 'Show Assembly Components';
+                        AppLicationArea = All;
+
                     }
                     field(DisplayAdditionalFeeNote; DisplayAdditionalFeeNote)
                     {
                         Caption = 'Show Additional Fee Note';
+                        AppLicationArea = All;
+
                     }
                 }
             }
         }
 
-        actions
-        {
-        }
-
         trigger OnInit()
         begin
             LogInteractionEnable := TRUE;
-            CLEAR(NoOfPrint);//SE-E969
-            CLEAR(DigitalSig);//SE-E969
-            CLEAR(ControlBool);//SE-E969
-            CLEAR(GTitle);//SE-E969
+            CLEAR(NoOfPrint);
+            CLEAR(DigitalSig);
+            CLEAR(ControlBool);
+            CLEAR(GTitle);
+
         end;
 
         trigger OnOpenPage()
         begin
-            InitLogInteraction;
+            InitLogInteraction();
             LogInteractionEnable := LogInteraction;
         end;
     }
@@ -1187,21 +1071,19 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
-        CompanyInfo.VerifyAndSetPaymentInfo;
-        CompanyInfo1.GET;
+        GLSetup.GET();
+        CompanyInfo.GET();
+        SalesSetup.GET();
+        CompanyInfo.VerifyAndSetPaymentInfo();
+        CompanyInfo1.GET();
         CompanyInfo1.CALCFIELDS(Picture);
-        CompanyInfo1.CALCFIELDS("Digital Signature");//SE-E969
-        //CLEAR(NoOfPrint);//SE-E969
-        //CLEAR(DigitalSig);//SE-E969
+        CompanyInfo1.CALCFIELDS("Digital Signature");
     end;
 
     trigger OnPreReport()
     begin
         IF NOT CurrReport.USEREQUESTPAGE THEN
-            InitLogInteraction;
+            InitLogInteraction();
     end;
 
     var
@@ -1210,32 +1092,31 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         Text003: Label ' COPY';
         Text004: Label 'Sales - Invoice%1';
         PageCaptionCap: Label 'Page %1 of %2';
-        GLSetup: Record "98";
-        ShipmentMethod: Record "10";
-        PaymentTerms: Record "3";
-        SalesPurchPerson: Record "13";
-        CompanyInfo: Record "79";
-        CompanyInfo1: Record "79";
-        CompanyInfo2: Record "79";
-        CompanyInfo3: Record "79";
-        GSTComponent: Record "16405";
-        Customer: Record "18";
-        DetailedGSTLedgerEntry: Record "16419";
-        SalesSetup: Record "311";
-        Cust: Record "18";
-        VATAmountLine: Record "290" temporary;
-        DimSetEntry1: Record "480";
-        DimSetEntry2: Record "480";
-        RespCenter: Record "5714";
-        Language: Record "8";
-        CurrExchRate: Record "330";
-        TempPostedAsmLine: Record "911" temporary;
-        TempLineFeeNoteOnReportHist: Record "1053" temporary;
-        GSTManagement: Codeunit "16401";
-        SalesInvCountPrinted: Codeunit "315";
-        FormatAddr: Codeunit "365";
-        SegManagement: Codeunit "5051";
-        SalesShipmentBuffer: Record "7190" temporary;
+        GLSetup: Record "General Ledger Setup";
+        ShipmentMethod: Record "Shipment Method";
+        PaymentTerms: Record "Payment Terms";
+        SalesPurchPerson: Record "Salesperson/Purchaser";
+        CompanyInfo: Record "Company Information";
+        CompanyInfo1: Record "Company Information";
+        CompanyInfo2: Record "Company Information";
+        CompanyInfo3: Record "Company Information";
+        //GSTComponent: Record "GST Component";
+        Customer: Record "Customer";
+        DetailedGSTLedgerEntry: Record "Detailed GST Ledger Entry";
+        SalesSetup: Record "Sales & Receivables Setup";
+        Cust: Record "Customer";
+
+        DimSetEntry1: Record "Dimension Set Entry";
+        DimSetEntry2: Record "Dimension Set Entry";
+        RespCenter: Record "Responsibility Center";
+        LanguageMgt: Codeunit "Language";
+        CurrExchRate: Record "Currency Exchange Rate";
+        TempPostedAsmLine: Record "Posted Assembly Line" temporary;
+        TempLineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist." temporary;
+        SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
+        FormatAddr: Codeunit "Format Address";
+        SegManagement: Codeunit SegManagement;
+        SalesShipmentBuffer: Record "Sales Shipment Buffer" temporary;
         GSTCompAmount: array[20] of Decimal;
         GSTCompPer: array[20] of Decimal;
         GSTComponentCode: array[20] of Code[10];
@@ -1284,7 +1165,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         Text13701: Label 'Total %1 Excl. Taxes';
         SupplementaryText: Text[30];
         Text16500: Label 'Supplementary Invoice';
-        ServiceTaxEntry: Record "16473";
         ServiceTaxAmt: Decimal;
         ServiceTaxECessAmt: Decimal;
         AppliedServiceTaxAmt: Decimal;
@@ -1297,7 +1177,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         ServiceTaxAmount: Decimal;
         ServiceTaxeCessAmount: Decimal;
         ServiceTaxSHECessAmount: Decimal;
-        [InDataSet]
         LogInteractionEnable: Boolean;
         DisplayAssemblyInformation: Boolean;
         BankDetailsCaptionLbl: Label 'BANK DETAILS';
@@ -1333,7 +1212,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         AppliedKKCessAmt: Decimal;
         IsGSTApplicable: Boolean;
         J: Integer;
-        ShipToAddress: Record "222";
+        ShipToAddress: Record "Ship-to Address";
         StateName: Text[50];
         ShipToStateName: Text[50];
         StateCaptionLbl: Label 'State';
@@ -1387,49 +1266,57 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         OtherCharges: Decimal;
         LineType: Integer;
         POdateCaptionLbl: Label 'PO Date';
-        Location1: Record "14";
+        Location1: Record "Location";
         ShipFromCaptionLbl: Label 'SHIP FROM:';
         No_SalesInvoiceLineCaptionLbl: Label 'Article No';
         LineAmountGst: Decimal;
         RoundOff: Decimal;
-        Item: Record "27";
+        Item: Record "Item";
         LineTotalCaptionLbl1: Label 'Line Total';
         CustomerReferencenoCaptionLbl: Label 'Customer Reference No.';
-        SalesInvoiceLine: Record "113";
-        SH: Record "36";
-        SalesShipmentHeader: Record "110";
+        SalesInvoiceLine: Record "Sales Invoice Line";
+        SH: Record "Sales Header";
+        SalesShipmentHeader: Record "Sales SHipment Header";
         Desc: Text[50];
-        SalesInvoiceLine1: Record "113";
-        SalesShipmentHeader1: Record "110";
+        SalesInvoiceLine1: Record "Sales Invoice Line";
+        SalesShipmentHeader1: Record "Sales Shipment Header";
         Desc1: Text[50];
         SACode: Code[10];
         GTitle: Text[30];
         NoOfPrint: Boolean;
         DigitalSig: Boolean;
         ControlBool: Boolean;
-        SalesInvoiceLine2: Record "113";
+        SalesInvoiceLine2: Record "Sales Invoice Line";
         GSTJurisdiction: Text;
-        SalesOrder: Record "36";
+        SalesOrder: Record "Sales Header";
         Desc2: Text[50];
-        Cert_SalInvLn: Record "113";
+        Cert_SalInvLn: Record "Sales Invoice Line";
         Cert_Ln: Integer;
         Cert_Qty: Decimal;
         Cert_Desc: Text[250];
         Cert_Article: Code[50];
         Cert_Disp: Boolean;
-        Cert_SalInvLn1: Record "113";
+        Cert_SalInvLn1: Record "Sales Invoice Line";
+        LineAMtToCustomer: Decimal;
+        CGSTAmt, CGSTPer : Decimal;
+        SGSTAmt, SGSTPer : Decimal;
+        IGSTAmt, IGSTPer : Decimal;
+        CessAmt, CessPer : Decimal;
+        CGSTLbl: Label 'CGST';
+        SGSTLbl: Label 'SGST';
+        IGSTLbl: Label 'IGST';
+        CessLbl: Label 'CESS';
 
-    [Scope('Internal')]
+
     procedure InitLogInteraction()
     begin
-        LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
+        //LogInteraction := SegManagement.FindInteractTmplCode(4) <> '';
     end;
 
-    [Scope('Internal')]
     procedure FindPostedShipmentDate(): Date
     var
-        SalesShipmentHeader: Record "110";
-        SalesShipmentBuffer2: Record "7190" temporary;
+        SalesShipmentHeader: Record "Sales Shipment Header";
+        SalesShipmentBuffer2: Record "Sales Shipment Buffer" temporary;
     begin
         NextEntryNo := 1;
         IF "Sales Invoice Line"."Shipment No." <> '' THEN
@@ -1469,11 +1356,10 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             EXIT("Sales Invoice Header"."Posting Date");
     end;
 
-    [Scope('Internal')]
-    procedure GenerateBufferFromValueEntry(SalesInvoiceLine2: Record "113")
+    procedure GenerateBufferFromValueEntry(SalesInvoiceLine2: Record "Sales Invoice Line")
     var
-        ValueEntry: Record "5802";
-        ItemLedgerEntry: Record "32";
+        ValueEntry: Record "Value Entry";
+        ItemLedgerEntry: Record "Item Ledger Entry";
         TotalQuantity: Decimal;
         Quantity: Decimal;
     begin
@@ -1500,13 +1386,12 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             UNTIL (ValueEntry.NEXT = 0) OR (TotalQuantity = 0);
     end;
 
-    [Scope('Internal')]
-    procedure GenerateBufferFromShipment(SalesInvoiceLine: Record "113")
+    procedure GenerateBufferFromShipment(SalesInvoiceLine: Record "Sales Invoice Line")
     var
-        SalesInvoiceHeader: Record "112";
-        SalesInvoiceLine2: Record "113";
-        SalesShipmentHeader: Record "110";
-        SalesShipmentLine: Record "111";
+        SalesInvoiceHeader: Record "Sales Invoice Header";
+        SalesInvoiceLine2: Record "Sales Invoice Line";
+        SalesShipmentHeader: Record "Sales Shipment Header";
+        SalesShipmentLine: Record "Sales Shipment Line";
         TotalQuantity: Decimal;
         Quantity: Decimal;
     begin
@@ -1560,10 +1445,9 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             UNTIL (SalesShipmentLine.NEXT = 0) OR (TotalQuantity = 0);
     end;
 
-    [Scope('Internal')]
-    procedure CorrectShipment(var SalesShipmentLine: Record "111")
+    procedure CorrectShipment(var SalesShipmentLine: Record "Sales Shipment Line")
     var
-        SalesInvoiceLine: Record "113";
+        SalesInvoiceLine: Record "Sales Invoice Line";
     begin
         SalesInvoiceLine.SETCURRENTKEY("Shipment No.", "Shipment Line No.");
         SalesInvoiceLine.SETRANGE("Shipment No.", SalesShipmentLine."Document No.");
@@ -1574,8 +1458,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             UNTIL SalesInvoiceLine.NEXT = 0;
     end;
 
-    [Scope('Internal')]
-    procedure AddBufferEntry(SalesInvoiceLine: Record "113"; QtyOnShipment: Decimal; PostingDate: Date)
+    procedure AddBufferEntry(SalesInvoiceLine: Record "Sales Invoice Line"; QtyOnShipment: Decimal; PostingDate: Date)
     begin
         SalesShipmentBuffer.SETRANGE("Document No.", SalesInvoiceLine."Document No.");
         SalesShipmentBuffer.SETRANGE("Line No.", SalesInvoiceLine."Line No.");
@@ -1586,17 +1469,16 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             EXIT;
         END;
 
-        WITH SalesShipmentBuffer DO BEGIN
-            "Document No." := SalesInvoiceLine."Document No.";
-            "Line No." := SalesInvoiceLine."Line No.";
-            "Entry No." := NextEntryNo;
-            Type := SalesInvoiceLine.Type;
-            "No." := SalesInvoiceLine."No.";
-            Quantity := QtyOnShipment;
-            "Posting Date" := PostingDate;
-            INSERT;
-            NextEntryNo := NextEntryNo + 1
-        END;
+        SalesShipmentBuffer."Document No." := SalesInvoiceLine."Document No.";
+        SalesShipmentBuffer."Line No." := SalesInvoiceLine."Line No.";
+        SalesShipmentBuffer."Entry No." := NextEntryNo;
+        SalesShipmentBuffer.Type := SalesInvoiceLine.Type;
+        SalesShipmentBuffer."No." := SalesInvoiceLine."No.";
+        SalesShipmentBuffer.Quantity := QtyOnShipment;
+        SalesShipmentBuffer."Posting Date" := PostingDate;
+        SalesShipmentBuffer.INSERT();
+        NextEntryNo := NextEntryNo + 1
+
     end;
 
     local procedure DocumentCaption(): Text[250]
@@ -1606,7 +1488,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         EXIT(Text004);
     end;
 
-    [Scope('Internal')]
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean; DisplayAsmInfo: Boolean)
     begin
         NoOfCopies := NewNoOfCopies;
@@ -1615,27 +1496,26 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         DisplayAssemblyInformation := DisplayAsmInfo;
     end;
 
-    [Scope('Internal')]
     procedure CollectAsmInformation()
     var
-        ValueEntry: Record "5802";
-        ItemLedgerEntry: Record "32";
-        PostedAsmHeader: Record "910";
-        PostedAsmLine: Record "911";
-        SalesShipmentLine: Record "111";
+        ValueEntry: Record "Value Entry";
+        ItemLedgerEntry: Record "Item Ledger Entry";
+        PostedAsmHeader: Record "Posted Assembly Header";
+        PostedAsmLine: Record "Posted Assembly Line";
+        SalesShipmentLine: Record "Sales Shipment Line";
     begin
-        TempPostedAsmLine.DELETEALL;
+        TempPostedAsmLine.DELETEALL();
         IF "Sales Invoice Line".Type <> "Sales Invoice Line".Type::Item THEN
             EXIT;
-        WITH ValueEntry DO BEGIN
-            SETCURRENTKEY("Document No.");
-            SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
-            SETRANGE("Document Type", "Document Type"::"Sales Invoice");
-            SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
-            SETRANGE(Adjustment, FALSE);
-            IF NOT FINDSET THEN
-                EXIT;
-        END;
+
+        ValueEntry.SETCURRENTKEY("Document No.");
+        ValueEntry.SETRANGE("Document No.", "Sales Invoice Line"."Document No.");
+        ValueEntry.SETRANGE("Document Type", ValueEntry."Document Type"::"Sales Invoice");
+        ValueEntry.SETRANGE("Document Line No.", "Sales Invoice Line"."Line No.");
+        ValueEntry.SETRANGE(Adjustment, FALSE);
+        IF NOT ValueEntry.FINDSET THEN
+            EXIT;
+
         REPEAT
             IF ItemLedgerEntry.GET(ValueEntry."Item Ledger Entry No.") THEN
                 IF ItemLedgerEntry."Document Type" = ItemLedgerEntry."Document Type"::"Sales Shipment" THEN BEGIN
@@ -1651,8 +1531,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         UNTIL ValueEntry.NEXT = 0;
     end;
 
-    [Scope('Internal')]
-    procedure TreatAsmLineBuffer(PostedAsmLine: Record "911")
+    procedure TreatAsmLineBuffer(PostedAsmLine: Record "Posted Assembly Line")
     begin
         CLEAR(TempPostedAsmLine);
         TempPostedAsmLine.SETRANGE(Type, PostedAsmLine.Type);
@@ -1670,17 +1549,15 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         END;
     end;
 
-    [Scope('Internal')]
     procedure GetUOMText(UOMCode: Code[10]): Text[10]
     var
-        UnitOfMeasure: Record "204";
+        UnitOfMeasure: Record "Unit Of Measure";
     begin
         IF NOT UnitOfMeasure.GET(UOMCode) THEN
             EXIT(UOMCode);
         EXIT(UnitOfMeasure.Description);
     end;
 
-    [Scope('Internal')]
     procedure BlanksForIndent(): Text[10]
     begin
         EXIT(PADSTR('', 2, ' '));
@@ -1688,9 +1565,8 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
     local procedure GetLineFeeNoteOnReportHist(SalesInvoiceHeaderNo: Code[20])
     var
-        LineFeeNoteOnReportHist: Record "1053";
-        CustLedgerEntry: Record "21";
-        Customer: Record "18";
+        LineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist.";
+        CustLedgerEntry: Record "Cust. Ledger Entry";
     begin
         TempLineFeeNoteOnReportHist.DELETEALL;
         CustLedgerEntry.SETRANGE("Document Type", CustLedgerEntry."Document Type"::Invoice);
@@ -1710,7 +1586,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                 TempLineFeeNoteOnReportHist.INSERT;
             UNTIL LineFeeNoteOnReportHist.NEXT = 0;
         END ELSE BEGIN
-            LineFeeNoteOnReportHist.SETRANGE("Language Code", Language.GetUserLanguage);
+            LineFeeNoteOnReportHist.SETRANGE("Language Code", LanguageMgt.GetUserLanguageCode());
             IF LineFeeNoteOnReportHist.FINDSET THEN
                 REPEAT
                     TempLineFeeNoteOnReportHist.INIT;
@@ -1748,5 +1624,92 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             END;
         END;
     end;
-}
 
+    local procedure CheckGSTDoc(SalesLine: Record "Sales Invoice Line"): Boolean
+    var
+        TaxTransactionValue: Record "Tax Transaction Value";
+    begin
+        TaxTransactionValue.Reset();
+        TaxTransactionValue.SetRange("Tax Record ID", SalesLine.RecordId);
+        TaxTransactionValue.SetRange("Tax Type", 'GST');
+        if not TaxTransactionValue.IsEmpty then
+            exit(true);
+    end;
+
+    local procedure GetSalesGSTAmount(SalesInvoiceHeader: Record "Sales Invoice Header";
+    SalesInvoiceLine: Record "Sales Invoice Line")
+    var
+        DetailedGSTLedgerEntry: Record "Detailed GST Ledger Entry";
+    begin
+        Clear(IGSTAmt);
+        Clear(CGSTAmt);
+        Clear(SGSTAmt);
+        Clear(CessAmt);
+        Clear(IGSTPer);
+        Clear(CGSTPer);
+        Clear(SGSTPer);
+        Clear(CessPer);
+        DetailedGSTLedgerEntry.Reset();
+        DetailedGSTLedgerEntry.SetRange("Document No.", SalesInvoiceLine."Document No.");
+        DetailedGSTLedgerEntry.SetRange("Document Line No.", SalesInvoiceLine."Line No.");
+        DetailedGSTLedgerEntry.SetRange("Entry Type", DetailedGSTLedgerEntry."Entry Type"::"Initial Entry");
+        if DetailedGSTLedgerEntry.FindSet() then
+            repeat
+                if (DetailedGSTLedgerEntry."GST Component Code" = CGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then Begin
+                    CGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
+                    CGSTPer := DetailedGSTLedgerEntry."GST %";
+                End else
+                    if (DetailedGSTLedgerEntry."GST Component Code" = CGSTLbl) then begin
+                        CGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
+                        CGSTPer := DetailedGSTLedgerEntry."GST %";
+                    end;
+
+                if (DetailedGSTLedgerEntry."GST Component Code" = SGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
+                    SGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
+                    SGSTPer := DetailedGSTLedgerEntry."GST %";
+                end else
+                    if (DetailedGSTLedgerEntry."GST Component Code" = SGSTLbl) then begin
+                        SGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
+                        SGSTPer := DetailedGSTLedgerEntry."GST %";
+                    end;
+
+                if (DetailedGSTLedgerEntry."GST Component Code" = IGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
+                    IGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
+                    IGSTPer := DetailedGSTLedgerEntry."GST %";
+                end else
+                    if (DetailedGSTLedgerEntry."GST Component Code" = IGSTLbl) then begin
+                        IGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
+                        IGSTPer := DetailedGSTLedgerEntry."GST %";
+                    end;
+                if (DetailedGSTLedgerEntry."GST Component Code" = CessLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
+                    CessAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
+                    CessPer := DetailedGSTLedgerEntry."GST %";
+                end
+                else
+                    if (DetailedGSTLedgerEntry."GST Component Code" = CessLbl) then begin
+                        CessAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
+                        CessPer := DetailedGSTLedgerEntry."GST %";
+                    end;
+            until DetailedGSTLedgerEntry.Next() = 0;
+    end;
+
+    procedure GetGSTRoundingPrecision(ComponentName: Code[30]): Decimal
+    var
+        TaxComponent: Record "Tax Component";
+        GSTSetup: Record "GST Setup";
+        GSTRoundingPrecision: Decimal;
+    begin
+        if not GSTSetup.Get() then
+            exit;
+        GSTSetup.TestField("GST Tax Type");
+
+        TaxComponent.SetRange("Tax Type", GSTSetup."GST Tax Type");
+        TaxComponent.SetRange(Name, ComponentName);
+        TaxComponent.FindFirst();
+        if TaxComponent."Rounding Precision" <> 0 then
+            GSTRoundingPrecision := TaxComponent."Rounding Precision"
+        else
+            GSTRoundingPrecision := 1;
+        exit(GSTRoundingPrecision);
+    end;
+}

@@ -168,6 +168,17 @@ tableextension 50029 SalesHeader extends "Sales Header"
         exit(SGSTAmt + CGSTAmt + IGSTAmt + CessAmount);
     end;
 
+    procedure CheckAttachment(GRec: Record "Sales Header")
+    var
+        RecordLink: Record "Document Attachment";
+    begin
+        RecordLink.SETRANGE("Table ID", Database::"Sales Header");
+        RecordLink.SetRange("No.", GRec."No.");
+        IF RecordLink.IsEmpty THEN
+            ERROR('Link attachment is mandatory to send approval request');
+    end;
+
+
     var
         IGSTLbl: Label 'IGST';
         SGSTLbl: Label 'SGST';
