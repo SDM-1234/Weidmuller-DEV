@@ -9,6 +9,8 @@ codeunit 50006 "Inventory Subscriber"
         G_SalesLine: Record "Sales Line";
         Item: Record Item;
 
+
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Item-Check Avail.", OnSalesLineCheckOnAfterSalesLineShowWarning, '', false, false)]
     local procedure "Item-Check Avail._OnSalesLineCheckOnAfterSalesLineShowWarning"(var SalesLine: Record "Sales Line"; var Rollback: Boolean)
     var
@@ -43,4 +45,55 @@ codeunit 50006 "Inventory Subscriber"
         IF SalesLine1."No." <> Item."No." THEN
             Item.GET(SalesLine1."No.");
     END;
+
+
+    local procedure CheckMandatoryItemDimension(tableID: Integer; ItemNo: Code[20])
+    var
+        Dimension: Record Dimension;
+        DefaultDim: Record "Default Dimension";
+    begin
+        Dimension.SetRange("Mandatory for Item", true);
+        if Dimension.FindSet() then
+            repeat
+                DefaultDim.SetRange("Table ID", tableID);
+                DefaultDim.SetRange("No.", ItemNo);
+                DefaultDim.SetRange("Dimension Code", Dimension.Code);
+                if DefaultDim.IsEmpty then
+                    Error('Dimension value is blank in Item No. %1,Please select dimension %2', ItemNo, Dimension.Code)
+            until Dimension.Next() = 0;
+    end;
+
+    local procedure CheckItemDefDim(tableID: Integer; ItemNo: Code[20]): Boolean
+    var
+        DefaultDim: Record "Default Dimension";
+    begin
+        DefaultDim.SetRange("Table ID", tableID);
+        DefaultDim.SetRange("No.", ItemNo);
+        If DefaultDim.IsEmpty then
+            Error('Dimension value is blank in Item No. %1,Please select mandatory dimensions', ItemNo)
+        else
+            exit(true);
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Approvals Mgmt.", OnSendItemForApproval, '', False, False)]
+    local procedure WM_OnSendItemForApproval(var Item: Record Item)
+    begin
+        if CheckItemDefDim(27, Item."No.") then
+            CheckMandatoryItemDimension(27, Item."No.");
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Item Card", OnQueryClosePageEvent, '', false, false)]
+    local procedure WM_OnQueryClosePageEventItemCard(var Rec: Record Item)
+    begin
+        if CheckItemDefDim(27, Rec."No.") then
+            CheckMandatoryItemDimension(27, Rec."No.");
+    end;
+
+    [EventSubscriber(ObjectType::Page, Page::"Item List", OnQueryClosePageEvent, '', false, false)]
+    local procedure WM_OnQueryClosePageEventItemList(var Rec: Record Item)
+    begin
+        if CheckItemDefDim(27, Rec."No.") then
+            CheckMandatoryItemDimension(27, Rec."No.");
+    end;
+
 }

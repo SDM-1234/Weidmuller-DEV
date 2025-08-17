@@ -322,6 +322,15 @@ codeunit 50100 SalesSubscriber
         SalesLine."OC No" := SalesShptLine."Order No.";
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Approvals Mgmt.", OnAfterCheckSalesApprovalPossible, '', false, false)]
+    local procedure WM_OnAfterCheckSalesApprovalPossible(var SalesHeader: Record "Sales Header")
+    begin
+        //if SalesHeader."Document Type" <> SalesHeader."Document Type"::Invoice then
+        //  exit;
+        SalesHeader.CheckAttachment(SalesHeader);
+    end;
+
+
 
 
 

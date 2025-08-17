@@ -15,6 +15,15 @@ codeunit 50005 "Purchase Subscriber"
         PurchaseHeader.CheckAttachment(PurchaseHeader);
     end;
 
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Purch.-Post (Yes/No)", OnAfterConfirmPost, '', false, false)]
+    local procedure WM_OnAfterConfirmPost(var PurchaseHeader: Record "Purchase Header")
+    begin
+        if PurchaseHeader.Receive or PurchaseHeader.Invoice then
+            PurchaseHeader.CheckAttachment(PurchaseHeader);
+    end;
+
+
+
 
 
 

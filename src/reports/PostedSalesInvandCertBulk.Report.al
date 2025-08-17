@@ -1,19 +1,9 @@
 report 50022 "Posted Sales Inv and Cert-Bulk"
 {
-    // Project: Weidmuller
-    // ********************************************************************************************************************************
-    // Developer: ZiniosEdge
-    // ********************************************************************************************************************************
-    // -+------+---------+--------+---------+----+--------------------------------------
-    // T|ID_RIC|MOD  REL |DATE    |SEARCH   |Developer|DESCRIPTION
-    // -+------+---------+--------+---------+----+--------------------------------------
-    // 1|ZT0207|         |12.07.19|ZE_LIJO  |LIJO     |Variable to find GST Type
-    // 2|                |17.07.19|ZE_LIJO  |LIJO     |Description changes in the Report Body
-    // 3|                |02.08.19|ZE_LIJO  |LIJO     |Code to calculate 2.1 Certificate table
-    DefaultLayout = RDLC;
-    RDLCLayout = 'src/reportlayout/PostedSalesInvandCertBulk.rdl';
     Caption = ' Bulk Sales - Invoice Certificate';
     Permissions = TableData 7190 = rimd;
+    DefaultLayout = RDLC;
+    RDLCLayout = 'src/reportlayout/PostedSalesInvandCertBulk.rdl';
     PreviewMode = PrintLayout;
     UseRequestPage = false;
     ApplicationArea = All;
@@ -859,15 +849,16 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                 TotalAmttoCustomer: Decimal;
                 NumToWords: Codeunit AmounttoWords;
             begin
+                If "Language Code" <> '' then
                 CurrReport.LANGUAGE := Languagemgt.GetLanguageID("Language Code");
                 IsGSTApplicable := CheckGSTDoc("Sales Invoice Line");
                 Customer.GET("Bill-to Customer No.");
-                States.RESET;
+                States.RESET();
                 IF States.GET(Customer."State Code") THEN
                     StateName := States.Description;
-                ShipToAddress.RESET;
+                ShipToAddress.RESET();
                 IF ShipToAddress.GET("Sales Invoice Header"."Sell-to Customer No.", "Sales Invoice Header"."Ship-to Code") THEN BEGIN
-                    States.RESET;
+                    States.RESET();
                     IF States.GET(ShipToAddress.State) THEN
                         ShipToStateName := States.Description;
                 END;
@@ -885,7 +876,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                 ELSE
                     OrderNoText := FIELDCAPTION("Order No.");
                 IF "Salesperson Code" = '' THEN BEGIN
-                    SalesPurchPerson.INIT;
+                    SalesPurchPerson.INIT();
                     SalesPersonText := '';
                 END ELSE BEGIN
                     SalesPurchPerson.GET("Salesperson Code");
@@ -914,29 +905,25 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     CLEAR(Cust);
 
                 IF "Payment Terms Code" = '' THEN
-                    PaymentTerms.INIT
+                    PaymentTerms.INIT()
                 ELSE BEGIN
                     PaymentTerms.GET("Payment Terms Code");
                     PaymentTerms.TranslateDescription(PaymentTerms, "Language Code");
                 END;
                 IF "Shipment Method Code" = '' THEN
-                    ShipmentMethod.INIT
+                    ShipmentMethod.INIT()
                 ELSE BEGIN
                     ShipmentMethod.GET("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 END;
                 FormatAddr.SalesInvShipTo(ShipToAddr, ShipToAddr, "Sales Invoice Header");
-                /*ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
-                FOR i := 1 TO ARRAYLEN(ShipToAddr) DO
-                  IF ShipToAddr[i] <> CustAddr[i] THEN
-                    ShowShippingAddr := TRUE;*/
 
                 GetLineFeeNoteOnReportHist("No.");
 
                 SupplementaryText := '';
                 SalesInvLine.SETRANGE("Document No.", "No.");
                 //SalesInvLine.SETRANGE(Supplementary, TRUE);
-                IF SalesInvLine.FINDFIRST THEN
+                IF SalesInvLine.FINDFIRST() THEN
                     SupplementaryText := Text16500;
 
 
@@ -962,7 +949,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
                 CLEAR(SalesShipmentHeader);
                 CLEAR(SH);
-                SalesInvoiceLine.RESET;
+                SalesInvoiceLine.RESET();
                 SalesInvoiceLine.SETRANGE(SalesInvoiceLine."Document No.", "Sales Invoice Header"."No.");
                 SalesInvoiceLine.SETFILTER(SalesInvoiceLine.Type, '%1', SalesInvoiceLine.Type::Item);
                 IF SalesInvoiceLine.FINDFIRST() THEN
@@ -976,8 +963,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     SACode := SH."Shipping Agent Code";
 
 
-                //ZE_LIJO 12/7/2019
-                //++
                 CLEAR(GSTJurisdiction);
                 SalesInvoiceLine2.RESET();
                 SalesInvoiceLine2.SETFILTER(SalesInvoiceLine2."Document No.", "Sales Invoice Header"."No.");
@@ -988,12 +973,7 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
                     IF SalesInvoiceLine2."GST Jurisdiction Type" = SalesInvoiceLine2."GST Jurisdiction Type"::Intrastate THEN
                         GSTJurisdiction := 'Intrastate';
                 END;
-                //--
-                //ZE_LIJO 02.08.2019
-                //++
                 CLEAR(Cert_Ln);
-                //--
-
             end;
         }
     }
@@ -1016,12 +996,10 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
                         trigger OnValidate()
                         begin
-                            //SE-E969
                             IF (NoOfPrint) THEN
                                 ControlBool := TRUE;
                             IF (NoOfCopies > 0) THEN
                                 ERROR('No. of Copy have value');
-                            //SE-E969
                         end;
                     }
                     field("Digital Signature"; DigitalSig)
@@ -1037,10 +1015,8 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
                         trigger OnValidate()
                         begin
-                            //SE-E969
                             IF (ControlBool) AND (NoOfCopies > 0) THEN
                                 ERROR('No. of print is enable.');
-                            //SE-E969
                         end;
                     }
                     field(ShowInternalInfo; ShowInternalInfo)
@@ -1072,17 +1048,14 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
             }
         }
 
-        actions
-        {
-        }
-
         trigger OnInit()
         begin
             LogInteractionEnable := TRUE;
-            CLEAR(NoOfPrint);//SE-E969
-            CLEAR(DigitalSig);//SE-E969
-            CLEAR(ControlBool);//SE-E969
-            CLEAR(GTitle);//SE-E969
+            CLEAR(NoOfPrint);
+            CLEAR(DigitalSig);
+            CLEAR(ControlBool);
+            CLEAR(GTitle);
+
         end;
 
         trigger OnOpenPage()
@@ -1098,21 +1071,19 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
 
     trigger OnInitReport()
     begin
-        GLSetup.GET;
-        CompanyInfo.GET;
-        SalesSetup.GET;
-        CompanyInfo.VerifyAndSetPaymentInfo;
-        CompanyInfo1.GET;
+        GLSetup.GET();
+        CompanyInfo.GET();
+        SalesSetup.GET();
+        CompanyInfo.VerifyAndSetPaymentInfo();
+        CompanyInfo1.GET();
         CompanyInfo1.CALCFIELDS(Picture);
-        CompanyInfo1.CALCFIELDS("Digital Signature");//SE-E969
-        //CLEAR(NoOfPrint);//SE-E969
-        //CLEAR(DigitalSig);//SE-E969
+        CompanyInfo1.CALCFIELDS("Digital Signature");
     end;
 
     trigger OnPreReport()
     begin
         IF NOT CurrReport.USEREQUESTPAGE THEN
-            InitLogInteraction;
+            InitLogInteraction();
     end;
 
     var
@@ -1134,15 +1105,14 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         DetailedGSTLedgerEntry: Record "Detailed GST Ledger Entry";
         SalesSetup: Record "Sales & Receivables Setup";
         Cust: Record "Customer";
-        //VATAmountLine: Record "290" temporary;
+
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
         RespCenter: Record "Responsibility Center";
         LanguageMgt: Codeunit "Language";
         CurrExchRate: Record "Currency Exchange Rate";
-        TempPostedAsmLine: Record "Posted Assembly Line";
+        TempPostedAsmLine: Record "Posted Assembly Line" temporary;
         TempLineFeeNoteOnReportHist: Record "Line Fee Note on Report Hist." temporary;
-        //GSTManagement: Codeunit "GST Management";
         SalesInvCountPrinted: Codeunit "Sales Inv.-Printed";
         FormatAddr: Codeunit "Format Address";
         SegManagement: Codeunit SegManagement;
@@ -1195,7 +1165,6 @@ report 50022 "Posted Sales Inv and Cert-Bulk"
         Text13701: Label 'Total %1 Excl. Taxes';
         SupplementaryText: Text[30];
         Text16500: Label 'Supplementary Invoice';
-        //ServiceTaxEntry: Record "16473";
         ServiceTaxAmt: Decimal;
         ServiceTaxECessAmt: Decimal;
         AppliedServiceTaxAmt: Decimal;

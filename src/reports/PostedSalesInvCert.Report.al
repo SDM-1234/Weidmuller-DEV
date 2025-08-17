@@ -945,15 +945,16 @@ report 50023 "Posted Sales Inv Cert."
                 TotalAmttoCustomer: Decimal;
                 NumToWords: Codeunit AmounttoWords;
             begin
+                If "Language Code" <> '' then
                 CurrReport.LANGUAGE := LanguageMgt.GetLanguageID("Language Code");
                 IsGSTApplicable := CheckGSTDoc("Sales Invoice Line");
                 Customer.GET("Bill-to Customer No.");
-                States.RESET;
+                States.RESET();
                 IF States.GET(Customer."State Code") THEN
                     StateName := States.Description;
-                ShipToAddress.RESET;
+                ShipToAddress.RESET();
                 IF ShipToAddress.GET("Sales Invoice Header"."Sell-to Customer No.", "Sales Invoice Header"."Ship-to Code") THEN BEGIN
-                    States.RESET;
+                    States.RESET();
                     IF States.GET(ShipToAddress.State) THEN
                         ShipToStateName := States.Description;
                 END;
@@ -971,7 +972,7 @@ report 50023 "Posted Sales Inv Cert."
                 ELSE
                     OrderNoText := FIELDCAPTION("Order No.");
                 IF "Salesperson Code" = '' THEN BEGIN
-                    SalesPurchPerson.INIT;
+                    SalesPurchPerson.INIT();
                     SalesPersonText := '';
                 END ELSE BEGIN
                     SalesPurchPerson.GET("Salesperson Code");
