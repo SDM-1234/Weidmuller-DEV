@@ -55,6 +55,7 @@ report 50024 "Customer-wise Dunning"
             }
             column(Balance; Balance)
             {
+                DecimalPlaces = 0 : 2;
             }
             dataitem("Cust. Ledger Entry"; "Cust. Ledger Entry")
             {

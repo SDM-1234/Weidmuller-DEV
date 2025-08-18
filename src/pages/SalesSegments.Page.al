@@ -21,8 +21,7 @@ page 50014 "Sales Segments"
 
                     trigger OnValidate()
                     begin
-                        Rec."Sales Order No." := SalesOrderNo;
-                        Rec."Sales Invoice No." := SalesInvNo;
+
                     end;
                 }
                 field("Sales %"; Rec."Sales %")
@@ -85,6 +84,13 @@ page 50014 "Sales Segments"
         }
     }
 
+    trigger OnInsertRecord(BelowxRec: Boolean): Boolean
+    begin
+        Rec."Sales Order No." := SalesOrderNo;
+        Rec."Sales Invoice No." := SalesInvNo;
+        Rec."Posted Sales Invoice No." := PostedSalesInvNo;
+    end;
+
     trigger OnAfterGetCurrRecord()
     begin
         IF (Rec."Posted Sales Invoice No." = '') THEN
@@ -96,10 +102,6 @@ page 50014 "Sales Segments"
 
     trigger OnAfterGetRecord()
     begin
-        IF Rec."Sales Order No." <> '' THEN
-            SalesOrderNo := Rec."Sales Order No.";
-        IF Rec."Sales Invoice No." <> '' THEN
-            SalesInvNo := Rec."Sales Invoice No.";
         Rec.UpdateUnassignedPercentage(Rec."Customer No.", 0);
     end;
 
@@ -111,7 +113,7 @@ page 50014 "Sales Segments"
         SalesSegment.SETRANGE("Customer No.", Rec."Customer No.");
         SalesSegment.SETRANGE("Sales Order No.", Rec."Sales Order No.");
         SalesSegment.SETRANGE("Sales %", 0);
-        SalesSegment.DELETE();
+        if SalesSegment.DELETE() then;
     end;
 
     trigger OnOpenPage()
@@ -122,7 +124,7 @@ page 50014 "Sales Segments"
     var
         SalesOrderNo: Code[20];
         FieldEditable: Boolean;
-        SalesInvNo: Code[20];
+        SalesInvNo, PostedSalesInvNo : Code[20];
 
     local procedure FindLineAmount(DocType: Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order"; No: Code[20]) TotalLineAmt: Decimal
     var
@@ -135,6 +137,16 @@ page 50014 "Sales Segments"
             REPEAT
                 TotalLineAmt += SalesLine."Line Amount";
             UNTIL SalesLine.NEXT() = 0;
+    end;
+
+    procedure SetOrderInvNo(pSalesOrderNo: Code[20]; pSalesInvNo: Code[20]; pPostedSalesInvNo: Code[20])
+    begin
+        IF pSalesOrderNo <> '' THEN
+            SalesOrderNo := pSalesOrderNo;
+        IF pSalesInvNo <> '' THEN
+            SalesInvNo := pSalesInvNo;
+        if pPostedSalesInvNo <> '' then
+            PostedSalesInvNo := pPostedSalesInvNo;
     end;
 }
 

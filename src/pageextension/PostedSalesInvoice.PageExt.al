@@ -29,10 +29,16 @@ pageextension 50005 PostedSalesInvoice extends "Posted Sales Invoice"
                 Caption = 'Industry Segments';
                 ToolTip = 'View the industry segments associated with this posted sales invoice.';
                 ApplicationArea = All;
-                RunObject = Page "Sales Segments";
-                RunPageLink = "Posted Sales Invoice No." = FIELD("No.");
-                RunPageView = SORTING("Posted Sales Invoice No.")
-                              ORDER(Ascending);
+                trigger OnAction()
+                var
+                    SalesSegmentRec: Record "Sales Segment";
+                    SalesSegmentPage: Page "Sales Segments";
+                begin
+                    SalesSegmentPage.SetOrderInvNo('', '', Rec."No.");
+                    SalesSegmentRec.SetRange("Posted Sales Invoice No.", Rec."No.");
+                    SalesSegmentPage.SetTableView(SalesSegmentRec);
+                    SalesSegmentPage.RunModal();
+                end;
             }
         }
         addafter(Print)

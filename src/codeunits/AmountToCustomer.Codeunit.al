@@ -1,4 +1,4 @@
-codeunit 50002 "Amount To Customer"
+codeunit 50012 "Amount To Customer"
 {
     trigger OnRun()
     begin
