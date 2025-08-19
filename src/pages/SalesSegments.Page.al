@@ -89,6 +89,7 @@ page 50014 "Sales Segments"
         Rec."Sales Order No." := SalesOrderNo;
         Rec."Sales Invoice No." := SalesInvNo;
         Rec."Posted Sales Invoice No." := PostedSalesInvNo;
+        Rec."Customer No." := CustNo;
     end;
 
     trigger OnAfterGetCurrRecord()
@@ -124,7 +125,7 @@ page 50014 "Sales Segments"
     var
         SalesOrderNo: Code[20];
         FieldEditable: Boolean;
-        SalesInvNo, PostedSalesInvNo : Code[20];
+        SalesInvNo, PostedSalesInvNo, CustNo : Code[20];
 
     local procedure FindLineAmount(DocType: Option Quote,"Order",Invoice,"Credit Memo","Blanket Order","Return Order"; No: Code[20]) TotalLineAmt: Decimal
     var
@@ -139,7 +140,7 @@ page 50014 "Sales Segments"
             UNTIL SalesLine.NEXT() = 0;
     end;
 
-    procedure SetOrderInvNo(pSalesOrderNo: Code[20]; pSalesInvNo: Code[20]; pPostedSalesInvNo: Code[20])
+    procedure SetOrderInvNo(pSalesOrderNo: Code[20]; pSalesInvNo: Code[20]; pPostedSalesInvNo: Code[20]; pCustNo: Code[20])
     begin
         IF pSalesOrderNo <> '' THEN
             SalesOrderNo := pSalesOrderNo;
@@ -147,6 +148,8 @@ page 50014 "Sales Segments"
             SalesInvNo := pSalesInvNo;
         if pPostedSalesInvNo <> '' then
             PostedSalesInvNo := pPostedSalesInvNo;
+        if pCustNo <> '' Then
+            CustNo := pCustNo;
     end;
 }
 

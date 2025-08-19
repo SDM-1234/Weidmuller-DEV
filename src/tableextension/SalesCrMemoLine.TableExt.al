@@ -10,5 +10,52 @@ tableextension 50005 SalesCrMemoLine extends "Sales Cr.Memo Line"
             FieldClass = FlowField;
         }
     }
+    procedure AmountToCustomer(): Decimal
+    var
+        AmtToCustCU: Codeunit "Amount To Customer";
+        CGSTLineAmount: Decimal;
+        SGSTLineAmount: Decimal;
+        IGSTLineAmount: Decimal;
+        CESSLineAmount: Decimal;
+    begin
+        CGSTLineAmount := 0;
+        SGSTLineAmount := 0;
+        IGSTLineAmount := 0;
+        CESSLineAmount := 0;
+
+        AmtToCustCU.GetGSTValueForLineCrMemo(
+            "Document No.",
+            "Line No.",
+            CGSTLineAmount,
+            SGSTLineAmount,
+            IGSTLineAmount,
+            CESSLineAmount);
+
+        Exit("Line Amount" + CGSTLineAmount + SGSTLineAmount + IGSTLineAmount + CESSLineAmount);
+    end;
+
+    procedure GstAmount(): Decimal
+    var
+        AmtToCustCU: Codeunit "Amount To Customer";
+        CGSTLineAmount: Decimal;
+        SGSTLineAmount: Decimal;
+        IGSTLineAmount: Decimal;
+        CESSLineAmount: Decimal;
+    begin
+        CGSTLineAmount := 0;
+        SGSTLineAmount := 0;
+        IGSTLineAmount := 0;
+        CESSLineAmount := 0;
+
+        AmtToCustCU.GetGSTValueForLineCrMemo(
+            "Document No.",
+            "Line No.",
+            CGSTLineAmount,
+            SGSTLineAmount,
+            IGSTLineAmount,
+            CESSLineAmount);
+
+        Exit(CGSTLineAmount + SGSTLineAmount + IGSTLineAmount + CESSLineAmount);
+    end;
 }
 

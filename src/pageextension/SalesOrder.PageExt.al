@@ -116,7 +116,7 @@ pageextension 50053 SalesOrder extends "Sales Order"
                     SalesSegmentRec: Record "Sales Segment";
                     SalesSegmentPage: Page "Sales Segments";
                 begin
-                    SalesSegmentPage.SetOrderInvNo(Rec."No.", '', '');
+                    SalesSegmentPage.SetOrderInvNo(Rec."No.", '', '', Rec."Bill-to Customer No.");
                     SalesSegmentRec.SetRange("Sales Order No.", Rec."No.");
                     SalesSegmentPage.SetTableView(SalesSegmentRec);
                     SalesSegmentPage.RunModal();

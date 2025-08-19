@@ -94,7 +94,7 @@ pageextension 50054 SalesInvoice extends "Sales Invoice"
                     SalesSegmentRec: Record "Sales Segment";
                     SalesSegmentPage: Page "Sales Segments";
                 begin
-                    SalesSegmentPage.SetOrderInvNo('', Rec."No.", '');
+                    SalesSegmentPage.SetOrderInvNo('', Rec."No.", '', Rec."Bill-to Customer No.");
                     SalesSegmentRec.SetRange("Sales Invoice No.", Rec."No.");
                     SalesSegmentPage.SetTableView(SalesSegmentRec);
                     SalesSegmentPage.RunModal();

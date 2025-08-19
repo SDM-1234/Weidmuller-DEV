@@ -34,7 +34,7 @@ pageextension 50005 PostedSalesInvoice extends "Posted Sales Invoice"
                     SalesSegmentRec: Record "Sales Segment";
                     SalesSegmentPage: Page "Sales Segments";
                 begin
-                    SalesSegmentPage.SetOrderInvNo('', '', Rec."No.");
+                    SalesSegmentPage.SetOrderInvNo('', '', Rec."No.", Rec."Bill-to Customer No.");
                     SalesSegmentRec.SetRange("Posted Sales Invoice No.", Rec."No.");
                     SalesSegmentPage.SetTableView(SalesSegmentRec);
                     SalesSegmentPage.RunModal();
@@ -62,54 +62,57 @@ pageextension 50005 PostedSalesInvoice extends "Posted Sales Invoice"
                     END;
                 end;
             }
-            //     action("Posted Sales Inv & Certificate")
-            //     {
-            //         Caption = 'Posted Sales Inv Certificate';
-            //         Image = "report";
-            //         Promoted = true;
-            //         PromotedCategory = Process;
+            action("Posted Sales Inv & Certificate")
+            {
+                Caption = 'Posted Sales Inv Certificate';
+                Image = Report;
+                ApplicationArea = All;
+                ToolTip = ' ';
 
-            //         trigger OnAction()
-            //         var
-            //             PostdSalesInv: Report "50023";
-            //         begin
-            //             //ZE_LIJO 05.08.2019
-            //             //++
-            //             SalesInvHeader.RESET;
-            //             SalesInvHeader.SETRANGE("No.", "No.");
-            //             IF SalesInvHeader.FINDFIRST THEN BEGIN
-            //                 PostdSalesInv.SETTABLEVIEW(SalesInvHeader);
-            //                 PostdSalesInv.RUN;
-            //             END;
-            //             //--
-            //         end;
-            //     }
-            //     action("Export Invoice")
-            //     {
-            //         Caption = 'Export Invoice';
-            //         Image = "report";
-            //         Promoted = true;
-            //         PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    PostdSalesInv: Report "Posted Sales Inv Cert.";
+                begin
+                    SalesInvHeader.RESET();
+                    SalesInvHeader.SETRANGE("No.", Rec."No.");
+                    IF SalesInvHeader.FINDFIRST() THEN BEGIN
+                        PostdSalesInv.SETTABLEVIEW(SalesInvHeader);
+                        PostdSalesInv.RunModal();
+                    END;
+                end;
+            }
+            action("Export Invoice")
+            {
+                Caption = 'Export Invoice';
+                Image = Report;
+                ApplicationArea = All;
+                ToolTip = ' ';
 
-            //         trigger OnAction()
-            //         begin
-            //             SalesInvHeader.SETRANGE("No.", "No.");
-            //             IF SalesInvHeader.FINDFIRST THEN BEGIN
-            //                 ExportInvoiceWeidmueller.SETTABLEVIEW(SalesInvHeader);
-            //                 ExportInvoiceWeidmueller.RUN;
-            //             END;
-            //         end;
-            //     }
+                trigger OnAction()
+                var
+                    ExportInvoiceWeidmueller: Report "Export Invoice -Weidmueller";
+                begin
+                    SalesInvHeader.SETRANGE("No.", Rec."No.");
+                    IF SalesInvHeader.FINDFIRST() THEN BEGIN
+                        ExportInvoiceWeidmueller.SETTABLEVIEW(SalesInvHeader);
+                        ExportInvoiceWeidmueller.RunModal();
+                    END;
+                end;
+            }
         }
         addafter(Print_Promoted)
         {
             actionref(Posted_Sales_Invoice_Promoted; PostedSalesInvoice)
             {
             }
+            actionref(Posted_Sales_Inv_Certificate_Promoted; "Posted Sales Inv & Certificate")
+            {
+            }
+            actionref(Export_Invoice_Promoted; "Export Invoice")
+            {
+            }
+
         }
     }
-
-    // var
-    //     ExportInvoiceWeidmueller: Report "50009";
 }
 
