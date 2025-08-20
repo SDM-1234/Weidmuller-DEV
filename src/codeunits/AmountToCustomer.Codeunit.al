@@ -1,4 +1,4 @@
-codeunit 50002 "Amount To Customer"
+codeunit 50012 "Amount To Customer"
 {
     trigger OnRun()
     begin
@@ -75,6 +75,59 @@ codeunit 50002 "Amount To Customer"
             repeat
                 if salesInvoiceHeader."Currency Code" <> '' then
                     CESSLineAmount += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * salesInvoiceHeader."Currency Factor"), PostedSalesInvRep.GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"))
+                else
+                    CESSLineAmount += Abs(DetailedGSTLedgerEntry."GST Amount");
+            until DetailedGSTLedgerEntry.Next() = 0;
+
+    end;
+
+    procedure GetGSTValueForLineCrMemo(
+        DocumentNo: Code[20];
+        DocumentLineNo: Integer;
+        var CGSTLineAmount: Decimal;
+        var SGSTLineAmount: Decimal;
+        var IGSTLineAmount: Decimal;
+        var CESSLineAmount: Decimal)
+    var
+        DetailedGSTLedgerEntry: Record "Detailed GST Ledger Entry";
+        SalesCrMemoHeader: Record "Sales Cr.Memo Header";
+        PostedSalesInvRep: Report "Posted Sales Invoice";
+    begin
+        SalesCrMemoHeader.Get(DocumentNo);
+        CGSTLineAmount := 0;
+        SGSTLineAmount := 0;
+        IGSTLineAmount := 0;
+        CESSLineAmount := 0;
+
+        DetailedGSTLedgerEntry.SetRange("Document No.", DocumentNo);
+        DetailedGSTLedgerEntry.SetRange("Document Line No.", DocumentLineNo);
+        DetailedGSTLedgerEntry.SetRange("Entry Type", DetailedGSTLedgerEntry."Entry Type"::"Initial Entry");
+        DetailedGSTLedgerEntry.SetRange("GST Component Code", CGSTLbl);
+        if DetailedGSTLedgerEntry.FindSet() then
+            repeat
+                CGSTLineAmount += Abs(DetailedGSTLedgerEntry."GST Amount");
+            until DetailedGSTLedgerEntry.Next() = 0;
+
+        DetailedGSTLedgerEntry.SetRange("GST Component Code", SGSTLbl);
+        if DetailedGSTLedgerEntry.FindSet() then
+            repeat
+                SGSTLineAmount += Abs(DetailedGSTLedgerEntry."GST Amount")
+            until DetailedGSTLedgerEntry.Next() = 0;
+
+        DetailedGSTLedgerEntry.SetRange("GST Component Code", IGSTLbl);
+        if DetailedGSTLedgerEntry.FindSet() then
+            repeat
+                if SalesCrMemoHeader."Currency Code" <> '' then
+                    IGSTLineAmount += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesCrMemoHeader."Currency Factor"), PostedSalesInvRep.GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"))
+                else
+                    IGSTLineAmount += Abs(DetailedGSTLedgerEntry."GST Amount");
+            until DetailedGSTLedgerEntry.Next() = 0;
+
+        DetailedGSTLedgerEntry.SetRange("GST Component Code", CESSLbl);
+        if DetailedGSTLedgerEntry.FindSet() then
+            repeat
+                if SalesCrMemoHeader."Currency Code" <> '' then
+                    CESSLineAmount += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesCrMemoHeader."Currency Factor"), PostedSalesInvRep.GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"))
                 else
                     CESSLineAmount += Abs(DetailedGSTLedgerEntry."GST Amount");
             until DetailedGSTLedgerEntry.Next() = 0;

@@ -41,10 +41,11 @@ table 50005 "Sales Segment"
                     UNTIL SalesSegment.NEXT() = 0;
                 UpdateUnassignedPercentage("Customer No.", "Sales %");
                 IF "Sales %" + TotalSalesPercentage > 100 THEN
-#pragma warning disable
+#pragma warning disable AL0606
                     ERROR('Total Sales % for Sales Order No. ' + "Sales Order No." + ' cannot exceed 100');
-#pragma warning enable
+#pragma warning restore AL0606
             end;
+
         }
         field(7; Amount; Decimal)
         {
