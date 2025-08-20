@@ -10,6 +10,14 @@ pageextension 50002 GeneralLedgerSetup extends "General Ledger Setup"
                 ApplicationArea = All;
             }
         }
+        addafter("Allow Posting To")
+        {
+            field("Dunning Letter Date"; Rec."Dunning Letter Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Dunning Letter Date field.', Comment = '%';
+            }
+        }
     }
 }
 

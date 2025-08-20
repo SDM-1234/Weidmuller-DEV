@@ -325,8 +325,6 @@ codeunit 50100 SalesSubscriber
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Approvals Mgmt.", OnAfterCheckSalesApprovalPossible, '', false, false)]
     local procedure WM_OnAfterCheckSalesApprovalPossible(var SalesHeader: Record "Sales Header")
     begin
-        //if SalesHeader."Document Type" <> SalesHeader."Document Type"::Invoice then
-        //  exit;
         SalesHeader.CheckAttachment(SalesHeader);
     end;
 
