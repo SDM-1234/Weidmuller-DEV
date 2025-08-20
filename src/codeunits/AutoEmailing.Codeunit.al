@@ -21,8 +21,12 @@ codeunit 50002 "Auto Emailing"
         ReportOutStream: OutStream;
         ReportInStream: InStream;
         EmailRecipientType: Enum "Email Recipient Type";
+        GenLedgerSetup: Record "General Ledger Setup";
     begin
-        IF (DATE2DMY(TODAY, 1) = 1) OR (DATE2DMY(TODAY, 1) = 15) THEN BEGIN
+        GenLedgerSetup.Get();
+
+        IF (DATE2DMY(TODAY, 1) = 1) OR (DATE2DMY(TODAY, 1) = 15) OR (Today = GenLedgerSetup."Dunning Letter Date") THEN BEGIN
+
             CLEAR(DE_CustEmail);
             CLEAR(DE_EmailBody);
             DE_Customer.RESET();
