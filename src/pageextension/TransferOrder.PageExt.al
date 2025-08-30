@@ -4,10 +4,18 @@ pageextension 50022 TransferOrder extends "Transfer Order"
     {
         addafter(Status)
         {
-            field("Approval Status"; Rec."Approval Status")
+            // field("Approval Status"; Rec."Approval Status")
+            // {
+            //     ApplicationArea = All;
+            //     ToolTip = 'Specifies the value of the Approval Status field.', Comment = '%';
+            // }
+            field(TransferApprovalStatus; TransferApprovalStatus)
             {
-                ApplicationArea = All;
-                ToolTip = 'Specifies the value of the Approval Status field.', Comment = '%';
+                ApplicationArea = Basic, Suite;
+                Caption = 'Approval Status';
+                Editable = false;
+                Visible = EnabledTransferWorkflowsExist;
+                ToolTip = 'Specifies the approval status for transfer order.';
             }
         }
     }
@@ -27,11 +35,27 @@ pageextension 50022 TransferOrder extends "Transfer Order"
 
                 trigger OnAction()
                 var
-                    PriceAppMgt: Codeunit "Price Approval Mgmt";
+                    TransferAppMgt: Codeunit "Transfer Approval Mgmt";
                 begin
-                    //PriceAppMgt.OnSendTOforApproval(Rec);
+                    TransferAppMgt.OnSendRequestforApproval(Rec);
                 end;
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        ApprovalMgmt.GetTransferApprovalStatus(Rec, TransferApprovalStatus, EnabledTransferWorkflowsExist);
+    end;
+
+    trigger OnOpenPage()
+    begin
+        EnabledTransferWorkflowsExist := WorkflowManagement.EnabledWorkflowExist(DATABASE::"Transfer Header", WorkflowEventHandling.RunWorkflowOnSendTransferForApprovalCode());
+    end;
+
+    var
+        ApprovalMgmt: Codeunit "Approval Mgt. WM";
+        WorkflowManagement: Codeunit "Workflow Management";
+        WorkflowEventHandling: Codeunit "Transfer Workflow Evt Handling";
+        TransferApprovalStatus: Text[20];
+        EnabledTransferWorkflowsExist: Boolean;
 }

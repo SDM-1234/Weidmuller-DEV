@@ -23,7 +23,7 @@ codeunit 50016 "Transfer Workflow Evt Handling"
         workflowEventHandling.AddEventToLibrary(RunWorkflowOnCancelTransferForApprovalCode(), DATABASE::"Transfer Header", TransferCancelApprovalLbl, 0, false);
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Price Approval Mgmt", 'OnSendRequestForApproval', '', false, false)]
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Transfer Approval Mgmt", 'OnSendRequestForApproval', '', false, false)]
     local procedure OnSendRequestForApproval(var TransferHeader: Record "Transfer Header")
     begin
         workflowMgt.HandleEvent(RunWorkflowOnSendTransferForApprovalCode(), TransferHeader);
@@ -31,11 +31,11 @@ codeunit 50016 "Transfer Workflow Evt Handling"
 
 
 
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Price Approval Mgmt", 'OnCancelRequestForApproval', '', false, false)]
-    local procedure OnCancelRequestForApproval(var PriceHeader: Record "Price List Header")
+    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Transfer Approval Mgmt", 'OnCancelRequestForApproval', '', false, false)]
+    local procedure OnCancelRequestForApproval(var TransferHeader: Record "Transfer Header")
     begin
 
-        workflowMgt.HandleEvent(RunWorkflowOnCancelTransferForApprovalCode(), PriceHeader);
+        workflowMgt.HandleEvent(RunWorkflowOnCancelTransferForApprovalCode(), TransferHeader);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Event Handling", 'OnAddWorkflowEventPredecessorsToLibrary', '', false, false)]
@@ -49,7 +49,7 @@ codeunit 50016 "Transfer Workflow Evt Handling"
         end;
     end;
 
-    procedure isPricepprovalWorkflowEnabled(Var TransferHeader: Record "Transfer Header"): Boolean
+    procedure isTransferpprovalWorkflowEnabled(Var TransferHeader: Record "Transfer Header"): Boolean
     begin
         exit(workflowMgt.CanExecuteWorkflow(TransferHeader, RunWorkflowOnSendTransferForApprovalCode()))
     end;
@@ -57,7 +57,7 @@ codeunit 50016 "Transfer Workflow Evt Handling"
 
     procedure IsTransferPendingApproval(Var TransferHeader: Record "Transfer Header"): Boolean
     begin
-        exit(isPricepprovalWorkflowEnabled(TransferHeader));
+        exit(isTransferpprovalWorkflowEnabled(TransferHeader));
     end;
 
 
@@ -65,14 +65,14 @@ codeunit 50016 "Transfer Workflow Evt Handling"
     procedure CheckInvcomingApprovalWorkFlowEnabled(Var TransferHeader: Record "Transfer Header"): Boolean
     begin
         if not IsTransferPendingApproval(TransferHeader) then
-            error(youtubeApprovalExistErr);
+            error(TransferApprovalExistErr);
         exit(true);
     end;
 
     var
         workflowMgt: Codeunit "Workflow Management";
         workflowEventHandling: Codeunit "Workflow Event Handling";
-        PriceSendApprovalLbl: Label ' Transfer Approval Requested';
-        PriceCancelApprovalLbl: Label ' Transfer Approval Cancelled';
-        youtubeApprovalExistErr: Label 'No Approval Workflow For This Document';
+        TransferSendApprovalLbl: Label ' Transfer Approval Requested';
+        TransferCancelApprovalLbl: Label ' Transfer Approval Cancelled';
+        TransferApprovalExistErr: Label 'No Approval Workflow For This Document';
 }

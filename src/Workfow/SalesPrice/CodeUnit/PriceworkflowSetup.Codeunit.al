@@ -45,11 +45,11 @@ codeunit 50152 "Price workflow Setup"
         workflowsetup.InitWorkflowStepArgument(WorkflowStepArgument, WorkflowStepArgument."Approver Type"::Approver, WorkflowStepArgument."Approver Limit Type"::"Direct Approver", 0, '', BlankDateFormula, true);
 
 
-        workflowsetup.InsertDocApprovalWorkflowSteps(workflow, BuildYoutubeTypeConditions(PriceHeader.Status::Draft), workflowEventHandling.RunWorkflowOnSendPriceForApprovalCode(),
-        BuildYoutubeTypeConditions(PriceHeader.Status::"Pending Approval"), workflowEventHandling.RunWorkflowOnCancelPriceForApprovalCode(), WorkflowStepArgument, true);
+        workflowsetup.InsertDocApprovalWorkflowSteps(workflow, BuildPriceTypeConditions(PriceHeader.Status::Draft), workflowEventHandling.RunWorkflowOnSendPriceForApprovalCode(),
+        BuildPriceTypeConditions(PriceHeader.Status::"Pending Approval"), workflowEventHandling.RunWorkflowOnCancelPriceForApprovalCode(), WorkflowStepArgument, true);
     end;
 
-    local procedure BuildYoutubeTypeConditions(Status: Enum "Price Status"): Text
+    local procedure BuildPriceTypeConditions(Status: Enum "Price Status"): Text
 
     var
         PriceHeader: record "Price List Header";

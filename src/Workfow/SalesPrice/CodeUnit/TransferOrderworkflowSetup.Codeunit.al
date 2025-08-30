@@ -37,18 +37,18 @@ codeunit 50013 "Transfer Order workflow Setup"
     var
         TransferHeader: record "Transfer Header";
         WorkflowStepArgument: Record "Workflow Step Argument";
-        workflowEventHandling: Codeunit "Price Workflow Evt Handling";
+        workflowEventHandling: Codeunit "Transfer Workflow Evt Handling";
         BlankDateFormula: DateFormula;
 
     begin
         workflowsetup.InitWorkflowStepArgument(WorkflowStepArgument, WorkflowStepArgument."Approver Type"::Approver, WorkflowStepArgument."Approver Limit Type"::"Direct Approver", 0, '', BlankDateFormula, true);
 
 
-        workflowsetup.InsertDocApprovalWorkflowSteps(workflow, BuildYoutubeTypeConditions(TransferHeader."Approval Status"::Created), workflowEventHandling.RunWorkflowOnSendPriceForApprovalCode(),
-        BuildYoutubeTypeConditions(TransferHeader."Approval Status"::"Pending Approval"), workflowEventHandling.RunWorkflowOnCancelPriceForApprovalCode(), WorkflowStepArgument, true);
+        workflowsetup.InsertDocApprovalWorkflowSteps(workflow, BuildTransferTypeConditions(TransferHeader."Approval Status"::Created), workflowEventHandling.RunWorkflowOnSendTransferForApprovalCode(),
+        BuildTransferTypeConditions(TransferHeader."Approval Status"::"Pending Approval"), workflowEventHandling.RunWorkflowOnCancelTransferForApprovalCode(), WorkflowStepArgument, true);
     end;
 
-    local procedure BuildYoutubeTypeConditions(Status: Enum "Approval Status"): Text
+    local procedure BuildTransferTypeConditions(Status: Enum "Approval Status"): Text
 
     var
         TransferHeader: record "Transfer Header";

@@ -63,7 +63,7 @@ codeunit 50150 "Price Workflow Evt Handling"
     procedure CheckInvcomingApprovalWorkFlowEnabled(Var PriceHeader: Record "Price List Header"): Boolean
     begin
         if not IsPricePendingApproval(PriceHeader) then
-            error(youtubeApprovalExistErr);
+            error(PriceApprovalExistErr);
         exit(true);
     end;
 
@@ -72,5 +72,5 @@ codeunit 50150 "Price Workflow Evt Handling"
         workflowEventHandling: Codeunit "Workflow Event Handling";
         PriceSendApprovalLbl: Label ' Price Approval Requested';
         PriceCancelApprovalLbl: Label ' Price Approval Cancelled';
-        youtubeApprovalExistErr: Label 'No Approval Workflow For This Document';
+        PriceApprovalExistErr: Label 'No Approval Workflow For This Document';
 }
