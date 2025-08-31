@@ -40,11 +40,24 @@ pageextension 50022 TransferOrder extends "Transfer Order"
                     TransferAppMgt.OnSendRequestforApproval(Rec);
                 end;
             }
+            action("Cancel Approval Request")
+            {
+                ApplicationArea = Basic, Suite;
+                Caption = 'Cancel Approval Request';
+                Image = CancelApprovalRequest;
+                ToolTip = 'Cancel sending the transfer order for approval.';
+                trigger OnAction()
+                var
+                    TransferAppMgt: Codeunit "Transfer Approval Mgmt";
+                begin
+                    TransferAppMgt.OnCancelRequestForApproval(Rec);
+                end;
+            }
         }
     }
     trigger OnAfterGetRecord()
     begin
-        ApprovalMgmt.GetTransferApprovalStatus(Rec, TransferApprovalStatus, EnabledTransferWorkflowsExist);
+        ApprovalMgmt.GetApprovalStatus(Rec, TransferApprovalStatus, EnabledTransferWorkflowsExist);
     end;
 
     trigger OnOpenPage()

@@ -28,19 +28,24 @@ codeunit 50017 "Approval Mgt. WM"
         exit(FieldRef.GetEnumValueCaption(ApprovalEntry.Status.AsInteger() + 1));
     end;
 
-    procedure GetTransferApprovalStatus(TransferHeader: Record "Transfer Header"; var TransferApprovalStatus: Text[20]; EnabledTransferWorkflowsExist: Boolean)
+    procedure GetApprovalStatus(RecVariant: Variant; var TransferApprovalStatus: Text[20]; EnabledTransferWorkflowsExist: Boolean)
     var
         ApprovalEntry: Record "Approval Entry";
+        RecRef: RecordRef;
     begin
+        if not RecVariant.IsRecord then
+            exit;
+        RecRef.GetTable(RecVariant);
+
         Clear(TransferApprovalStatus);
         if not EnabledTransferWorkflowsExist then
             exit;
 
-        if ApprovalMgt.FindLastApprovalEntryForCurrUser(ApprovalEntry, TransferHeader.RecordId) then
-            TransferApprovalStatus := GetApprovalStatusFromApprovalEntry(ApprovalEntry, TransferHeader)
+        if ApprovalMgt.FindLastApprovalEntryForCurrUser(ApprovalEntry, RecRef.RecordId) then
+            TransferApprovalStatus := GetApprovalStatusFromApprovalEntry(ApprovalEntry, RecVariant)
         else
-            if ApprovalMgt.FindApprovalEntryByRecordId(ApprovalEntry, TransferHeader.RecordId) then
-                TransferApprovalStatus := GetApprovalStatusFromApprovalEntry(ApprovalEntry, TransferHeader);
+            if ApprovalMgt.FindApprovalEntryByRecordId(ApprovalEntry, RecRef.RecordId) then
+                TransferApprovalStatus := GetApprovalStatusFromApprovalEntry(ApprovalEntry, RecVariant);
     end;
 
     local procedure GetApprovalStatusFromApprovalEntry(var ApprovalEntry: Record "Approval Entry"; RecVariant: Variant): Text[20]
