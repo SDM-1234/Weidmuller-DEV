@@ -161,13 +161,13 @@ pageextension 50025 PhysInventoryJournal extends "Phys. Inventory Journal"
 
     trigger OnOpenPage()
     begin
-        EnabledPhysInvtWorkflowsExist := WorkflowManagement.EnabledWorkflowExist(DATABASE::"Item Journal Line", WorkflowEventHandling.RunWorkflowOnSendTransferForApprovalCode());
+        EnabledPhysInvtWorkflowsExist := WorkflowManagement.EnabledWorkflowExist(DATABASE::"Item Journal Line", WorkflowEventHandling.RunWorkflowOnSendPhysInvtForApprovalCode());
     end;
 
     var
         ApprovalMgmt: Codeunit "Approval Mgt. WM";
         WorkflowManagement: Codeunit "Workflow Management";
-        WorkflowEventHandling: Codeunit "Transfer Workflow Evt Handling";
+        WorkflowEventHandling: Codeunit "PhysInvt Workflow Evt Handling";
         PhysInvtApprovalStatus: Text[20];
         EnabledPhysInvtWorkflowsExist: Boolean;
         OpenApprovalEntriesExistForCurrUser: Boolean;
