@@ -21,19 +21,19 @@ codeunit 50154 "Production BOM Workflow Setup"
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Setup", 'OnInsertWorkflowTemplates', '', true, true)]
     local procedure OnInsertWorkflowTemplates()
     begin
-        InsertTransferOrderTemplate()
+        InsertProdBOMTemplate()
     end;
 
-    procedure InsertTransferOrderTemplate()
+    procedure InsertProdBOMTemplate()
     var
         workflow: record Workflow;
     begin
         workflowsetup.InsertWorkflowTemplate(workflow, WorkflowTemplateCodeLbl, WorkflowTemplateDescLbl, workflowCategoryCodeLbl);
-        InsertTransferOrderApprovalWorkFlowDetails(workflow);
+        InsertProdBOMApprovalWorkFlowDetails(workflow);
         workflowsetup.MarkWorkflowAsTemplate(workflow);
     end;
 
-    procedure InsertTransferOrderApprovalWorkFlowDetails(var workflow: record Workflow)
+    procedure InsertProdBOMApprovalWorkFlowDetails(var workflow: record Workflow)
     var
         ProductionBomHeader: record "Production Bom Header";
         WorkflowStepArgument: Record "Workflow Step Argument";
