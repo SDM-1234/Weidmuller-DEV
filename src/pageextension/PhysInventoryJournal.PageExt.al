@@ -10,7 +10,7 @@ pageextension 50025 PhysInventoryJournal extends "Phys. Inventory Journal"
                 ApplicationArea = Basic, Suite;
                 Caption = 'Approval Status';
                 Editable = false;
-                Visible = EnabledPhysInvtWorkflowsExist;
+                Visible = true;
                 ToolTip = 'Specifies the approval status for Physical Inventory Journal.';
             }
         }
