@@ -64,6 +64,12 @@ tableextension 50023 Customer extends Customer
             Description = 'SE_E969';
             TableRelation = "G/L Account" WHERE("Direct Posting" = CONST(true), "Account Type" = CONST(Posting), Blocked = CONST(false));
         }
+        field(50004; "Weidmuller Industry Code"; Code[10])
+        {
+            DataClassification = ToBeClassified;
+            toolTip = 'Specifies the Weidmuller Industry Code.';
+            caption = 'Weidmuller Industry Code (WIC)';
+        }
     }
 
     var

@@ -11,6 +11,14 @@ pageextension 50043 CustomerCard extends "Customer Card"
                         ERROR('Send Approval Request for Customer Unblocking');
             end;
         }
+        addbefore(ContactDetails)
+        {
+            field("Territory Code"; Rec."Territory Code")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Territory Code field.';
+            }
+        }
         addafter("Last Date Modified")
         {
             field("No. of Industry Segments"; Rec."No. of Industry Segments")
@@ -33,6 +41,10 @@ pageextension 50043 CustomerCard extends "Customer Card"
                 ToolTip = 'Specifies the value of the Freight GL Account field.';
                 ApplicationArea = All;
             }
+            field("Weidmuller Industry Code"; Rec."Weidmuller Industry Code")
+            {
+                ApplicationArea = All;
+            }
         }
     }
     actions
@@ -53,8 +65,6 @@ pageextension 50043 CustomerCard extends "Customer Card"
 
     trigger OnModifyRecord(): Boolean
     begin
-        IF Rec."E-Mail" = '' THEN
-            ERROR('Kindly enter Customer mail');
         IF (xRec."Customer Price Group" <> Rec."Customer Price Group") OR (xRec."Customer Posting Group" <> Rec."Customer Posting Group")
           OR (xRec."Gen. Bus. Posting Group" <> Rec."Gen. Bus. Posting Group") THEN
             Rec.Blocked := Rec.Blocked::All;

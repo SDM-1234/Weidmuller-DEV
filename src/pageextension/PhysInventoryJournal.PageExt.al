@@ -3,11 +3,11 @@ pageextension 50025 PhysInventoryJournal extends "Phys. Inventory Journal"
     layout
     {
         // Add changes to page layout here
-        addlast(content)
+        addlast(Control1)
         {
             field(PhysInvtApprovalStatus; PhysInvtApprovalStatus)
             {
-                ApplicationArea = Basic, Suite;
+                ApplicationArea = All;
                 Caption = 'Approval Status';
                 Editable = false;
                 Visible = true;
@@ -144,8 +144,6 @@ pageextension 50025 PhysInventoryJournal extends "Phys. Inventory Journal"
                 }
             }
         }
-
-
     }
     trigger OnAfterGetRecord()
     begin
@@ -157,6 +155,25 @@ pageextension 50025 PhysInventoryJournal extends "Phys. Inventory Journal"
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";
     begin
         OpenApprovalEntriesExistForCurrUser := ApprovalsMgmt.HasOpenApprovalEntriesForCurrentUser(Rec.RecordId);
+        ApprovalMgmt.GetApprovalStatus(Rec, PhysInvtApprovalStatus, EnabledPhysInvtWorkflowsExist);
+    end;
+
+    trigger OnModifyRecord(): Boolean
+    var
+        ApprovalStatusName: Text[20];
+    begin
+        ApprovalMgmt.GetApprovalStatus(Rec, ApprovalStatusName, EnabledPhysInvtWorkflowsExist);
+        if ApprovalStatusName = 'Approved' then
+            Error('You cannot modify an approved journal line.');
+    end;
+
+    trigger OnDeleteRecord(): Boolean
+    var
+        ApprovalStatusName: Text[20];
+    begin
+        ApprovalMgmt.GetApprovalStatus(Rec, ApprovalStatusName, EnabledPhysInvtWorkflowsExist);
+        if ApprovalStatusName = 'Approved' then
+            Error('You cannot delete an approved journal line.');
     end;
 
     trigger OnOpenPage()
