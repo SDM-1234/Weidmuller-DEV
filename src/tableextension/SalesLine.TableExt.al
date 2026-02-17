@@ -105,7 +105,9 @@ tableextension 50030 SalesLine extends "Sales Line"
 
         field(50081; Status; enum "Sales Document Status")
         {
-            DataClassification = ToBeClassified;
+
+            FieldClass = FlowField;
+            Calcformula = lookup("Sales Header".Status where("No." = field("Document No.")));
             Editable = false;
         }
 
