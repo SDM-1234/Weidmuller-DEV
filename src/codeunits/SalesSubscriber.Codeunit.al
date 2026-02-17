@@ -21,7 +21,7 @@ using Microsoft.Utilities;
 using Microsoft.Warehouse.Document;
 using Microsoft.Warehouse.History;
 using System.Automation;
-    
+
 codeunit 50100 SalesSubscriber
 {
 
