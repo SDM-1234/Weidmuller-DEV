@@ -7,15 +7,44 @@ report 50027 "Segment Wise Sales"
 
     dataset
     {
-        dataitem(Integer; Integer)
+        dataitem(QueyLoop; Integer)
         {
-            column(SegmentName; GetSegmentDesc(SalesSegmentQuery.Industry_Group_Code))
+            DataItemTableView = sorting(Number);
+            dataitem(SegmentLoop; "Industry Segment")
             {
-                Caption = 'Industry Group Code';
-            }
-            column(SumAmount; SalesSegmentQuery.Amount)
-            {
-                Caption = 'Total Sales Amount';
+                DataItemTableView = sorting("Customer No.", "Industry Group Code");
+                column(CustomerNo; SalesSegmentQuery.CustNo)
+                {
+                    Caption = 'Customer No.';
+                }
+                column(CustomerName; Customer.Name)
+                {
+                    Caption = 'Customer Name';
+                    IncludeCaption = true;
+                }
+                column(SegmentCode; SegmentLoop."Industry Group Code")
+                {
+                    Caption = 'Industry Group Code';
+                    IncludeCaption = true;
+                }
+                column(SegmentName; SegmentLoop."Industry Group Description")
+                {
+                    Caption = 'Segment Name';
+                    IncludeCaption = true;
+                }
+                column(SalesAmount; (SalesSegmentQuery.Amount + SalesSegmentQuery.GSTAmount) * (SegmentLoop."Sales %" / 100))
+                {
+                    Caption = 'Total Sales Amount';
+                }
+                column(Percentage; SegmentLoop."Sales %")
+                {
+                    Caption = 'Sales %';
+                    IncludeCaption = true;
+                }
+                trigger OnPreDataItem()
+                begin
+                    SetRange("Customer No.", SalesSegmentQuery.CustNo);
+                end;
             }
             trigger OnPreDataItem()
             begin
@@ -27,6 +56,7 @@ report 50027 "Segment Wise Sales"
             begin
                 if not SalesSegmentQuery.Read() then
                     CurrReport.Break();
+                Customer.GET(SalesSegmentQuery.CustNo);
             end;
         }
     }
@@ -69,6 +99,7 @@ report 50027 "Segment Wise Sales"
     }
 
     var
+        Customer: Record Customer;
         SalesSegmentQuery: Query "Sales Segment Report";
         StartDate, EndDate : Date;
 

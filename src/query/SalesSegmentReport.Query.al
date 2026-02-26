@@ -4,23 +4,40 @@ query 50000 "Sales Segment Report"
 
     elements
     {
-        dataitem(SalesInvHdr; "Sales Invoice Header")
+        dataitem(Customer; Customer)
         {
-            filter(posting_date; "Posting Date")
+            column(CustNo; "No.")
             {
-
             }
-            dataitem(SalesSegment; "Sales Segment")
+            dataitem(SalesInvHdr; "Sales Invoice Header")
             {
-                DataItemLink = "Posted Sales Invoice No." = SalesInvHdr."No.";
+                DataItemLink = "Sell-to Customer No." = Customer."No.";
                 SqlJoinType = InnerJoin;
-                column(industry_group_code; "Industry Group Code")
+                filter(posting_date; "Posting Date")
                 {
 
                 }
-                column(Amount; Amount)
+                dataitem(SalesInvLine; "Sales Invoice Line")
                 {
-                    Method = Sum;
+                    DataItemLink = "Document No." = SalesInvHdr."No.";
+                    DataItemTableFilter = Type = const(Item);
+                    SqlJoinType = InnerJoin;
+                    column(Amount; Amount)
+                    {
+                        Method = Sum;
+                    }
+                    dataitem(Detailed_GST_Ledger_Entry; "Detailed GST Ledger Entry")
+                    {
+                        DataItemLink = "Document No." = SalesInvHdr."No.",
+                                       "Document Line No." = SalesInvLine."Line No.",
+                                       "Source No." = Customer."No.";
+                        SqlJoinType = InnerJoin;
+                        column(GSTAmount; "GST Amount")
+                        {
+                            Method = Sum;
+                            ReverseSign = true;
+                        }
+                    }
                 }
             }
         }
