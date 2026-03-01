@@ -4,6 +4,7 @@ using Microsoft.Sales.Document;
     
 pageextension 50051 SalesQuote extends "Sales Quote"
 {
+    DeleteAllowed = false;
     layout
     {
         addlast(General)
