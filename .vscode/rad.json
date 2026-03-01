@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[{"Id":50100,"Kind":11,"Name":"SalesSubscriber","Namespace":"WM.WeidmullerDEV"}],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":50100,"Kind":11,"Name":"SalesSubscriber","Namespace":"WM.WeidmullerDEV"},{"Id":50053,"Kind":16,"Name":"SalesOrder","Namespace":"WM.WeidmullerDEV"},{"Id":50109,"Kind":16,"Name":"SalesOrderList","Namespace":"WM.WeidmullerDEV"},{"Id":50108,"Kind":16,"Name":"SalesQuotes","Namespace":"WM.WeidmullerDEV"},{"Id":50051,"Kind":16,"Name":"SalesQuote","Namespace":"WM.WeidmullerDEV"}],"Removed":[]}
