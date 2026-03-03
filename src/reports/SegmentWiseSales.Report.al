@@ -32,10 +32,15 @@ report 50027 "Segment Wise Sales"
                     Caption = 'Segment Name';
                     IncludeCaption = true;
                 }
-                column(SalesAmount; (SalesSegmentQuery.Amount + SalesSegmentQuery.GSTAmount) * (SegmentLoop."Sales %" / 100))
+                // column(SalesAmount; (SalesSegmentQuery.Amount + SalesSegmentQuery.GSTAmount) * (SegmentLoop."Sales %" / 100))
+                // {
+                //     Caption = 'Total Sales Amount';
+                // }
+                column(SalesAmount; (SalesSegmentQuery.Amount) * (SegmentLoop."Sales %" / 100))
                 {
                     Caption = 'Total Sales Amount';
                 }
+
                 column(Percentage; SegmentLoop."Sales %")
                 {
                     Caption = 'Sales %';
