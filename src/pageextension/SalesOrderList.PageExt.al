@@ -6,6 +6,8 @@ using System.Automation;
 
 pageextension 50109 SalesOrderList extends "Sales Order List"
 {
+    DeleteAllowed = false;
+
     layout
     {
 

@@ -4,6 +4,8 @@ using Microsoft.Sales.Document;
     
 pageextension 50053 SalesOrder extends "Sales Order"
 {
+    DeleteAllowed = false;
+
     layout
     {
         modify("Document Date")
