@@ -26,18 +26,18 @@ query 50000 "Sales Segment Report"
                     {
                         Method = Sum;
                     }
-                    dataitem(Detailed_GST_Ledger_Entry; "Detailed GST Ledger Entry")
-                    {
-                        DataItemLink = "Document No." = SalesInvHdr."No.",
-                                       "Document Line No." = SalesInvLine."Line No.",
-                                       "Source No." = Customer."No.";
-                        SqlJoinType = InnerJoin;
-                        column(GSTAmount; "GST Amount")
-                        {
-                            Method = Sum;
-                            ReverseSign = true;
-                        }
-                    }
+                    // dataitem(Detailed_GST_Ledger_Entry; "Detailed GST Ledger Entry")
+                    // {
+                    //     DataItemLink = "Document No." = SalesInvHdr."No.",
+                    //                    "Document Line No." = SalesInvLine."Line No.",
+                    //                    "Source No." = Customer."No.";
+                    //     SqlJoinType = InnerJoin;
+                    //     column(GSTAmount; "GST Amount")
+                    //     {
+                    //         Method = Sum;
+                    //         ReverseSign = true;
+                    //     }
+                    // }
                 }
             }
         }
