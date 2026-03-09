@@ -69,6 +69,20 @@ pageextension 50053 SalesOrder extends "Sales Order"
     {
         addafter("Send IC Sales Order")
         {
+
+            action(CheckDuplicateItem)
+            {
+                ApplicationArea = All;
+                Caption = 'Check Duplicate Item';
+                Image = CheckDuplicates;
+                ToolTip = 'Click here to check duplicate items';
+
+
+                trigger OnAction()
+                begin
+                    Rec.CheckDuplicateItem()
+                end;
+            }
             action(Calculate)
             {
                 Caption = 'Assign Industrial Segments';

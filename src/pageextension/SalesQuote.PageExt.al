@@ -28,6 +28,27 @@ pageextension 50051 SalesQuote extends "Sales Quote"
         }
     }
 
+    actions
+    {
+        addafter("&Quote")
+        {
+            action(CheckDuplicateItem)
+            {
+                ApplicationArea = All;
+                Caption = 'Check Duplicate Item';
+                Image = CheckDuplicates;
+                ToolTip = 'Click here to check duplicate items';
+
+
+                trigger OnAction()
+                begin
+                    Rec.CheckDuplicateItem()
+                end;
+            }
+
+        }
+    }
+
     trigger OnAfterGetRecord()
     begin
         Rec.UpdatePONo();
