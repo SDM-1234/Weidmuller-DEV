@@ -7,7 +7,7 @@ report 50027 "Segment Wise Sales"
 
     dataset
     {
-        dataitem(QueyLoop; Integer)
+        dataitem(QueryLoop; Integer)
         {
             DataItemTableView = sorting(Number);
             dataitem(SegmentLoop; "Industry Segment")
@@ -36,7 +36,7 @@ report 50027 "Segment Wise Sales"
                 // {
                 //     Caption = 'Total Sales Amount';
                 // }
-                column(SalesAmount; (SalesSegmentQuery.Amount) * (SegmentLoop."Sales %" / 100))
+                column(SalesAmount; (SalesSegmentQuery.Amount - CrMemoAmount) * (SegmentLoop."Sales %" / 100))
                 {
                     Caption = 'Total Sales Amount';
                 }
@@ -58,10 +58,17 @@ report 50027 "Segment Wise Sales"
             end;
 
             trigger OnAfterGetRecord()
+            var
+                SalesCrMemoLine: Record "Sales Cr.Memo Line";
             begin
                 if not SalesSegmentQuery.Read() then
                     CurrReport.Break();
+                CrMemoAmount := 0;
                 Customer.GET(SalesSegmentQuery.CustNo);
+                SalesCrMemoLine.SetRange("Sell-to Customer No.", SalesSegmentQuery.CustNo);
+                SalesCrMemoLine.SetRange("Posting Date", StartDate, EndDate);
+                SalesCrMemoLine.CalcSums(Amount);
+                CrMemoAmount := SalesCrMemoLine.Amount;
             end;
         }
     }
@@ -107,6 +114,7 @@ report 50027 "Segment Wise Sales"
         Customer: Record Customer;
         SalesSegmentQuery: Query "Sales Segment Report";
         StartDate, EndDate : Date;
+        CrMemoAmount: Decimal;
 
     procedure GetSegmentDesc(SegmentCode: Code[10]) Result: Text
     var
