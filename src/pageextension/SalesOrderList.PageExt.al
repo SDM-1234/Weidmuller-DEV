@@ -30,6 +30,21 @@ pageextension 50109 SalesOrderList extends "Sales Order List"
     {
         addafter("Delete Invoiced")
         {
+
+            action(CheckDuplicateItem)
+            {
+                ApplicationArea = All;
+                Caption = 'Check Duplicate Item';
+                Image = CheckDuplicates;
+                ToolTip = 'Click here to check duplicate items';
+
+
+                trigger OnAction()
+                begin
+                    Rec.CheckDuplicateItem()
+                end;
+            }
+
             fileuploadaction("Upload Shipment Dates")
             {
                 Caption = 'Upload Shipment Dates';

@@ -1,26 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:am="http://schemas.microsoft.com/sqlserver/reporting/authoringmetadata">
-  <rd:ReportUnitType>Inch</rd:ReportUnitType>
-  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
-  <am:AuthoringMetadata>
-    <am:CreatedBy>
-      <am:Name>PBIRB</am:Name>
-      <am:Version>15.7.1815.334</am:Version>
-    </am:CreatedBy>
-    <am:UpdatedBy>
-      <am:Name>PBIRB</am:Name>
-      <am:Version>15.7.1815.334</am:Version>
-    </am:UpdatedBy>
-    <am:LastModifiedTimestamp>2026-03-06T03:57:25.5863018Z</am:LastModifiedTimestamp>
-  </am:AuthoringMetadata>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
   <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="DataSource">
-      <rd:SecurityType>None</rd:SecurityType>
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
         <ConnectString />
       </ConnectionProperties>
+      <rd:SecurityType>None</rd:SecurityType>
       <rd:DataSourceID>58259488-db06-441e-812f-05a6842e602f</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -78,14 +65,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox19">
-                          <rd:DefaultName>Textbox19</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!SLNoCaptison.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!SLNoCaptison.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -97,6 +83,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox19</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -119,14 +106,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox21">
-                          <rd:DefaultName>Textbox21</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ItemCodeCaption.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!ItemCodeCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -138,6 +124,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox21</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -160,14 +147,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox23">
-                          <rd:DefaultName>Textbox23</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DescriptionCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!DescriptionCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -179,6 +165,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox23</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -201,14 +188,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox35">
-                          <rd:DefaultName>Textbox35</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!GeneralDescriptionCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!GeneralDescriptionCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -220,6 +206,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox35</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -242,14 +229,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox13">
-                          <rd:DefaultName>Textbox13</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CustomerReferencenoCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!CustomerReferencenoCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -261,6 +247,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox13</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -284,14 +271,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox15">
-                          <rd:DefaultName>Textbox15</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!HSNCodeCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!HSNCodeCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -303,6 +289,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox15</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -325,14 +312,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox17">
-                          <rd:DefaultName>Textbox17</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Quantity_SalesLineCaption.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!Quantity_SalesLineCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -344,6 +330,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox17</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -366,14 +353,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox37">
-                          <rd:DefaultName>Textbox37</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UnitPriceCaption.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!UnitPriceCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -385,6 +371,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox37</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -407,14 +394,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox34">
-                          <rd:DefaultName>Textbox34</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UoMCaption.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!UoMCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -426,6 +412,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox34</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -448,14 +435,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox5">
-                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!RequestDateCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!RequestDateCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -467,6 +453,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -489,14 +476,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox8">
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DeliveryDateCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!DeliveryDateCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -508,6 +494,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -530,14 +517,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox2">
-                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!GSTCaption.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!GSTCaption.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -549,6 +535,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -576,14 +563,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox11">
-                          <rd:DefaultName>Textbox11</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LineValueCaptionLbl.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!LineValueCaptionLbl.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -595,6 +581,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox11</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -627,14 +614,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox20">
-                          <rd:DefaultName>Textbox20</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!No.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!No.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -645,6 +631,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox20</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -667,14 +654,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox22">
-                          <rd:DefaultName>Textbox22</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!No2_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!No2_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -685,6 +671,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox22</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -707,14 +694,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox24">
-                          <rd:DefaultName>Textbox24</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Desc_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!Desc_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -725,6 +711,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox24</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -748,14 +735,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox36">
-                          <rd:DefaultName>Textbox36</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!GeneralDescription.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!GeneralDescription.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -766,6 +752,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox36</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -789,14 +776,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox14">
-                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!CrossReferenceNo_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!CrossReferenceNo_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>=Fields!OrderQty_SalesLineFormat.Value</Format>
@@ -808,6 +794,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox14</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -830,14 +817,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox16">
-                          <rd:DefaultName>Textbox16</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Hsn_Code.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!Hsn_Code.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>#,0.00</Format>
@@ -849,6 +835,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -872,14 +859,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox18">
-                          <rd:DefaultName>Textbox18</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Code.BlankZero(Fields!OrderQty_SalesLine.Value)</Value>
+                                  <Value EvaluationMode="Auto">=Code.BlankZero(Fields!OrderQty_SalesLine.Value)</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -890,6 +876,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox18</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -913,14 +900,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox38">
-                          <rd:DefaultName>Textbox38</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UnitPrice_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!UnitPrice_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>n2</Format>
@@ -932,6 +918,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox38</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -955,14 +942,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox39">
-                          <rd:DefaultName>Textbox39</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!UnitofMeasure_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!UnitofMeasure_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -973,6 +959,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox39</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -996,14 +983,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox6">
-                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Req_Date_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!Req_Date_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>dd-MM-yy</Format>
@@ -1015,6 +1001,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1044,14 +1031,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox9">
-                          <rd:DefaultName>Textbox9</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!Promised_Date_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!Promised_Date_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>dd-MM-yy</Format>
@@ -1063,6 +1049,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1092,14 +1079,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox3">
-                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!GstAmount.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!GstAmount.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>=Fields!GstAmountFormat.Value</Format>
@@ -1111,6 +1097,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>None</Style>
@@ -1141,14 +1128,13 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox12">
-                          <rd:DefaultName>Textbox12</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!LineAmt_SalesLine.Value</Value>
+                                  <Value EvaluationMode="Auto">=Fields!LineAmt_SalesLine.Value</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                     <Format>n2</Format>
@@ -1160,6 +1146,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1181,14 +1168,13 @@
                         <Rectangle Name="Rectangle4">
                           <ReportItems>
                             <Textbox Name="Textbox85">
-                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!TotalCaption.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!TotalCaption.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                       </Style>
@@ -1199,6 +1185,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <Top>0.04437cm</Top>
                               <Left>20.65208cm</Left>
                               <Height>0.508cm</Height>
@@ -1214,14 +1201,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox86">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=SUM(Fields!LineAmt_SalesLine.Value)+Sum(Fields!Tax_Amount.Value)</Value>
+                                      <Value EvaluationMode="Auto">=SUM(Fields!LineAmt_SalesLine.Value)+Sum(Fields!Tax_Amount.Value)</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>n2</Format>
@@ -1233,6 +1219,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>0.04437cm</Top>
                               <Left>24.68278cm</Left>
                               <Height>0.508cm</Height>
@@ -1249,14 +1236,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox93">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Text002.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!Text002.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1268,6 +1254,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>0.04437cm</Top>
                               <Left>0.28295cm</Left>
                               <Height>0.38629cm</Height>
@@ -1280,14 +1267,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox94">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Text003.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!Text003.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1299,6 +1285,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>0.47727cm</Top>
                               <Left>0.28295cm</Left>
                               <Height>0.38629cm</Height>
@@ -1311,14 +1298,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox95">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Text004.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!Text004.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1330,6 +1316,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>0.90589cm</Top>
                               <Left>0.28295cm</Left>
                               <Height>0.38629cm</Height>
@@ -1342,14 +1329,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox96">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!Text005.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!Text005.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1361,6 +1347,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>1.32923cm</Top>
                               <Left>0.28295cm</Left>
                               <Height>0.38629cm</Height>
@@ -1373,14 +1360,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox97">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!BankDetailsCaptionLbl.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!BankDetailsCaptionLbl.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <FontWeight>Bold</FontWeight>
@@ -1393,6 +1379,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>1.84781cm</Top>
                               <Left>0.30411cm</Left>
                               <Height>0.38629cm</Height>
@@ -1405,7 +1392,6 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox98">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <CanShrink>true</CanShrink>
                               <KeepTogether>true</KeepTogether>
@@ -1413,7 +1399,7 @@
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!CompanyInfo_BankName.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!CompanyInfo_BankName.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1425,6 +1411,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>2.26585cm</Top>
                               <Left>0.30411cm</Left>
                               <Height>0.38629cm</Height>
@@ -1437,14 +1424,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox99">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!CompanyInfo_AccNo.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!CompanyInfo_AccNo.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1456,6 +1442,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>2.68742cm</Top>
                               <Left>1.59458cm</Left>
                               <Height>0.41804cm</Height>
@@ -1468,14 +1455,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox100">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!CompanyInfo_IFSC.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!CompanyInfo_IFSC.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1487,6 +1473,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>3.13721cm</Top>
                               <Left>1.11833cm</Left>
                               <Height>0.41804cm</Height>
@@ -1499,14 +1486,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox101">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!KtoCaptionLbl.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!KtoCaptionLbl.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1518,6 +1504,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>2.68742cm</Top>
                               <Left>0.30411cm</Left>
                               <Height>0.41804cm</Height>
@@ -1530,14 +1517,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox102">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!IBANCaptionLbl.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!IBANCaptionLbl.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1549,6 +1535,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>3.13721cm</Top>
                               <Left>0.30411cm</Left>
                               <Height>0.41804cm</Height>
@@ -1561,14 +1548,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox87">
-                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!GSTAmountCaption.Value, "DataSet_Result")</Value>
+                                      <Value EvaluationMode="Auto">=First(Fields!GSTAmountCaption.Value, "DataSet_Result")</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                       </Style>
@@ -1579,6 +1565,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <Top>0.59118cm</Top>
                               <Left>20.65208cm</Left>
                               <Height>0.508cm</Height>
@@ -1595,14 +1582,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox88">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Sum(Fields!GstAmount.Value)</Value>
+                                      <Value EvaluationMode="Auto">=Sum(Fields!GstAmount.Value)</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>=Fields!GstAmountFormat.Value</Format>
@@ -1614,6 +1600,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>0.59118cm</Top>
                               <Left>24.68278cm</Left>
                               <Height>0.508cm</Height>
@@ -1630,14 +1617,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox89">
-                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=First(Fields!TotalOrderValueCaption.Value, "DataSet_Result")</Value>
+                                      <Value EvaluationMode="Auto">=First(Fields!TotalOrderValueCaption.Value, "DataSet_Result")</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                       </Style>
@@ -1648,6 +1634,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox81</rd:DefaultName>
                               <Top>1.13093cm</Top>
                               <Left>20.65208cm</Left>
                               <Height>0.47625cm</Height>
@@ -1664,14 +1651,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox90">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Sum(Fields!LineAmt_SalesLine.Value) + Sum(Fields!Tax_Amount.Value) + Sum(Fields!GstAmount.Value)</Value>
+                                      <Value EvaluationMode="Auto">=Sum(Fields!LineAmt_SalesLine.Value) + Sum(Fields!Tax_Amount.Value) + Sum(Fields!GstAmount.Value)</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>n2</Format>
@@ -1683,6 +1669,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>1.13093cm</Top>
                               <Left>24.67925cm</Left>
                               <Height>0.47625cm</Height>
@@ -1699,14 +1686,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox103">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!CompanyInfo_SWIFT_Code.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!CompanyInfo_SWIFT_Code.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1718,6 +1704,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>3.59053cm</Top>
                               <Left>2.26133cm</Left>
                               <Height>0.38629cm</Height>
@@ -1730,14 +1717,13 @@
                               </Style>
                             </Textbox>
                             <Textbox Name="Textbox104">
-                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=Fields!SwiftCode.Value</Value>
+                                      <Value EvaluationMode="Auto">=Fields!SwiftCode.Value</Value>
                                       <Style>
                                         <FontSize>8pt</FontSize>
                                         <Format>#,0.00</Format>
@@ -1749,6 +1735,7 @@
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
+                              <rd:DefaultName>Textbox82</rd:DefaultName>
                               <Top>3.59053cm</Top>
                               <Left>0.30411cm</Left>
                               <Height>0.38629cm</Height>
@@ -1823,7 +1810,7 @@
             <PageBreak>
               <BreakLocation>End</BreakLocation>
             </PageBreak>
-            <Top>2.86557in</Top>
+            <Top>2.61557in</Top>
             <Left>0.0114in</Left>
             <Height>2.07088in</Height>
             <Width>10.75167in</Width>
@@ -1847,20 +1834,20 @@
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox1">
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value />
+                                  <Value EvaluationMode="Auto" />
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
                           <Visibility>
                             <Hidden>=Code.SetData(Cstr(Fields!OrderText.Value) + Chr(177) + 
  
@@ -1960,7 +1947,7 @@ Cstr(Sum(Fields!GrossWeight.Value)),1)</Hidden>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet_Result</DataSetName>
-            <Top>2.90209in</Top>
+            <Top>2.65209in</Top>
             <Left>7.38515in</Left>
             <Height>0.16667in</Height>
             <Width>0.23958in</Width>
@@ -1974,14 +1961,13 @@ Cstr(Sum(Fields!GrossWeight.Value)),1)</Hidden>
           <Rectangle Name="Rectangle3">
             <ReportItems>
               <Textbox Name="Textbox32">
-                <rd:DefaultName>Textbox31</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>8. RESERVATION OF OWNERSHIP RIGHTS: Weidmuller Electronics India shall have a general lien on all goods for the time being in possession and the property of the goods shall not pass to the Customer until completion of payment of all outstanding amounts, present or future arising out of the business relationship with the Customer, irrespective of legal arguments.
+                        <Value EvaluationMode="Auto">8. RESERVATION OF OWNERSHIP RIGHTS: Weidmuller Electronics India shall have a general lien on all goods for the time being in possession and the property of the goods shall not pass to the Customer until completion of payment of all outstanding amounts, present or future arising out of the business relationship with the Customer, irrespective of legal arguments.
 
 9.      INTELLECTUAL PROPERTY RIGHTS: Unless otherwise agreed in writing with Weidmuller, copyright exists in all documents supplied to the Customer or produced by Weidmuller under Customers instructions and is retained by Weidmuller. The contents of such documents or any part thereof shall not be disseminated in any form to any unauthorized person, institution, organization or company either directly or indirectly without the prior consent, of Weidmuller.  The Intellectual Property Rights in or relating to the products shall remain exclusively the property of Weidmuller and neither the Customer nor any agent or subcontractor or any other person authorized by the Customer shall, at any time, make use of same without prior written authorization.
 
@@ -2014,7 +2000,7 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value />
+                        <Value EvaluationMode="Auto" />
                         <Style>
                           <FontSize>5.7pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2028,7 +2014,7 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>17.     Any export and/ or re-export to Russia is strictly prohibited. Any breach with this obligation will be considered material breach and may lead to termination of any purchase order (current or future) without any liability.</Value>
+                        <Value EvaluationMode="Auto">17.     Any export and/ or re-export to Russia is strictly prohibited. Any breach with this obligation will be considered material breach and may lead to termination of any purchase order (current or future) without any liability.</Value>
                         <Style>
                           <FontSize>5.7pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2040,6 +2026,7 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox31</rd:DefaultName>
                 <Top>0.2109in</Top>
                 <Left>5.33711in</Left>
                 <Height>6.71875in</Height>
@@ -2055,14 +2042,13 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                 </Style>
               </Textbox>
               <Textbox Name="Textbox33">
-                <rd:DefaultName>Textbox33</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>TERMS &amp; CONDITIONS</Value>
+                        <Value EvaluationMode="Auto">TERMS &amp; CONDITIONS</Value>
                         <Style>
                           <FontSize>6pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2074,6 +2060,7 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox33</rd:DefaultName>
                 <Top>0.02062in</Top>
                 <Left>4.42688in</Left>
                 <Height>0.1625in</Height>
@@ -2091,14 +2078,13 @@ Customer is obliged to notify any defect in products in writing, latest 8 days a
                 </Style>
               </Textbox>
               <Textbox Name="Textbox31">
-                <rd:DefaultName>Textbox31</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>1. GENERAL: All sales deliveries and services from and by Weidmuller Electronics India Pvt. Ltd (“Weidmuller”), shall be governed exclusively by the following terms and conditions and no deviation from these conditions, except those expressly accepted in writing by Weidmuller, shall be binding on Weidmuller. It is clearly understood that, by placing an order with Weidmuller, the Customer is deemed:
+                        <Value EvaluationMode="Auto">1. GENERAL: All sales deliveries and services from and by Weidmuller Electronics India Pvt. Ltd (“Weidmuller”), shall be governed exclusively by the following terms and conditions and no deviation from these conditions, except those expressly accepted in writing by Weidmuller, shall be binding on Weidmuller. It is clearly understood that, by placing an order with Weidmuller, the Customer is deemed:
 - To have accepted these Terms &amp; Conditions and
 - To have waived off their conditions of purchase, if any, conflicting with these Terms &amp; Conditions. 
 
@@ -2140,6 +2126,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox31</rd:DefaultName>
                 <Top>0.20882in</Top>
                 <Left>0.04695in</Left>
                 <Height>6.72083in</Height>
@@ -2157,7 +2144,7 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>12.57976cm</Top>
+            <Top>11.94476cm</Top>
             <Left>0.06812cm</Left>
             <Height>17.63576cm</Height>
             <Width>27.28257cm</Width>
@@ -2172,13 +2159,12 @@ GST concession forms should be provided within __ period from the date of invoic
             <ReportItems>
               <Textbox Name="Billing_AddressCaption2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Billing_AddressCaption.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Billing_AddressCaption.Value</Value>
                         <Style>
                           <FontWeight>Bold</FontWeight>
                         </Style>
@@ -2197,13 +2183,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CustomerNameCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CustomerNameCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2223,13 +2208,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Address_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!AddressCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!AddressCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2249,13 +2233,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Address_2_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value />
+                        <Value EvaluationMode="Auto" />
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2264,7 +2247,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.00779cm</Top>
+                <Top>4.90196cm</Top>
                 <Left>0.13441cm</Left>
                 <Height>0.423cm</Height>
                 <Width>2.19604cm</Width>
@@ -2275,13 +2258,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Bill_to_City___Sales_Shipment_Header___Bill_to_Post_Code_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value />
+                        <Value EvaluationMode="Auto" />
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2290,8 +2272,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.62188cm</Top>
-                <Left>0.05504cm</Left>
+                <Top>5.32496cm</Top>
+                <Left>0.13441cm</Left>
                 <Height>0.423cm</Height>
                 <Width>2.19604cm</Width>
                 <ZIndex>4</ZIndex>
@@ -2301,13 +2283,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Delivery_AddressCaption2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Delivery_AddressCaption.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Delivery_AddressCaption.Value</Value>
                         <Style>
                           <FontWeight>Bold</FontWeight>
                         </Style>
@@ -2327,13 +2308,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Name_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_ShiptoName.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_ShiptoName.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2353,13 +2333,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Address_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_ShiptoAddress.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_ShiptoAddress.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2379,13 +2358,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Address_2_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_ShiptoAddress2.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_ShiptoAddress2.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2394,7 +2372,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.04307cm</Top>
+                <Top>5.03049cm</Top>
                 <Left>10.98192cm</Left>
                 <Height>0.45828cm</Height>
                 <Width>6.19654cm</Width>
@@ -2405,13 +2383,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Ship_to_City___Sales_Shipment_Header___Ship_to_Code_2">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_ShiptoCity_PostCode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_ShiptoCity_PostCode.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2420,8 +2397,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.64599cm</Top>
-                <Left>10.92058cm</Left>
+                <Top>5.48877cm</Top>
+                <Left>10.98192cm</Left>
                 <Height>0.45828cm</Height>
                 <Width>6.19654cm</Width>
                 <ZIndex>9</ZIndex>
@@ -2436,7 +2413,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Dispatch_Date_Caption.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Dispatch_Date_Caption.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2446,7 +2423,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.34565cm</Top>
+                <Top>1.71065cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -2462,7 +2439,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_OrderDate.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_OrderDate.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <Format>d MMMM, yyyy</Format>
@@ -2474,7 +2451,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.34565cm</Top>
+                <Top>1.71065cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -2493,7 +2470,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!TermsofDeliveryCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!TermsofDeliveryCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2503,7 +2480,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>4.65821cm</Top>
+                <Top>4.02321cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -2519,7 +2496,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Shipmentcode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Shipmentcode.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <Format>d</Format>
@@ -2531,7 +2508,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>4.65821cm</Top>
+                <Top>4.02321cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -2547,7 +2524,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!TypeofDispatchCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!TypeofDispatchCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2557,7 +2534,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.11296cm</Top>
+                <Top>4.47796cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -2573,7 +2550,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!TransPortCode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!TransPortCode.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                         </Style>
@@ -2584,7 +2561,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.11296cm</Top>
+                <Top>4.47796cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -2600,7 +2577,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!PODateCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!PODateCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2610,7 +2587,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>3.74871cm</Top>
+                <Top>3.11371cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -2626,7 +2603,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeade_DocumentDate.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeade_DocumentDate.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <Format>M/d/yyyy</Format>
@@ -2638,7 +2615,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>3.74871cm</Top>
+                <Top>3.11371cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -2657,7 +2634,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!TermsofPaymentCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!TermsofPaymentCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -2667,7 +2644,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>4.20346cm</Top>
+                <Top>3.56846cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -2683,7 +2660,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Payment_Terms_Code.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Payment_Terms_Code.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                         </Style>
@@ -2694,7 +2671,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>4.20346cm</Top>
+                <Top>3.56846cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -2705,13 +2682,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CustomerNoCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CustomerNoCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2731,13 +2707,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_4">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_SelltoCustomerNo.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_SelltoCustomerNo.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2757,13 +2732,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Ship_to_City___Sales_Shipment_Header___Ship_to_Code_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!ShiptoAddress_GSTRNo.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!ShiptoAddress_GSTRNo.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2772,7 +2746,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>6.26102cm</Top>
+                <Top>5.94352cm</Top>
                 <Left>10.98192cm</Left>
                 <Height>0.45828cm</Height>
                 <Width>6.19654cm</Width>
@@ -2783,13 +2757,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Bill_to_City___Sales_Shipment_Header___Bill_to_Post_Code_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!GSTINCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!GSTINCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2798,8 +2771,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>6.22127cm</Top>
-                <Left>0.05504cm</Left>
+                <Top>5.74796cm</Top>
+                <Left>0.13441cm</Left>
                 <Height>0.48803cm</Height>
                 <Width>2.19604cm</Width>
                 <ZIndex>23</ZIndex>
@@ -2809,13 +2782,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Name_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CustomerNameCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CustomerNameCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2835,13 +2807,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Address_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!AddressCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!AddressCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2861,13 +2832,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Address_2_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value />
+                        <Value EvaluationMode="Auto" />
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2876,9 +2846,9 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.10458cm</Top>
+                <Top>5.03049cm</Top>
                 <Left>8.72238cm</Left>
-                <Height>0.39678cm</Height>
+                <Height>0.45828cm</Height>
                 <Width>2.19604cm</Width>
                 <ZIndex>26</ZIndex>
                 <Style>
@@ -2887,13 +2857,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Ship_to_City___Sales_Shipment_Header___Ship_to_Code_4">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value />
+                        <Value EvaluationMode="Auto" />
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2902,8 +2871,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.64246cm</Top>
-                <Left>8.66104cm</Left>
+                <Top>5.48524cm</Top>
+                <Left>8.72238cm</Left>
                 <Height>0.45828cm</Height>
                 <Width>2.19604cm</Width>
                 <ZIndex>27</ZIndex>
@@ -2913,13 +2882,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_5">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CustomerNoCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CustomerNoCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2939,13 +2907,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Ship_to_City___Sales_Shipment_Header___Ship_to_Code_5">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!GSTINCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!GSTINCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2954,7 +2921,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>6.28924cm</Top>
+                <Top>5.97174cm</Top>
                 <Left>8.72238cm</Left>
                 <Height>0.42653cm</Height>
                 <Width>2.19604cm</Width>
@@ -2965,13 +2932,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_6">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_BilltoName.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_BilltoName.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -2991,19 +2957,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Address_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>`</Value>
-                        <Style>
-                          <FontSize>8pt</FontSize>
-                        </Style>
-                      </TextRun>
-                      <TextRun>
-                        <Value>=Fields!SalesHeader_BilltoAddress.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_BilltoAddress.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -3014,7 +2973,7 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Paragraphs>
                 <Top>4.47896cm</Top>
                 <Left>2.33045cm</Left>
-                <Height>0.45828cm</Height>
+                <Height>0.423cm</Height>
                 <Width>6.23089cm</Width>
                 <ZIndex>31</ZIndex>
                 <Style>
@@ -3023,13 +2982,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Address_2_3">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_BilltoAddress2.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_BilltoAddress2.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -3038,9 +2996,9 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>4.97252cm</Top>
-                <Left>2.3151cm</Left>
-                <Height>0.45828cm</Height>
+                <Top>4.90196cm</Top>
+                <Left>2.33045cm</Left>
+                <Height>0.423cm</Height>
                 <Width>6.23089cm</Width>
                 <ZIndex>32</ZIndex>
                 <Style>
@@ -3049,13 +3007,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Bill_to_City___Sales_Shipment_Header___Bill_to_Post_Code_4">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_SelltoCity_PostCode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_SelltoCity_PostCode.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -3064,8 +3021,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>5.64105cm</Top>
-                <Left>2.32164cm</Left>
+                <Top>5.32496cm</Top>
+                <Left>2.33045cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.23089cm</Width>
                 <ZIndex>33</ZIndex>
@@ -3075,13 +3032,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Bill_to_Name_7">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!SalesHeader_BilltoCustomerNo.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!SalesHeader_BilltoCustomerNo.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -3101,13 +3057,12 @@ GST concession forms should be provided within __ period from the date of invoic
               </Textbox>
               <Textbox Name="Sales_Shipment_Header___Bill_to_City___Sales_Shipment_Header___Bill_to_Post_Code_5">
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!Cust_GSTNo.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!Cust_GSTNo.Value</Value>
                         <Style>
                           <FontSize>8pt</FontSize>
                         </Style>
@@ -3116,8 +3071,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>6.22127cm</Top>
-                <Left>2.25108cm</Left>
+                <Top>5.74796cm</Top>
+                <Left>2.33045cm</Left>
                 <Height>0.48803cm</Height>
                 <Width>6.23089cm</Width>
                 <ZIndex>35</ZIndex>
@@ -3132,7 +3087,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!OCNoCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!OCNoCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -3142,7 +3097,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.8004cm</Top>
+                <Top>2.1654cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -3158,7 +3113,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=First(Fields!SalesHeader_No.Value, "DataSet_Result")</Value>
+                        <Value EvaluationMode="Auto">=First(Fields!SalesHeader_No.Value, "DataSet_Result")</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                         </Style>
@@ -3169,7 +3124,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.8004cm</Top>
+                <Top>2.1654cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>6.44239cm</Width>
@@ -3185,7 +3140,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CustomerPONoCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CustomerPONoCaptionLbl.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -3195,7 +3150,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>3.29043cm</Top>
+                <Top>2.65543cm</Top>
                 <Left>17.26684cm</Left>
                 <Height>0.423cm</Height>
                 <Width>3.6cm</Width>
@@ -3211,7 +3166,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!PONo_SalesHeader.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!PONo_SalesHeader.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                         </Style>
@@ -3222,7 +3177,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>3.25515cm</Top>
+                <Top>2.62015cm</Top>
                 <Left>20.86684cm</Left>
                 <Height>0.45828cm</Height>
                 <Width>6.44239cm</Width>
@@ -3237,7 +3192,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CompanyInfo_Name.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CompanyInfo_Name.Value</Value>
                         <Style>
                           <FontSize>12pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -3267,7 +3222,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CompanyInfo_Address.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CompanyInfo_Address.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -3286,14 +3241,12 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Sales_Shipment_Header__Sales_Shipment_Header___Ship_to_Contact_3">
-                <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!PhoneNoCaptionLbl.Value &amp; "  " &amp; Fields!CompanyInfo_PhoneNo.Value &amp; "  " &amp; Fields!WebCaptionLbl.Value &amp; "  " &amp; Fields!CompanyInfo_HomePage.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!PhoneNoCaptionLbl.Value &amp; "  " &amp; Fields!CompanyInfo_PhoneNo.Value &amp; "  " &amp; Fields!WebCaptionLbl.Value &amp; "  " &amp; Fields!CompanyInfo_HomePage.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -3312,14 +3265,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox4">
-                <rd:DefaultName>Textbox4</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CompanyInfo_Address2.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CompanyInfo_Address2.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -3328,6 +3280,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox4</rd:DefaultName>
                 <Top>0.39717in</Top>
                 <Left>0.01769in</Left>
                 <Height>0.2125in</Height>
@@ -3341,14 +3294,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox7">
-                <rd:DefaultName>Textbox7</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CompanyInfo_City.Value &amp; "-" &amp; Fields!CompanyInfo_PostCode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CompanyInfo_City.Value &amp; "-" &amp; Fields!CompanyInfo_PostCode.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -3357,6 +3309,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox7</rd:DefaultName>
                 <Top>0.61958in</Top>
                 <Left>0.02167in</Left>
                 <Height>0.1625in</Height>
@@ -3370,21 +3323,20 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox25">
-                <rd:DefaultName>Textbox25</rd:DefaultName>
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!GSTINCaptionLbl.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!GSTINCaptionLbl.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
                     <Style />
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox25</rd:DefaultName>
                 <Top>0.99704in</Top>
                 <Left>0.01769in</Left>
                 <Height>0.2in</Height>
@@ -3398,15 +3350,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox10">
-                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <CanGrow>true</CanGrow>
-                <CanShrink>true</CanShrink>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CompanyGSTIN.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CompanyGSTIN.Value</Value>
                         <Style />
                       </TextRun>
                     </TextRuns>
@@ -3415,6 +3365,7 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
+                <rd:DefaultName>Textbox10</rd:DefaultName>
                 <Top>0.99704in</Top>
                 <Left>1.04547in</Left>
                 <Height>0.2in</Height>
@@ -3428,14 +3379,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox26">
-                <rd:DefaultName>Textbox26</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CurrencyCaption1.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CurrencyCaption1.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -3447,7 +3397,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.40855in</Top>
+                <rd:DefaultName>Textbox26</rd:DefaultName>
+                <Top>2.15855in</Top>
                 <Left>6.79797in</Left>
                 <Height>0.49003cm</Height>
                 <Width>3.57178cm</Width>
@@ -3461,14 +3412,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox27">
-                <rd:DefaultName>Textbox27</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!CurrencyCode.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!CurrencyCode.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                         </Style>
@@ -3477,7 +3427,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.40855in</Top>
+                <rd:DefaultName>Textbox27</rd:DefaultName>
+                <Top>2.15855in</Top>
                 <Left>8.21807in</Left>
                 <Height>0.4865cm</Height>
                 <Width>6.40358cm</Width>
@@ -3491,14 +3442,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox28">
-                <rd:DefaultName>Textbox28</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Fields!TotalGrossWeightCaption.Value</Value>
+                        <Value EvaluationMode="Auto">=Fields!TotalGrossWeightCaption.Value</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <FontWeight>Bold</FontWeight>
@@ -3508,7 +3458,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     <Style />
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.21333in</Top>
+                <rd:DefaultName>Textbox28</rd:DefaultName>
+                <Top>1.96333in</Top>
                 <Left>6.79458in</Left>
                 <Height>0.423cm</Height>
                 <Width>3.57686cm</Width>
@@ -3522,14 +3473,13 @@ GST concession forms should be provided within __ period from the date of invoic
                 </Style>
               </Textbox>
               <Textbox Name="Textbox29">
-                <rd:DefaultName>Textbox29</rd:DefaultName>
                 <CanGrow>true</CanGrow>
                 <KeepTogether>true</KeepTogether>
                 <Paragraphs>
                   <Paragraph>
                     <TextRuns>
                       <TextRun>
-                        <Value>=Sum(Fields!GrossWeight.Value)</Value>
+                        <Value EvaluationMode="Auto">=Sum(Fields!GrossWeight.Value)</Value>
                         <Style>
                           <FontSize>9pt</FontSize>
                           <Format>=First(Fields!GrossWeightFormat.Value, "DataSet_Result")</Format>
@@ -3541,7 +3491,8 @@ GST concession forms should be provided within __ period from the date of invoic
                     </Style>
                   </Paragraph>
                 </Paragraphs>
-                <Top>2.21133in</Top>
+                <rd:DefaultName>Textbox29</rd:DefaultName>
+                <Top>1.96133in</Top>
                 <Left>8.21668in</Left>
                 <Height>0.4281cm</Height>
                 <Width>6.40711cm</Width>
@@ -3558,7 +3509,7 @@ GST concession forms should be provided within __ period from the date of invoic
             <KeepTogether>true</KeepTogether>
             <Top>0.02764in</Top>
             <Left>0.0114in</Left>
-            <Height>2.70511in</Height>
+            <Height>2.54667in</Height>
             <Width>10.77125in</Width>
             <ZIndex>3</ZIndex>
             <Style>
@@ -3568,13 +3519,12 @@ GST concession forms should be provided within __ period from the date of invoic
             </Style>
           </Rectangle>
           <Textbox Name="Textbox105">
-            <rd:DefaultName>Textbox98</rd:DefaultName>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=TRUE</Value>
+                    <Value EvaluationMode="Auto">=TRUE</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -3583,7 +3533,8 @@ GST concession forms should be provided within __ period from the date of invoic
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <Top>11.92884in</Top>
+            <rd:DefaultName>Textbox98</rd:DefaultName>
+            <Top>11.67884in</Top>
             <Left>9.61718in</Left>
             <Height>0.01042in</Height>
             <Width>0.475in</Width>
@@ -3602,13 +3553,13 @@ GST concession forms should be provided within __ period from the date of invoic
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>11.93926in</Height>
+        <Height>11.72388in</Height>
         <Style />
       </Body>
-      <Width>10.78265in</Width>
+      <Width>10.79052in</Width>
       <Page>
         <PageHeader>
-          <Height>0.66875in</Height>
+          <Height>0.5561in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -3617,7 +3568,7 @@ GST concession forms should be provided within __ period from the date of invoic
               <Value>=Fields!Picture.Value</Value>
               <MIMEType>image/png</MIMEType>
               <Sizing>FitProportional</Sizing>
-              <Top>0.1375in</Top>
+              <Top>0.0125in</Top>
               <Left>8.35131in</Left>
               <Height>0.52083in</Height>
               <Width>2.40468in</Width>
@@ -3633,7 +3584,7 @@ GST concession forms should be provided within __ period from the date of invoic
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.Getdata(2,1)</Value>
+                      <Value EvaluationMode="Auto">=Code.Getdata(2,1)</Value>
                       <Style>
                         <FontStyle>Italic</FontStyle>
                         <FontSize>16pt</FontSize>
@@ -3646,7 +3597,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.34925cm</Top>
+              <Top>0.03175cm</Top>
               <Left>10.63984cm</Left>
               <Height>38.25pt</Height>
               <Width>6.39251cm</Width>
@@ -3674,7 +3625,6 @@ GST concession forms should be provided within __ period from the date of invoic
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
             <Textbox Name="Textbox30">
-              <rd:DefaultName>Textbox30</rd:DefaultName>
               <CanGrow>true</CanGrow>
               <CanShrink>true</CanShrink>
               <KeepTogether>true</KeepTogether>
@@ -3682,7 +3632,7 @@ GST concession forms should be provided within __ period from the date of invoic
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Page : " &amp; Globals!PageNumber &amp; " of " &amp; Globals!OverallTotalPages</Value>
+                      <Value EvaluationMode="Auto">="Page : " &amp; Globals!PageNumber &amp; " of " &amp; Globals!OverallTotalPages</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -3691,6 +3641,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   <Style />
                 </Paragraph>
               </Paragraphs>
+              <rd:DefaultName>Textbox30</rd:DefaultName>
               <Top>0.0125in</Top>
               <Left>0.01695in</Left>
               <Height>0.1625in</Height>
@@ -3706,7 +3657,6 @@ GST concession forms should be provided within __ period from the date of invoic
               </Style>
             </Textbox>
             <Textbox Name="Textbox106">
-              <rd:DefaultName>Textbox99</rd:DefaultName>
               <CanGrow>true</CanGrow>
               <CanShrink>true</CanShrink>
               <KeepTogether>true</KeepTogether>
@@ -3714,7 +3664,7 @@ GST concession forms should be provided within __ period from the date of invoic
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=First(Fields!Continued.Value, "DataSet_Result")</Value>
+                      <Value EvaluationMode="Auto">=First(Fields!Continued.Value, "DataSet_Result")</Value>
                       <Style>
                         <FontSize>7pt</FontSize>
                       </Style>
@@ -3725,6 +3675,7 @@ GST concession forms should be provided within __ period from the date of invoic
                   </Style>
                 </Paragraph>
               </Paragraphs>
+              <rd:DefaultName>Textbox99</rd:DefaultName>
               <Top>0.01525in</Top>
               <Left>8.77403in</Left>
               <Height>0.15975in</Height>
@@ -14962,6 +14913,8 @@ eXpzcIJ7eIF7doN9eIR+eYN9eIJ8d4B6dQD/////////////////////////////////////////////
   </EmbeddedImages>
   <Language>=User!Language</Language>
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>

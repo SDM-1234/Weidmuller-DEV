@@ -217,6 +217,30 @@ tableextension 50029 SalesHeader extends "Sales Header"
     end;
 
 
+    procedure CheckDuplicateItem()
+    var
+        SalesLine: Record "Sales Line";
+        SalesLine2: Record "Sales Line";
+        DuplicateItemFound: Boolean;
+    begin
+        SalesLine.SetCurrentKey("Line No.");
+        SalesLine.SetRange("Document No.", Rec."No.");
+        if SalesLine.FindSet() then
+            repeat
+                SalesLine2.SetRange("Document No.", SalesLine."Document No.");
+                SalesLine2.SetRange("No.", SalesLine."No.");
+                SalesLine2.SetFilter("Line No.", '>%1', SalesLine."Line No.");
+                if SalesLine2.FindFirst() then begin
+                    DuplicateItemFound := true;
+                    message('Item No. %1 is already listed on Line No. %2', SalesLine."No.", SalesLine2."Line No.");
+                end;
+            until SalesLine.Next() = 0;
+        if not DuplicateItemFound then
+            message('No duplicate item found for this order.');
+    end;
+
+
+
     var
         IGSTLbl: Label 'IGST';
         SGSTLbl: Label 'SGST';

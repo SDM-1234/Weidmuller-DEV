@@ -23,6 +23,23 @@ pageextension 50108 SalesQuotes extends "Sales Quotes"
     }
     actions
     {
+        addafter("&Quote")
+        {
+            action(CheckDuplicateItem)
+            {
+                ApplicationArea = All;
+                Caption = 'Check Duplicate Item';
+                Image = CheckDuplicates;
+                ToolTip = 'Click here to check duplicate items';
+
+
+                trigger OnAction()
+                begin
+                    Rec.CheckDuplicateItem()
+                end;
+            }
+
+        }
     }
 }
 
