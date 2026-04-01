@@ -729,8 +729,11 @@ report 50005 "Posted Sales Invoice"
                                                 Desc1 := 'PO No.:' + '' + SalesShipmentHeader1."External Document No.";
                                         END;
                                 END;
-                            end ELSE
-                                Desc := "Sales Invoice Line".Description;
+                            end else if "Sales Invoice Line".Description <> '' then
+                                    Desc := "Sales Invoice Line".Description
+                            else
+                                Desc := Item.Description;
+
                             LineAMtToCustomer += AmountToCustomer();
                         end;
 
@@ -1262,7 +1265,7 @@ report 50005 "Posted Sales Invoice"
         SalesInvoiceLine: Record "Sales Invoice Line";
         SH: Record "Sales Header";
         SalesShipmentHeader: Record "Sales Shipment Header";
-        Desc: Text[50];
+        Desc: Text[100];
         SalesInvoiceLine1: Record "Sales Invoice Line";
         SalesShipmentHeader1: Record "Sales Shipment Header";
         Desc1: Text[50];
