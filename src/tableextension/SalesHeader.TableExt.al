@@ -57,7 +57,7 @@ tableextension 50029 SalesHeader extends "Sales Header"
             var
                 SalesHeader: Record "Sales Header";
                 i: Integer;
-                SONo: array[10] of Code[20];
+                SONo: array[100] of Code[20];
             begin
 
 
@@ -70,7 +70,7 @@ tableextension 50029 SalesHeader extends "Sales Header"
                         i += 1;
                     UNTIL SalesHeader.NEXT() = 0;
                 IF i > 1 THEN
-                    MESSAGE('Customer PO is already available with %1 %2 %3 OC', SONo[1], SONo[2], SONo[3]);
+                    MESSAGE('Customer PO is already available with %4 documents %1 %2 %3 OC', SONo[1], SONo[2], SONo[3], i);
 
                 IF ("Document Type" IN ["Document Type"::Quote, "Document Type"::Order]) AND
                   NOT ("External Document No." = xRec."External Document No.") THEN
