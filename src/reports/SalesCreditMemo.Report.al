@@ -542,29 +542,14 @@ report 50031 "Sales - Credit Memo"
                             DataItemLink = "Document No." = FIELD("Document No."),
                                            "Line No." = FIELD("Line No.");
                             DataItemLinkReference = "Sales Cr.Memo Line";
-                            DataItemTableView = SORTING("Document No.", "Line No.") where(Type = filter(Item));
+                            DataItemTableView = SORTING("Document No.", "Line No.") where(Type = filter(Item | "G/L Account"));
 
-                            //DataItemTableView = ;
-                            //column(SalesShipmentBufferQuantity; SalesShipmentBuffer.Quantity)
-                            //{
-                            //  DecimalPlaces = 0 : 5;
-                            //}
 
                             trigger OnAfterGetRecord()
                             begin
-                                //IF Number = 1 THEN
-                                //  SalesShipmentBuffer.FIND('-')
-                                //ELSE
-                                //  SalesShipmentBuffer.NEXT();
                                 GetSalesGSTAmount("Sales Cr.Memo Header", SalesCrMemoLineGST);
-
                             end;
 
-                            trigger OnPreDataItem()
-                            begin
-                                //SETRANGE(Number, 1)
-                                //, SalesShipmentBuffer.COUNT);
-                            end;
                         }
                         dataitem("Sales Shipment Buffer"; "Integer")
                         {
@@ -893,8 +878,22 @@ report 50031 "Sales - Credit Memo"
                 end;
             }
 
+
+            trigger OnPreDataItem()
+            begin
+
+                Clear(IGSTAmt);
+                Clear(CGSTAmt);
+                Clear(SGSTAmt);
+                Clear(CessAmt);
+
+            end;
+
             trigger OnAfterGetRecord()
             begin
+
+
+
                 IsGSTApplicable := CheckGSTDoc("Sales Cr.Memo Line");
                 Customer.GET("Bill-to Customer No.");
                 CompanyInfo.GET();
@@ -1334,10 +1333,6 @@ SalesInvoiceLine: Record "Sales Cr.Memo Line")
     var
         DetailedGSTLedgerEntry: Record "Detailed GST Ledger Entry";
     begin
-        Clear(IGSTAmt);
-        Clear(CGSTAmt);
-        Clear(SGSTAmt);
-        Clear(CessAmt);
         Clear(IGSTPer);
         Clear(CGSTPer);
         Clear(SGSTPer);
