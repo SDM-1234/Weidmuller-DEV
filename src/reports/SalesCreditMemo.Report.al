@@ -88,30 +88,6 @@ report 50031 "Sales - Credit Memo"
                     column(GSTComponentCode4; CessLbl + 'Amount')
                     {
                     }
-                    column(GSTCompAmount1; ABS(CGSTAmt))
-                    {
-                    }
-                    column(GSTCompAmount2; ABS(IGSTAmt))
-                    {
-                    }
-                    column(GSTCompAmount3; ABS(SGSTAmt))
-                    {
-                    }
-                    column(GSTCompAmount4; ABS(CessAmt))
-                    {
-                    }
-                    column(GSTCompPer1; CGSTPer)
-                    {
-                    }
-                    column(GSTCompPer2; IgstPer)
-                    {
-                    }
-                    column(GSTCompPer3; SGSTPer)
-                    {
-                    }
-                    column(IsGSTApplicable; IsGSTApplicable)
-                    {
-                    }
                     column(CustAddr1; CustAddr[1])
                     {
                     }
@@ -326,6 +302,32 @@ report 50031 "Sales - Credit Memo"
                         column(No_SalesCrMemoLine; "No.")
                         {
                         }
+
+                        column(GSTCompAmount1; ABS(CGSTAmt))
+                        {
+                        }
+                        column(GSTCompAmount2; ABS(IGSTAmt))
+                        {
+                        }
+                        column(GSTCompAmount3; ABS(SGSTAmt))
+                        {
+                        }
+                        column(GSTCompAmount4; ABS(CessAmt))
+                        {
+                        }
+                        column(GSTCompPer1; CGSTPer)
+                        {
+                        }
+                        column(GSTCompPer2; IgstPer)
+                        {
+                        }
+                        column(GSTCompPer3; SGSTPer)
+                        {
+                        }
+                        column(IsGSTApplicable; IsGSTApplicable)
+                        {
+                        }
+
                         column(Qty_SalesCrMemoLine; Quantity)
                         {
                         }
@@ -532,6 +534,38 @@ report 50031 "Sales - Credit Memo"
                         column(BinCode_SalesCrMemoLine; "Sales Cr.Memo Line"."Bin Code")
                         {
                         }
+
+
+
+                        dataitem(SalesCrMemoLineGST; "Sales Cr.Memo Line")
+                        {
+                            DataItemLink = "Document No." = FIELD("Document No."),
+                                           "Line No." = FIELD("Line No.");
+                            DataItemLinkReference = "Sales Cr.Memo Line";
+                            DataItemTableView = SORTING("Document No.", "Line No.") where(Type = filter(Item));
+
+                            //DataItemTableView = ;
+                            //column(SalesShipmentBufferQuantity; SalesShipmentBuffer.Quantity)
+                            //{
+                            //  DecimalPlaces = 0 : 5;
+                            //}
+
+                            trigger OnAfterGetRecord()
+                            begin
+                                //IF Number = 1 THEN
+                                //  SalesShipmentBuffer.FIND('-')
+                                //ELSE
+                                //  SalesShipmentBuffer.NEXT();
+                                GetSalesGSTAmount("Sales Cr.Memo Header", SalesCrMemoLineGST);
+
+                            end;
+
+                            trigger OnPreDataItem()
+                            begin
+                                //SETRANGE(Number, 1)
+                                //, SalesShipmentBuffer.COUNT);
+                            end;
+                        }
                         dataitem("Sales Shipment Buffer"; "Integer")
                         {
                             DataItemTableView = SORTING(Number);
@@ -616,7 +650,7 @@ report 50031 "Sales - Credit Memo"
                             IF (Type = Type::"G/L Account") AND (NOT ShowInternalInfo) THEN
                                 "No." := '';
 
-                            GetSalesGSTAmount("Sales Cr.Memo Header", "Sales Cr.Memo Line");
+                            //GetSalesGSTAmount("Sales Cr.Memo Header", "Sales Cr.Memo Line");
                         end;
 
                         trigger OnPreDataItem()
@@ -1317,7 +1351,7 @@ SalesInvoiceLine: Record "Sales Cr.Memo Line")
                 if (DetailedGSTLedgerEntry."GST Component Code" = CGSTLbl) And (SalesInvoiceHeader."Currency Code" <> '') then Begin
                     CGSTAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
                     CGSTPer := DetailedGSTLedgerEntry."GST %";
-                End else
+                end else
                     if (DetailedGSTLedgerEntry."GST Component Code" = CGSTLbl) then begin
                         CGSTAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
                         CGSTPer := DetailedGSTLedgerEntry."GST %";
@@ -1343,8 +1377,7 @@ SalesInvoiceLine: Record "Sales Cr.Memo Line")
                 if (DetailedGSTLedgerEntry."GST Component Code" = CessLbl) And (SalesInvoiceHeader."Currency Code" <> '') then begin
                     CessAmt += Round((Abs(DetailedGSTLedgerEntry."GST Amount") * SalesInvoiceHeader."Currency Factor"), GetGSTRoundingPrecision(DetailedGSTLedgerEntry."GST Component Code"));
                     CessPer := DetailedGSTLedgerEntry."GST %";
-                end
-                else
+                end else
                     if (DetailedGSTLedgerEntry."GST Component Code" = CessLbl) then begin
                         CessAmt += Abs(DetailedGSTLedgerEntry."GST Amount");
                         CessPer := DetailedGSTLedgerEntry."GST %";
