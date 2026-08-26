@@ -547,7 +547,9 @@ report 50001 "Order-Confirmation"
 
                 //SE
 
-
+Clear(Shipmentcode);
+                Clear(TransPortCode);
+                Clear(PaymentTermsDesc);
                 IF "Shipment Method Code" = '' THEN
                     ShipmentMethod.INIT()
                 ELSE BEGIN
