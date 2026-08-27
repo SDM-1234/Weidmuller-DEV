@@ -11,6 +11,7 @@ codeunit 50003 "Customer Credit Check"
     trigger OnRun()
     begin
         SetJobQueueLogEntry(TRUE, RetunMinutes);
+        SetResetInvoiceBlockCustomer();
         //IF RetunMinutes = 1 THEN
         //  EXIT;
         //Above two lines commented to ensure codeunit runs every time when scheduled from job queue
@@ -49,6 +50,16 @@ codeunit 50003 "Customer Credit Check"
         CreditLimit: Decimal;
         PayTermsExceed: Boolean;
         RetunMinutes: Integer;
+
+
+    local procedure SetResetInvoiceBlockCustomer()
+    var
+        Customer: Record Customer;
+    begin
+        Customer.SetRange(Customer.Blocked, Customer.Blocked::Invoice);
+        Customer.Modifyall(Customer.Blocked, Customer.Blocked::" ");
+    end;
+
 
     local procedure BlockCustomer(CustomerNo: Code[20])
     begin

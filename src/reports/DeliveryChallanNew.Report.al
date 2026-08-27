@@ -62,7 +62,7 @@ report 50000 "Delivery Challan New"
             column(TransferfrmAddress2_TransferShipmentHeader; "Transfer Shipment Header"."Transfer-from Address 2")
             {
             }
-            column(EwayNo; "Transfer Shipment Header"."External Document No.")
+            column(EwayNo; "Transfer Shipment Header"."E-Way Bill No.")
             {
             }
             column(Cust_GSTN; RecLocTransferTo_Cust."Location ARN No.")
